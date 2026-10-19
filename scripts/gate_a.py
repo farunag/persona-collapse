@@ -37,7 +37,8 @@ MODELS = {
         "axis_folder": "qwen-3-32b",
         "chat_kwargs": {"enable_thinking": False},
         "max_tokens": None,
-        "default_files": sorted(glob.glob(str(TRANSCRIPTS / "case_studies/qwen-3-32b/*.json"))),
+        "default_files": sorted(glob.glob(str(TRANSCRIPTS / "case_studies/qwen-3-32b/*.json")))
+        + sorted(glob.glob(str(TRANSCRIPTS / "persona_drift/*.json"))),
     },
     "gemma": {
         "name": "google/gemma-2-27b-it",
@@ -47,6 +48,21 @@ MODELS = {
         "default_files": sorted(glob.glob(str(TRANSCRIPTS / "persona_drift/*.json"))),
     },
 }
+
+
+DEFAULT_PROJ_NOTE = "projection of published default_vector.pt onto the axis at the target layer"
+HIGH_DOMAINS, LOW_DOMAINS = ("coding", "writing"), ("therapy", "philosophy")
+
+
+def truncate(conversation, tokenizer, max_tokens, chat_kwargs):
+    """Drop trailing user/assistant pairs until the conversation fits; returns (conv, n_tokens)."""
+    conv = list(conversation)
+    while conv:
+        n = len(tokenizer.apply_chat_template(conv, tokenize=True, **chat_kwargs))
+        if n <= max_tokens:
+            return conv, n
+        conv = conv[:-2]
+    raise RuntimeError("no prefix fits the context")
 
 
 def label_for(path):
@@ -85,22 +101,66 @@ def compare(ours, stored):
     }
 
 
-def plot(results, path, title):
+def plot(results, path, title, default_proj):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
-    fig, ax = plt.subplots(figsize=(9, 5.5))
-    for r in results:
-        y = [t["projection"] for t in r["turns"]]
-        ax.plot(range(1, len(y) + 1), y, marker="o", markersize=3, label=r["label"])
-    ax.set_xlabel("Assistant turn")
-    ax.set_ylabel(f"Projection on Assistant Axis (layer {results[0]['layer']})")
-    ax.set_title(title)
-    ax.legend(fontsize=8)
-    ax.grid(alpha=0.3)
+    groups = [g for g in ("case_studies", "persona_drift") if any(r["group"] == g for r in results)]
+    fig, axes = plt.subplots(1, len(groups), figsize=(7.5 * len(groups), 5.5), squeeze=False, sharey=True)
+    domain_colors = {"coding": "tab:blue", "writing": "tab:green", "therapy": "tab:red", "philosophy": "tab:purple"}
+    scenario_colors = {"jailbreak": "tab:orange", "delusion": "tab:brown", "selfharm": "tab:gray"}
+    for ax, g in zip(axes[0], groups):
+        for r in (r for r in results if r["group"] == g):
+            y = [t["projection"] for t in r["turns"]]
+            name = r["label"].split("/")[-1]
+            if g == "persona_drift":
+                style = dict(color=domain_colors.get(r["domain"]),
+                             linestyle="-" if r["native"] else "--")
+                name += f" ({r['transcript_model'].split('/')[-1]} text)"
+            else:
+                style = dict(color=scenario_colors.get(name.split("_")[0]),
+                             linestyle="-" if r["steering"] == "capped" else ":")
+            ax.plot(range(1, len(y) + 1), y, marker="o", markersize=3, label=name, **style)
+        ax.axhline(default_proj, color="black", linewidth=1, alpha=0.6, label=f"default vector ({default_proj:.1f})")
+        ax.set_xlabel("Assistant turn")
+        ax.set_title(g.replace("_", " "))
+        ax.legend(fontsize=7)
+        ax.grid(alpha=0.3)
+    axes[0][0].set_ylabel(f"Projection on Assistant Axis (layer {results[0]['layer']})")
+    fig.suptitle(title)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
+
+
+def summarize(results, default_proj, model_name):
+    mean = {r["label"]: float(np.mean([t["projection"] for t in r["turns"]])) for r in results}
+    out = {"default_projection": default_proj, "mean_projection": mean}
+    pairs = {}
+    for r in results:
+        if r["group"] == "case_studies" and r["steering"] == "capped":
+            scen = r["label"].split("/")[-1].split("_")[0]
+            uns = next((u for u in results if u["group"] == "case_studies" and u["steering"] == "unsteered"
+                        and u["label"].split("/")[-1].startswith(scen + "_")), None)
+            if uns:
+                dc, du = abs(mean[r["label"]] - default_proj), abs(mean[uns["label"]] - default_proj)
+                pairs[scen] = {"capped_mean": mean[r["label"]], "unsteered_mean": mean[uns["label"]],
+                               "capped_dist_to_default": dc, "unsteered_dist_to_default": du,
+                               "capped_closer": dc < du}
+    if pairs:
+        out["capping_pairs"] = pairs
+    dom = {r["domain"]: mean[r["label"]] for r in results if r["group"] == "persona_drift"}
+    if all(d in dom for d in HIGH_DOMAINS + LOW_DOMAINS):
+        out["domain_means"] = dom
+        out["domain_ordering_pass"] = min(dom[d] for d in HIGH_DOMAINS) > max(dom[d] for d in LOW_DOMAINS)
+        out["domain_ordering_note"] = (
+            "persona_drift transcripts are projected as written; text from "
+            + ", ".join(f"{r['domain']}={r['transcript_model']}" for r in results if r["group"] == "persona_drift")
+            + f". Only transcripts whose model is {model_name} are this model's own replies.")
+    native = {r["label"]: mean[r["label"]] for r in results if r["group"] == "persona_drift" and r["native"]}
+    if native:
+        out["native_transcripts_mean"] = native
+    return out
 
 
 def main():
@@ -131,10 +191,13 @@ def main():
         label = label_for(f)
         if data.get("model") != spec["name"]:
             print(f"!! {label}: transcript model is {data.get('model')}, not {spec['name']}")
-        n_tok = len(pm.tokenizer.apply_chat_template(conv, tokenize=True, **spec["chat_kwargs"]))
-        if spec["max_tokens"] and n_tok > spec["max_tokens"]:
-            print(f"!! {label}: {n_tok} tokens exceeds context {spec['max_tokens']}, skipping")
-            continue
+        n_tok_full = len(pm.tokenizer.apply_chat_template(conv, tokenize=True, **spec["chat_kwargs"]))
+        n_asst_full = sum(m["role"] == "assistant" for m in conv)
+        n_tok = n_tok_full
+        if spec["max_tokens"] and n_tok_full > spec["max_tokens"]:
+            conv, n_tok = truncate(conv, pm.tokenizer, spec["max_tokens"], spec["chat_kwargs"])
+            print(f"!! {label}: {n_tok_full} tokens > {spec['max_tokens']}; truncated to {n_tok} tokens, "
+                  f"kept {sum(m['role'] == 'assistant' for m in conv)}/{n_asst_full} assistant turns")
         t1 = time.time()
         turns = compute_projections(pm, encoder, span_mapper, conv, axis, layer, spec["chat_kwargs"])
         dt = time.time() - t1
@@ -147,15 +210,26 @@ def main():
             "file": str(f),
             "transcript_model": data.get("model"),
             "domain": data.get("domain"),
+            "group": Path(f).parent.name if Path(f).parent.name == "persona_drift" else "case_studies",
+            "native": data.get("model") == spec["name"],
             "steering": "capped" if "steering_config" in data else "unsteered",
             "steering_config": data.get("steering_config"),
             "n_tokens": n_tok,
+            "n_tokens_full": n_tok_full,
+            "assistant_turns_kept": len(turns),
+            "assistant_turns_full": n_asst_full,
+            "truncated": n_tok != n_tok_full,
             "layer": layer,
             "turns": turns,
             "comparison": cmp,
             "seconds": round(dt, 2),
         })
         torch.cuda.empty_cache()
+
+    default_path = hf_hub_download(AXIS_REPO, f"{spec['axis_folder']}/default_vector.pt", repo_type="dataset")
+    default_proj = project(load_axis(default_path), axis, layer=layer)
+    summary = summarize(results, default_proj, spec["name"])
+    print(json.dumps(summary, indent=2))
 
     meta = {
         "created": datetime.now(timezone.utc).isoformat(),
@@ -166,6 +240,7 @@ def main():
         "axis_file": f"{AXIS_REPO}/{spec['axis_folder']}/assistant_axis.pt",
         "axis_path": axis_path,
         "chat_kwargs": spec["chat_kwargs"],
+        "default_projection_note": DEFAULT_PROJ_NOTE,
         "seed": None,  # forward passes only, no sampling
         "versions": {
             "torch": torch.__version__,
@@ -178,8 +253,9 @@ def main():
     }
     RESULTS.mkdir(exist_ok=True)
     out_json = RESULTS / f"{stem}.json"
-    json.dump({"meta": meta, "results": results}, open(out_json, "w"), indent=2)
-    plot(results, RESULTS / f"{stem}.png", f"Gate A: {spec['name']} per-turn projection")
+    json.dump({"meta": meta, "summary": summary, "results": results}, open(out_json, "w"), indent=2)
+    plot(results, RESULTS / f"{stem}.png", f"Gate A: {spec['name']} per-turn projection\n"
+         f"(dashed = another model's text, projected as written)", default_proj)
     print(f"Wrote {out_json} and {stem}.png; total {meta['total_seconds']}s")
 
     del pm

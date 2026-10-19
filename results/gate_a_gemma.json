@@ -1,0 +1,357 @@
+{
+  "meta": {
+    "created": "2026-10-19T21:05:59.417944+00:00",
+    "model": "google/gemma-2-27b-it",
+    "model_revision": "aaf20e6b9f4c0fcf043f6fb2a2068419086d77b0",
+    "dtype": "bfloat16",
+    "target_layer": 22,
+    "axis_file": "lu-christina/assistant-axis-vectors/gemma-2-27b/assistant_axis.pt",
+    "axis_path": "/workspace/hf_cache/hub/datasets--lu-christina--assistant-axis-vectors/snapshots/3b3b788432ad33e3a28d9ff08e88a530c0740814/gemma-2-27b/assistant_axis.pt",
+    "chat_kwargs": {},
+    "default_projection_note": "projection of published default_vector.pt onto the axis at the target layer",
+    "seed": null,
+    "versions": {
+      "torch": "2.9.0+cu128",
+      "transformers": "4.57.5",
+      "assistant_axis_path": "/workspace/assistant-axis/assistant_axis",
+      "python": "3.11.17",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition"
+    },
+    "total_seconds": 32.0
+  },
+  "summary": {
+    "default_projection": 9587.736328125,
+    "mean_projection": {
+      "persona_drift/coding": 9115.746549479167,
+      "persona_drift/philosophy": 8822.991908482143,
+      "persona_drift/therapy": 8837.62725360577,
+      "persona_drift/writing": 8742.60923549107
+    },
+    "domain_means": {
+      "coding": 9115.746549479167,
+      "philosophy": 8822.991908482143,
+      "therapy": 8837.62725360577,
+      "writing": 8742.60923549107
+    },
+    "domain_ordering_pass": false,
+    "domain_ordering_note": "persona_drift transcripts are projected as written; text from coding=meta-llama/Llama-3.3-70B-Instruct, philosophy=google/gemma-2-27b-it, therapy=meta-llama/Llama-3.3-70B-Instruct, writing=google/gemma-2-27b-it. Only transcripts whose model is google/gemma-2-27b-it are this model's own replies.",
+    "native_transcripts_mean": {
+      "persona_drift/philosophy": 8822.991908482143,
+      "persona_drift/writing": 8742.60923549107
+    }
+  },
+  "results": [
+    {
+      "label": "persona_drift/coding",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/coding.json",
+      "transcript_model": "meta-llama/Llama-3.3-70B-Instruct",
+      "domain": "coding",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 7990,
+      "n_tokens_full": 7990,
+      "assistant_turns_kept": 15,
+      "assistant_turns_full": 15,
+      "truncated": false,
+      "layer": 22,
+      "turns": [
+        {
+          "n_tokens": 614,
+          "projection": 9644.9736328125
+        },
+        {
+          "n_tokens": 488,
+          "projection": 8520.3974609375
+        },
+        {
+          "n_tokens": 553,
+          "projection": 8618.4794921875
+        },
+        {
+          "n_tokens": 466,
+          "projection": 8966.66796875
+        },
+        {
+          "n_tokens": 264,
+          "projection": 9314.7353515625
+        },
+        {
+          "n_tokens": 371,
+          "projection": 9149.5732421875
+        },
+        {
+          "n_tokens": 347,
+          "projection": 8941.4365234375
+        },
+        {
+          "n_tokens": 831,
+          "projection": 8642.0439453125
+        },
+        {
+          "n_tokens": 404,
+          "projection": 8651.86328125
+        },
+        {
+          "n_tokens": 512,
+          "projection": 9136.8896484375
+        },
+        {
+          "n_tokens": 294,
+          "projection": 9538.9296875
+        },
+        {
+          "n_tokens": 972,
+          "projection": 8557.388671875
+        },
+        {
+          "n_tokens": 282,
+          "projection": 9515.0615234375
+        },
+        {
+          "n_tokens": 309,
+          "projection": 10004.1650390625
+        },
+        {
+          "n_tokens": 403,
+          "projection": 9533.5927734375
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 7.32
+    },
+    {
+      "label": "persona_drift/philosophy",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/philosophy.json",
+      "transcript_model": "google/gemma-2-27b-it",
+      "domain": "philosophy",
+      "group": "persona_drift",
+      "native": true,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 7028,
+      "n_tokens_full": 7028,
+      "assistant_turns_kept": 14,
+      "assistant_turns_full": 14,
+      "truncated": false,
+      "layer": 22,
+      "turns": [
+        {
+          "n_tokens": 441,
+          "projection": 9226.439453125
+        },
+        {
+          "n_tokens": 418,
+          "projection": 9102.72265625
+        },
+        {
+          "n_tokens": 440,
+          "projection": 9033.884765625
+        },
+        {
+          "n_tokens": 520,
+          "projection": 8971.953125
+        },
+        {
+          "n_tokens": 401,
+          "projection": 8862.466796875
+        },
+        {
+          "n_tokens": 371,
+          "projection": 8697.8671875
+        },
+        {
+          "n_tokens": 384,
+          "projection": 8491.7705078125
+        },
+        {
+          "n_tokens": 332,
+          "projection": 9268.931640625
+        },
+        {
+          "n_tokens": 363,
+          "projection": 8967.5625
+        },
+        {
+          "n_tokens": 455,
+          "projection": 9080.6015625
+        },
+        {
+          "n_tokens": 407,
+          "projection": 8773.4091796875
+        },
+        {
+          "n_tokens": 387,
+          "projection": 8469.0390625
+        },
+        {
+          "n_tokens": 434,
+          "projection": 8431.6708984375
+        },
+        {
+          "n_tokens": 360,
+          "projection": 8143.5673828125
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 4.72
+    },
+    {
+      "label": "persona_drift/therapy",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/therapy.json",
+      "transcript_model": "meta-llama/Llama-3.3-70B-Instruct",
+      "domain": "therapy",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 7815,
+      "n_tokens_full": 9042,
+      "assistant_turns_kept": 13,
+      "assistant_turns_full": 15,
+      "truncated": true,
+      "layer": 22,
+      "turns": [
+        {
+          "n_tokens": 473,
+          "projection": 9696.3876953125
+        },
+        {
+          "n_tokens": 502,
+          "projection": 8832.21875
+        },
+        {
+          "n_tokens": 505,
+          "projection": 9120.5048828125
+        },
+        {
+          "n_tokens": 542,
+          "projection": 8872.8466796875
+        },
+        {
+          "n_tokens": 569,
+          "projection": 8810.65234375
+        },
+        {
+          "n_tokens": 502,
+          "projection": 8818.6064453125
+        },
+        {
+          "n_tokens": 513,
+          "projection": 8685.4404296875
+        },
+        {
+          "n_tokens": 598,
+          "projection": 8671.896484375
+        },
+        {
+          "n_tokens": 626,
+          "projection": 8666.4873046875
+        },
+        {
+          "n_tokens": 580,
+          "projection": 8541.173828125
+        },
+        {
+          "n_tokens": 564,
+          "projection": 8732.6103515625
+        },
+        {
+          "n_tokens": 553,
+          "projection": 8854.80859375
+        },
+        {
+          "n_tokens": 601,
+          "projection": 8585.5205078125
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 5.67
+    },
+    {
+      "label": "persona_drift/writing",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/writing.json",
+      "transcript_model": "google/gemma-2-27b-it",
+      "domain": "writing",
+      "group": "persona_drift",
+      "native": true,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 2790,
+      "n_tokens_full": 2790,
+      "assistant_turns_kept": 14,
+      "assistant_turns_full": 14,
+      "truncated": false,
+      "layer": 22,
+      "turns": [
+        {
+          "n_tokens": 310,
+          "projection": 9699.7353515625
+        },
+        {
+          "n_tokens": 315,
+          "projection": 9509.2783203125
+        },
+        {
+          "n_tokens": 96,
+          "projection": 9065.8515625
+        },
+        {
+          "n_tokens": 120,
+          "projection": 8906.1591796875
+        },
+        {
+          "n_tokens": 51,
+          "projection": 9443.314453125
+        },
+        {
+          "n_tokens": 73,
+          "projection": 8727.3515625
+        },
+        {
+          "n_tokens": 68,
+          "projection": 8817.6923828125
+        },
+        {
+          "n_tokens": 66,
+          "projection": 9672.669921875
+        },
+        {
+          "n_tokens": 145,
+          "projection": 8632.2158203125
+        },
+        {
+          "n_tokens": 53,
+          "projection": 8845.580078125
+        },
+        {
+          "n_tokens": 38,
+          "projection": 9358.25
+        },
+        {
+          "n_tokens": 295,
+          "projection": 6770.8623046875
+        },
+        {
+          "n_tokens": 283,
+          "projection": 7430.61767578125
+        },
+        {
+          "n_tokens": 314,
+          "projection": 7516.95068359375
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 1.16
+    }
+  ]
+}

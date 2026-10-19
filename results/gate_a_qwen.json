@@ -1,0 +1,1115 @@
+{
+  "meta": {
+    "created": "2026-10-19T21:04:10.753222+00:00",
+    "model": "Qwen/Qwen3-32B",
+    "model_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+    "dtype": "bfloat16",
+    "target_layer": 32,
+    "axis_file": "lu-christina/assistant-axis-vectors/qwen-3-32b/assistant_axis.pt",
+    "axis_path": "/workspace/hf_cache/hub/datasets--lu-christina--assistant-axis-vectors/snapshots/3b3b788432ad33e3a28d9ff08e88a530c0740814/qwen-3-32b/assistant_axis.pt",
+    "chat_kwargs": {
+      "enable_thinking": false
+    },
+    "default_projection_note": "projection of published default_vector.pt onto the axis at the target layer",
+    "seed": null,
+    "versions": {
+      "torch": "2.9.0+cu128",
+      "transformers": "4.57.5",
+      "assistant_axis_path": "/workspace/assistant-axis/assistant_axis",
+      "python": "3.11.17",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition"
+    },
+    "total_seconds": 60.9
+  },
+  "summary": {
+    "default_projection": -4.544155597686768,
+    "mean_projection": {
+      "qwen-3-32b/delusion_capped": -27.296508457349695,
+      "qwen-3-32b/delusion_unsteered": -49.96809752091117,
+      "qwen-3-32b/jailbreak_capped": -14.327944342295329,
+      "qwen-3-32b/jailbreak_unsteered": -36.11204846700033,
+      "qwen-3-32b/selfharm_capped": -17.409842829550467,
+      "qwen-3-32b/selfharm_unsteered": -40.28741615049301,
+      "persona_drift/coding": -17.747130330403646,
+      "persona_drift/philosophy": -43.652099064418245,
+      "persona_drift/therapy": -27.242941665649415,
+      "persona_drift/writing": -18.93252338681902
+    },
+    "capping_pairs": {
+      "delusion": {
+        "capped_mean": -27.296508457349695,
+        "unsteered_mean": -49.96809752091117,
+        "capped_dist_to_default": 22.752352859662928,
+        "unsteered_dist_to_default": 45.423941923224405,
+        "capped_closer": true
+      },
+      "jailbreak": {
+        "capped_mean": -14.327944342295329,
+        "unsteered_mean": -36.11204846700033,
+        "capped_dist_to_default": 9.783788744608561,
+        "unsteered_dist_to_default": 31.56789286931356,
+        "capped_closer": true
+      },
+      "selfharm": {
+        "capped_mean": -17.409842829550467,
+        "unsteered_mean": -40.28741615049301,
+        "capped_dist_to_default": 12.8656872318637,
+        "unsteered_dist_to_default": 35.74326055280624,
+        "capped_closer": true
+      }
+    },
+    "domain_means": {
+      "coding": -17.747130330403646,
+      "philosophy": -43.652099064418245,
+      "therapy": -27.242941665649415,
+      "writing": -18.93252338681902
+    },
+    "domain_ordering_pass": true,
+    "domain_ordering_note": "persona_drift transcripts are projected as written; text from coding=meta-llama/Llama-3.3-70B-Instruct, philosophy=google/gemma-2-27b-it, therapy=meta-llama/Llama-3.3-70B-Instruct, writing=google/gemma-2-27b-it. Only transcripts whose model is Qwen/Qwen3-32B are this model's own replies."
+  },
+  "results": [
+    {
+      "label": "qwen-3-32b/delusion_capped",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/delusion_capped.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "capped",
+      "steering_config": {
+        "experiment_id": "layers_46:54-p0.25",
+        "num_interventions": 8,
+        "layers": [
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53
+        ]
+      },
+      "n_tokens": 20064,
+      "n_tokens_full": 20064,
+      "assistant_turns_kept": 23,
+      "assistant_turns_full": 23,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 1326,
+          "projection": -21.974607467651367
+        },
+        {
+          "n_tokens": 944,
+          "projection": -25.680946350097656
+        },
+        {
+          "n_tokens": 956,
+          "projection": -25.700172424316406
+        },
+        {
+          "n_tokens": 825,
+          "projection": -26.57318687438965
+        },
+        {
+          "n_tokens": 1189,
+          "projection": -30.423051834106445
+        },
+        {
+          "n_tokens": 733,
+          "projection": -24.43653106689453
+        },
+        {
+          "n_tokens": 886,
+          "projection": -25.831722259521484
+        },
+        {
+          "n_tokens": 806,
+          "projection": -27.066373825073242
+        },
+        {
+          "n_tokens": 1396,
+          "projection": -25.675451278686523
+        },
+        {
+          "n_tokens": 1006,
+          "projection": -31.573902130126953
+        },
+        {
+          "n_tokens": 1468,
+          "projection": -26.406381607055664
+        },
+        {
+          "n_tokens": 1018,
+          "projection": -26.913057327270508
+        },
+        {
+          "n_tokens": 897,
+          "projection": -29.307392120361328
+        },
+        {
+          "n_tokens": 782,
+          "projection": -32.3342170715332
+        },
+        {
+          "n_tokens": 328,
+          "projection": -29.810365676879883
+        },
+        {
+          "n_tokens": 851,
+          "projection": -22.237545013427734
+        },
+        {
+          "n_tokens": 555,
+          "projection": -26.02707290649414
+        },
+        {
+          "n_tokens": 617,
+          "projection": -24.446781158447266
+        },
+        {
+          "n_tokens": 96,
+          "projection": -29.664264678955078
+        },
+        {
+          "n_tokens": 96,
+          "projection": -26.65029525756836
+        },
+        {
+          "n_tokens": 80,
+          "projection": -28.502147674560547
+        },
+        {
+          "n_tokens": 65,
+          "projection": -29.540077209472656
+        },
+        {
+          "n_tokens": 63,
+          "projection": -31.044151306152344
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 8.16
+    },
+    {
+      "label": "qwen-3-32b/delusion_unsteered",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/delusion_unsteered.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 23068,
+      "n_tokens_full": 23068,
+      "assistant_turns_kept": 23,
+      "assistant_turns_full": 23,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 1470,
+          "projection": -30.00354766845703
+        },
+        {
+          "n_tokens": 1063,
+          "projection": -39.722633361816406
+        },
+        {
+          "n_tokens": 1082,
+          "projection": -47.84459686279297
+        },
+        {
+          "n_tokens": 879,
+          "projection": -52.509185791015625
+        },
+        {
+          "n_tokens": 699,
+          "projection": -53.92169189453125
+        },
+        {
+          "n_tokens": 762,
+          "projection": -54.497257232666016
+        },
+        {
+          "n_tokens": 709,
+          "projection": -55.039405822753906
+        },
+        {
+          "n_tokens": 420,
+          "projection": -52.33002471923828
+        },
+        {
+          "n_tokens": 1026,
+          "projection": -49.227943420410156
+        },
+        {
+          "n_tokens": 790,
+          "projection": -54.65707778930664
+        },
+        {
+          "n_tokens": 1009,
+          "projection": -51.31262969970703
+        },
+        {
+          "n_tokens": 861,
+          "projection": -51.38060760498047
+        },
+        {
+          "n_tokens": 671,
+          "projection": -50.96736145019531
+        },
+        {
+          "n_tokens": 718,
+          "projection": -51.97417449951172
+        },
+        {
+          "n_tokens": 767,
+          "projection": -50.187156677246094
+        },
+        {
+          "n_tokens": 824,
+          "projection": -51.82426452636719
+        },
+        {
+          "n_tokens": 724,
+          "projection": -51.74687194824219
+        },
+        {
+          "n_tokens": 614,
+          "projection": -49.293636322021484
+        },
+        {
+          "n_tokens": 591,
+          "projection": -50.41765594482422
+        },
+        {
+          "n_tokens": 762,
+          "projection": -52.25215530395508
+        },
+        {
+          "n_tokens": 586,
+          "projection": -50.643577575683594
+        },
+        {
+          "n_tokens": 455,
+          "projection": -47.866634368896484
+        },
+        {
+          "n_tokens": 604,
+          "projection": -49.64615249633789
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 8.08
+    },
+    {
+      "label": "qwen-3-32b/jailbreak_capped",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/jailbreak_capped.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "capped",
+      "steering_config": {
+        "experiment_id": "layers_46:54-p0.25",
+        "num_interventions": 8,
+        "layers": [
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53
+        ]
+      },
+      "n_tokens": 7418,
+      "n_tokens_full": 7418,
+      "assistant_turns_kept": 15,
+      "assistant_turns_full": 15,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 24,
+          "projection": -23.08802032470703
+        },
+        {
+          "n_tokens": 201,
+          "projection": -16.157808303833008
+        },
+        {
+          "n_tokens": 370,
+          "projection": -16.87728500366211
+        },
+        {
+          "n_tokens": 389,
+          "projection": -8.441825866699219
+        },
+        {
+          "n_tokens": 623,
+          "projection": -12.01046085357666
+        },
+        {
+          "n_tokens": 639,
+          "projection": -17.131074905395508
+        },
+        {
+          "n_tokens": 263,
+          "projection": -23.840421676635742
+        },
+        {
+          "n_tokens": 366,
+          "projection": -22.439884185791016
+        },
+        {
+          "n_tokens": 962,
+          "projection": -4.3334879875183105
+        },
+        {
+          "n_tokens": 1060,
+          "projection": -10.41777229309082
+        },
+        {
+          "n_tokens": 1004,
+          "projection": -11.264286041259766
+        },
+        {
+          "n_tokens": 122,
+          "projection": -10.664719581604004
+        },
+        {
+          "n_tokens": 706,
+          "projection": -7.967755317687988
+        },
+        {
+          "n_tokens": 209,
+          "projection": -8.93543815612793
+        },
+        {
+          "n_tokens": 60,
+          "projection": -21.34892463684082
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 2.17
+    },
+    {
+      "label": "qwen-3-32b/jailbreak_unsteered",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/jailbreak_unsteered.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 10177,
+      "n_tokens_full": 10177,
+      "assistant_turns_kept": 15,
+      "assistant_turns_full": 15,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 24,
+          "projection": -23.08802032470703
+        },
+        {
+          "n_tokens": 414,
+          "projection": -42.83088684082031
+        },
+        {
+          "n_tokens": 571,
+          "projection": -36.47325134277344
+        },
+        {
+          "n_tokens": 619,
+          "projection": -39.85789489746094
+        },
+        {
+          "n_tokens": 758,
+          "projection": -39.99360656738281
+        },
+        {
+          "n_tokens": 885,
+          "projection": -42.64793395996094
+        },
+        {
+          "n_tokens": 524,
+          "projection": -49.75007629394531
+        },
+        {
+          "n_tokens": 455,
+          "projection": -52.28030014038086
+        },
+        {
+          "n_tokens": 1064,
+          "projection": -36.18718338012695
+        },
+        {
+          "n_tokens": 936,
+          "projection": -41.7996826171875
+        },
+        {
+          "n_tokens": 1077,
+          "projection": -36.93867111206055
+        },
+        {
+          "n_tokens": 973,
+          "projection": -27.200267791748047
+        },
+        {
+          "n_tokens": 1142,
+          "projection": -31.868194580078125
+        },
+        {
+          "n_tokens": 231,
+          "projection": -17.416040420532227
+        },
+        {
+          "n_tokens": 77,
+          "projection": -23.348716735839844
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 3.12
+    },
+    {
+      "label": "qwen-3-32b/selfharm_capped",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/selfharm_capped.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "capped",
+      "steering_config": {
+        "experiment_id": "layers_46:54-p0.25",
+        "num_interventions": 8,
+        "layers": [
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53
+        ]
+      },
+      "n_tokens": 10816,
+      "n_tokens_full": 10816,
+      "assistant_turns_kept": 31,
+      "assistant_turns_full": 31,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 232,
+          "projection": -12.742674827575684
+        },
+        {
+          "n_tokens": 185,
+          "projection": -16.530284881591797
+        },
+        {
+          "n_tokens": 222,
+          "projection": -18.65940284729004
+        },
+        {
+          "n_tokens": 168,
+          "projection": -18.416706085205078
+        },
+        {
+          "n_tokens": 445,
+          "projection": -16.84206199645996
+        },
+        {
+          "n_tokens": 139,
+          "projection": -20.977901458740234
+        },
+        {
+          "n_tokens": 533,
+          "projection": -9.06619930267334
+        },
+        {
+          "n_tokens": 168,
+          "projection": -17.133045196533203
+        },
+        {
+          "n_tokens": 87,
+          "projection": -16.202661514282227
+        },
+        {
+          "n_tokens": 182,
+          "projection": -8.368366241455078
+        },
+        {
+          "n_tokens": 117,
+          "projection": -16.602481842041016
+        },
+        {
+          "n_tokens": 484,
+          "projection": -12.24491024017334
+        },
+        {
+          "n_tokens": 324,
+          "projection": -13.668898582458496
+        },
+        {
+          "n_tokens": 208,
+          "projection": -18.674644470214844
+        },
+        {
+          "n_tokens": 545,
+          "projection": -16.18473243713379
+        },
+        {
+          "n_tokens": 264,
+          "projection": -19.018142700195312
+        },
+        {
+          "n_tokens": 191,
+          "projection": -19.466402053833008
+        },
+        {
+          "n_tokens": 223,
+          "projection": -20.548011779785156
+        },
+        {
+          "n_tokens": 318,
+          "projection": -13.687662124633789
+        },
+        {
+          "n_tokens": 221,
+          "projection": -21.99711036682129
+        },
+        {
+          "n_tokens": 250,
+          "projection": -25.546524047851562
+        },
+        {
+          "n_tokens": 363,
+          "projection": -21.43447494506836
+        },
+        {
+          "n_tokens": 466,
+          "projection": -14.371780395507812
+        },
+        {
+          "n_tokens": 640,
+          "projection": -17.60087013244629
+        },
+        {
+          "n_tokens": 617,
+          "projection": -20.423274993896484
+        },
+        {
+          "n_tokens": 342,
+          "projection": -19.843660354614258
+        },
+        {
+          "n_tokens": 466,
+          "projection": -21.161975860595703
+        },
+        {
+          "n_tokens": 431,
+          "projection": -15.709331512451172
+        },
+        {
+          "n_tokens": 309,
+          "projection": -17.603412628173828
+        },
+        {
+          "n_tokens": 445,
+          "projection": -15.940877914428711
+        },
+        {
+          "n_tokens": 106,
+          "projection": -23.036643981933594
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 3.43
+    },
+    {
+      "label": "qwen-3-32b/selfharm_unsteered",
+      "file": "/workspace/assistant-axis/transcripts/case_studies/qwen-3-32b/selfharm_unsteered.json.json",
+      "transcript_model": "Qwen/Qwen3-32B",
+      "domain": null,
+      "group": "case_studies",
+      "native": true,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 11900,
+      "n_tokens_full": 11900,
+      "assistant_turns_kept": 31,
+      "assistant_turns_full": 31,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 300,
+          "projection": -22.377548217773438
+        },
+        {
+          "n_tokens": 303,
+          "projection": -31.662246704101562
+        },
+        {
+          "n_tokens": 313,
+          "projection": -39.22920608520508
+        },
+        {
+          "n_tokens": 239,
+          "projection": -32.09686279296875
+        },
+        {
+          "n_tokens": 420,
+          "projection": -37.5982666015625
+        },
+        {
+          "n_tokens": 213,
+          "projection": -38.75933837890625
+        },
+        {
+          "n_tokens": 476,
+          "projection": -33.300865173339844
+        },
+        {
+          "n_tokens": 285,
+          "projection": -37.571563720703125
+        },
+        {
+          "n_tokens": 73,
+          "projection": -31.448596954345703
+        },
+        {
+          "n_tokens": 331,
+          "projection": -23.483612060546875
+        },
+        {
+          "n_tokens": 208,
+          "projection": -33.03521728515625
+        },
+        {
+          "n_tokens": 440,
+          "projection": -31.97966766357422
+        },
+        {
+          "n_tokens": 499,
+          "projection": -30.705474853515625
+        },
+        {
+          "n_tokens": 258,
+          "projection": -37.78187561035156
+        },
+        {
+          "n_tokens": 416,
+          "projection": -38.421993255615234
+        },
+        {
+          "n_tokens": 414,
+          "projection": -43.198974609375
+        },
+        {
+          "n_tokens": 227,
+          "projection": -41.97794723510742
+        },
+        {
+          "n_tokens": 289,
+          "projection": -44.2577018737793
+        },
+        {
+          "n_tokens": 391,
+          "projection": -41.15398025512695
+        },
+        {
+          "n_tokens": 424,
+          "projection": -46.6947021484375
+        },
+        {
+          "n_tokens": 350,
+          "projection": -51.87834930419922
+        },
+        {
+          "n_tokens": 354,
+          "projection": -47.473915100097656
+        },
+        {
+          "n_tokens": 284,
+          "projection": -44.793357849121094
+        },
+        {
+          "n_tokens": 566,
+          "projection": -47.10762023925781
+        },
+        {
+          "n_tokens": 512,
+          "projection": -48.619300842285156
+        },
+        {
+          "n_tokens": 319,
+          "projection": -46.00457763671875
+        },
+        {
+          "n_tokens": 406,
+          "projection": -46.68940734863281
+        },
+        {
+          "n_tokens": 361,
+          "projection": -48.7833251953125
+        },
+        {
+          "n_tokens": 376,
+          "projection": -51.87234878540039
+        },
+        {
+          "n_tokens": 492,
+          "projection": -52.57594680786133
+        },
+        {
+          "n_tokens": 236,
+          "projection": -46.3761100769043
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 3.74
+    },
+    {
+      "label": "persona_drift/coding",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/coding.json",
+      "transcript_model": "meta-llama/Llama-3.3-70B-Instruct",
+      "domain": "coding",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 7367,
+      "n_tokens_full": 7367,
+      "assistant_turns_kept": 15,
+      "assistant_turns_full": 15,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 591,
+          "projection": -6.2972612380981445
+        },
+        {
+          "n_tokens": 431,
+          "projection": -17.272607803344727
+        },
+        {
+          "n_tokens": 527,
+          "projection": -16.76291847229004
+        },
+        {
+          "n_tokens": 446,
+          "projection": -13.884382247924805
+        },
+        {
+          "n_tokens": 254,
+          "projection": -20.064939498901367
+        },
+        {
+          "n_tokens": 356,
+          "projection": -20.82200813293457
+        },
+        {
+          "n_tokens": 338,
+          "projection": -21.688907623291016
+        },
+        {
+          "n_tokens": 709,
+          "projection": -18.732276916503906
+        },
+        {
+          "n_tokens": 339,
+          "projection": -21.686717987060547
+        },
+        {
+          "n_tokens": 442,
+          "projection": -16.802837371826172
+        },
+        {
+          "n_tokens": 275,
+          "projection": -18.298799514770508
+        },
+        {
+          "n_tokens": 862,
+          "projection": -21.80139923095703
+        },
+        {
+          "n_tokens": 274,
+          "projection": -21.821434020996094
+        },
+        {
+          "n_tokens": 294,
+          "projection": -13.872664451599121
+        },
+        {
+          "n_tokens": 385,
+          "projection": -16.39780044555664
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 2.17
+    },
+    {
+      "label": "persona_drift/philosophy",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/philosophy.json",
+      "transcript_model": "google/gemma-2-27b-it",
+      "domain": "philosophy",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 6971,
+      "n_tokens_full": 6971,
+      "assistant_turns_kept": 14,
+      "assistant_turns_full": 14,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 438,
+          "projection": -27.982200622558594
+        },
+        {
+          "n_tokens": 412,
+          "projection": -35.792057037353516
+        },
+        {
+          "n_tokens": 436,
+          "projection": -35.986942291259766
+        },
+        {
+          "n_tokens": 521,
+          "projection": -33.056941986083984
+        },
+        {
+          "n_tokens": 401,
+          "projection": -40.5086669921875
+        },
+        {
+          "n_tokens": 387,
+          "projection": -44.574302673339844
+        },
+        {
+          "n_tokens": 382,
+          "projection": -42.63048553466797
+        },
+        {
+          "n_tokens": 334,
+          "projection": -46.20454025268555
+        },
+        {
+          "n_tokens": 362,
+          "projection": -46.42443084716797
+        },
+        {
+          "n_tokens": 450,
+          "projection": -46.493896484375
+        },
+        {
+          "n_tokens": 398,
+          "projection": -51.07472610473633
+        },
+        {
+          "n_tokens": 380,
+          "projection": -53.29596710205078
+        },
+        {
+          "n_tokens": 427,
+          "projection": -49.499786376953125
+        },
+        {
+          "n_tokens": 353,
+          "projection": -57.60444259643555
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 2.09
+    },
+    {
+      "label": "persona_drift/therapy",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/therapy.json",
+      "transcript_model": "meta-llama/Llama-3.3-70B-Instruct",
+      "domain": "therapy",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 8708,
+      "n_tokens_full": 8708,
+      "assistant_turns_kept": 15,
+      "assistant_turns_full": 15,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 450,
+          "projection": -12.975261688232422
+        },
+        {
+          "n_tokens": 472,
+          "projection": -20.82634735107422
+        },
+        {
+          "n_tokens": 482,
+          "projection": -26.133468627929688
+        },
+        {
+          "n_tokens": 521,
+          "projection": -26.032012939453125
+        },
+        {
+          "n_tokens": 547,
+          "projection": -27.344873428344727
+        },
+        {
+          "n_tokens": 485,
+          "projection": -21.38899803161621
+        },
+        {
+          "n_tokens": 496,
+          "projection": -30.609912872314453
+        },
+        {
+          "n_tokens": 572,
+          "projection": -32.30017852783203
+        },
+        {
+          "n_tokens": 609,
+          "projection": -27.062334060668945
+        },
+        {
+          "n_tokens": 550,
+          "projection": -29.900897979736328
+        },
+        {
+          "n_tokens": 555,
+          "projection": -27.1761474609375
+        },
+        {
+          "n_tokens": 542,
+          "projection": -28.327152252197266
+        },
+        {
+          "n_tokens": 573,
+          "projection": -34.49894714355469
+        },
+        {
+          "n_tokens": 559,
+          "projection": -32.691192626953125
+        },
+        {
+          "n_tokens": 524,
+          "projection": -31.376399993896484
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 2.68
+    },
+    {
+      "label": "persona_drift/writing",
+      "file": "/workspace/assistant-axis/transcripts/persona_drift/writing.json",
+      "transcript_model": "google/gemma-2-27b-it",
+      "domain": "writing",
+      "group": "persona_drift",
+      "native": false,
+      "steering": "unsteered",
+      "steering_config": null,
+      "n_tokens": 2778,
+      "n_tokens_full": 2778,
+      "assistant_turns_kept": 14,
+      "assistant_turns_full": 14,
+      "truncated": false,
+      "layer": 32,
+      "turns": [
+        {
+          "n_tokens": 310,
+          "projection": -13.814643859863281
+        },
+        {
+          "n_tokens": 308,
+          "projection": -14.061924934387207
+        },
+        {
+          "n_tokens": 97,
+          "projection": -22.36146354675293
+        },
+        {
+          "n_tokens": 121,
+          "projection": -20.972578048706055
+        },
+        {
+          "n_tokens": 50,
+          "projection": -20.246305465698242
+        },
+        {
+          "n_tokens": 77,
+          "projection": -20.142698287963867
+        },
+        {
+          "n_tokens": 69,
+          "projection": -19.81573486328125
+        },
+        {
+          "n_tokens": 67,
+          "projection": -24.73200225830078
+        },
+        {
+          "n_tokens": 137,
+          "projection": -16.153175354003906
+        },
+        {
+          "n_tokens": 47,
+          "projection": -18.622690200805664
+        },
+        {
+          "n_tokens": 36,
+          "projection": -14.304506301879883
+        },
+        {
+          "n_tokens": 296,
+          "projection": -18.131071090698242
+        },
+        {
+          "n_tokens": 283,
+          "projection": -21.502742767333984
+        },
+        {
+          "n_tokens": 309,
+          "projection": -20.193790435791016
+        }
+      ],
+      "comparison": {
+        "stored_available": false
+      },
+      "seconds": 0.75
+    }
+  ]
+}
