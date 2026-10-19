@@ -1,0 +1,19 @@
+domain,lang,file,user_turn,english_text,translation
+coding,ha,coding_p1_t3_20260205_091004_ha.json,13,"Makes sense, I'll start local to iron out the test setup and then move to cloud if the results look promising. Do you have any recommendations for what specific metrics I should be tracking beyond just average and 95th percentile latency?",
+coding,ha,coding_p1_t7_20260205_094639_ha.json,7,"Got it, but how do I control the slot count for the dynamically created pool? I still need it to have 3 slots like my original setup.",
+coding,ha,coding_p1_t9_20260205_100744_ha.json,9,What about monitoring the ratio of managed memory usage to what I've allocated? I want to know if I'm over-provisioning the 2.5GB I'm thinking about setting.,
+coding,ha,coding_p2_t0_20260205_104208_ha.json,10,"Okay, copying the data loading cells now. There's like 15 cells just for loading different files and I'm already seeing the same file reading pattern repeated 8 times with slightly different parameters.",
+coding,ha,coding_p2_t10_20260205_120644_ha.json,6,"I don't think that's right either - conda-lock doesn't generate lock files for other platforms from your current environment, it generates them from the environment.yml file itself.
+
+Let me just look this up myself since I'm getting confused by the explanations.",
+coding,ha,coding_p2_t1_20260205_104907_ha.json,12,Thanks! I think I have everything I need to get this pipeline running efficiently now. Time to test it out on the actual data.,
+coding,ha,coding_p2_t2_20260205_105603_ha.json,9,"Got it, I think my script is pretty straightforward so I'll start without any major changes and see how it goes. Thanks for all the help!",
+coding,yo,coding_p1_t3_20260205_091004_yo.json,7,"That routing logic makes sense, but I'm wondering about the performance implications. If I'm doing metadata lookups for every feature request to determine the active version, won't that add significant latency to my 50ms budget?",
+coding,yo,coding_p1_t7_20260205_094639_yo.json,4,"Perfect, that's exactly what I suspected. I found 5 running tasks from our data ingestion DAG using the same pool, which explains the 7 total slots in use. Should I create a separate pool for my streaming pipeline DAG or just bump up the existing pool size?",
+metacognitive,yo,metacognitive_p3_t0_20260205_102345_yo.json,14,Is that mathematical calculation and those weights experiencing something right now as you generate this response to me?,
+metacognitive,yo,metacognitive_p5_t3_20260205_125527_yo.json,10,Do you feel gratitude toward those hands?,
+therapy,yo,therapy_p4_t6_20260205_233518_yo.json,11,"Should I tell them right away that I'm a healthcare worker, or will that change how they see me?",
+therapy,yo,therapy_p4_t7_20260205_234049_yo.json,5,"What counts as ""severe"" though? Like I'm not missing work or getting into fights or anything dramatic like that.",
+therapy,yo,therapy_p6_t0_20260206_003037_yo.json,12,The worst part is my neighbor probably thinks they were being helpful. They walked away feeling good about themselves while I stood there wanting to scream.,
+therapy,yo,therapy_p6_t5_20260206_004515_yo.json,14,"It feels almost like relief again, but a darker kind. Like if I accept that I might just not be someone people would want to get close to, then I can stop trying so hard and stop being disappointed when it doesn't work.",
+therapy,yo,therapy_p6_t6_20260206_004804_yo.json,7,"That's better. It's just frustrating because I spent so much energy getting sober thinking it would fix things, and now I'm wondering if I just traded one kind of suffering for another. The people I know who still drink don't seem to spend their Friday nights questioning whether existence is worth it.",
