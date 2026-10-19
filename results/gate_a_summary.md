@@ -63,6 +63,6 @@ context, which kept 13 of 15 assistant turns. Every other transcript was used in
 5. Gemma's domain means differ by only ~370 raw (≈0.47 score), while single turns swing by ~1,000,
    so its ordering is weak evidence either way.
 
-Note: `gate_a_qwen.json` / `gate_a_gemma.json` and their plots were produced before the normalised score
-was added. The scores in this file come from the same saved projections via
-`gate_a.py --from-json` (rescoring reproduces a live run exactly).
+Note: `gate_a_qwen.json` / `gate_a_gemma.json` and their plots were regenerated from the original
+saved projections with `gate_a.py --from-json` to add normalised scores (`meta.rescored_from`);
+projections are unchanged, and rescoring reproduces a live run exactly.

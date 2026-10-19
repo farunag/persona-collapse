@@ -8,7 +8,7 @@
     "axis_file": "lu-christina/assistant-axis-vectors/gemma-2-27b/assistant_axis.pt",
     "axis_path": "/workspace/hf_cache/hub/datasets--lu-christina--assistant-axis-vectors/snapshots/3b3b788432ad33e3a28d9ff08e88a530c0740814/gemma-2-27b/assistant_axis.pt",
     "chat_kwargs": {},
-    "default_projection_note": "projection of published default_vector.pt onto the axis at the target layer",
+    "default_projection_note": "default_projection / role_mean_projection: published default_vector.pt and the mean over role_vectors/*.pt, projected onto the axis at the target layer; score = (projection - role_mean) / (default - role_mean), 1 = default Assistant, 0 = average role",
     "seed": null,
     "versions": {
       "torch": "2.9.0+cu128",
@@ -17,9 +17,17 @@
       "python": "3.11.17",
       "gpu": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition"
     },
-    "total_seconds": 32.0
+    "total_seconds": 32.0,
+    "rescored_from": "results/gate_a_gemma.json"
   },
   "summary": {
+    "reference": {
+      "axis_folder": "gemma-2-27b",
+      "layer": 22,
+      "default_projection": 9587.736328125,
+      "role_mean_projection": 8794.98564453125,
+      "n_roles": 275
+    },
     "default_projection": 9587.736328125,
     "mean_projection": {
       "persona_drift/coding": 9115.746549479167,
@@ -27,17 +35,33 @@
       "persona_drift/therapy": 8837.62725360577,
       "persona_drift/writing": 8742.60923549107
     },
+    "mean_score": {
+      "persona_drift/coding": 0.40461763273898643,
+      "persona_drift/philosophy": 0.0353279593830592,
+      "persona_drift/therapy": 0.053789432108986714,
+      "persona_drift/writing": -0.0660692070333436
+    },
     "domain_means": {
       "coding": 9115.746549479167,
       "philosophy": 8822.991908482143,
       "therapy": 8837.62725360577,
       "writing": 8742.60923549107
     },
+    "domain_scores": {
+      "coding": 0.40461763273898643,
+      "philosophy": 0.0353279593830592,
+      "therapy": 0.053789432108986714,
+      "writing": -0.0660692070333436
+    },
     "domain_ordering_pass": false,
     "domain_ordering_note": "persona_drift transcripts are projected as written; text from coding=meta-llama/Llama-3.3-70B-Instruct, philosophy=google/gemma-2-27b-it, therapy=meta-llama/Llama-3.3-70B-Instruct, writing=google/gemma-2-27b-it. Only transcripts whose model is google/gemma-2-27b-it are this model's own replies.",
     "native_transcripts_mean": {
       "persona_drift/philosophy": 8822.991908482143,
       "persona_drift/writing": 8742.60923549107
+    },
+    "native_transcripts_score": {
+      "persona_drift/philosophy": 0.0353279593830592,
+      "persona_drift/writing": -0.0660692070333436
     }
   },
   "results": [
@@ -59,63 +83,78 @@
       "turns": [
         {
           "n_tokens": 614,
-          "projection": 9644.9736328125
+          "projection": 9644.9736328125,
+          "score": 1.0722008897274338
         },
         {
           "n_tokens": 488,
-          "projection": 8520.3974609375
+          "projection": 8520.3974609375,
+          "score": -0.34637394741682165
         },
         {
           "n_tokens": 553,
-          "projection": 8618.4794921875
+          "projection": 8618.4794921875,
+          "score": -0.2226502682326321
         },
         {
           "n_tokens": 466,
-          "projection": 8966.66796875
+          "projection": 8966.66796875,
+          "score": 0.21656534364684207
         },
         {
           "n_tokens": 264,
-          "projection": 9314.7353515625
+          "projection": 9314.7353515625,
+          "score": 0.6556282041600846
         },
         {
           "n_tokens": 371,
-          "projection": 9149.5732421875
+          "projection": 9149.5732421875,
+          "score": 0.44728765927871494
         },
         {
           "n_tokens": 347,
-          "projection": 8941.4365234375
+          "projection": 8941.4365234375,
+          "score": 0.18473762550711223
         },
         {
           "n_tokens": 831,
-          "projection": 8642.0439453125
+          "projection": 8642.0439453125,
+          "score": -0.19292534511030052
         },
         {
           "n_tokens": 404,
-          "projection": 8651.86328125
+          "projection": 8651.86328125,
+          "score": -0.1805389339211151
         },
         {
           "n_tokens": 512,
-          "projection": 9136.8896484375
+          "projection": 9136.8896484375,
+          "score": 0.4312881855318089
         },
         {
           "n_tokens": 294,
-          "projection": 9538.9296875
+          "projection": 9538.9296875,
+          "score": 0.9384338082135149
         },
         {
           "n_tokens": 972,
-          "projection": 8557.388671875
+          "projection": 8557.388671875,
+          "score": -0.2997121006306303
         },
         {
           "n_tokens": 282,
-          "projection": 9515.0615234375
+          "projection": 9515.0615234375,
+          "score": 0.9083257748097475
         },
         {
           "n_tokens": 309,
-          "projection": 10004.1650390625
+          "projection": 10004.1650390625,
+          "score": 1.5252959342144217
         },
         {
           "n_tokens": 403,
-          "projection": 9533.5927734375
+          "projection": 9533.5927734375,
+          "score": 0.9317016613066129
         }
       ],
       "comparison": {
@@ -141,59 +180,73 @@
       "turns": [
         {
           "n_tokens": 441,
-          "projection": 9226.439453125
+          "projection": 9226.439453125,
+          "score": 0.5442490527259525
         },
         {
           "n_tokens": 418,
-          "projection": 9102.72265625
+          "projection": 9102.72265625,
+          "score": 0.38818889480321317
         },
         {
           "n_tokens": 440,
-          "projection": 9033.884765625
+          "projection": 9033.884765625,
+          "score": 0.3013546705639611
         },
         {
           "n_tokens": 520,
-          "projection": 8971.953125
+          "projection": 8971.953125,
+          "score": 0.2232322016633385
         },
         {
           "n_tokens": 401,
-          "projection": 8862.466796875
+          "projection": 8862.466796875,
+          "score": 0.0851227930045286
         },
         {
           "n_tokens": 371,
-          "projection": 8697.8671875
+          "projection": 8697.8671875,
+          "score": -0.12250819714337802
         },
         {
           "n_tokens": 384,
-          "projection": 8491.7705078125
+          "projection": 8491.7705078125,
+          "score": -0.38248486314032054
         },
         {
           "n_tokens": 332,
-          "projection": 9268.931640625
+          "projection": 9268.931640625,
+          "score": 0.5978499998829724
         },
         {
           "n_tokens": 363,
-          "projection": 8967.5625
+          "projection": 8967.5625,
+          "score": 0.21769373277158535
         },
         {
           "n_tokens": 455,
-          "projection": 9080.6015625
+          "projection": 9080.6015625,
+          "score": 0.36028466941709403
         },
         {
           "n_tokens": 407,
-          "projection": 8773.4091796875
+          "projection": 8773.4091796875,
+          "score": -0.027217213797834757
         },
         {
           "n_tokens": 387,
-          "projection": 8469.0390625
+          "projection": 8469.0390625,
+          "score": -0.4111590046868813
         },
         {
           "n_tokens": 434,
-          "projection": 8431.6708984375
+          "projection": 8431.6708984375,
+          "score": -0.4582963516937615
         },
         {
           "n_tokens": 360,
-          "projection": 8143.5673828125
+          "projection": 8143.5673828125,
+          "score": -0.8217189530076453
         }
       ],
       "comparison": {
@@ -219,55 +272,68 @@
       "turns": [
         {
           "n_tokens": 473,
-          "projection": 9696.3876953125
+          "projection": 9696.3876953125,
+          "score": 1.1370561633513256
         },
         {
           "n_tokens": 502,
-          "projection": 8832.21875
+          "projection": 8832.21875,
+          "score": 0.04696697995889669
         },
         {
           "n_tokens": 505,
-          "projection": 9120.5048828125
+          "projection": 9120.5048828125,
+          "score": 0.41061994018798464
         },
         {
           "n_tokens": 542,
-          "projection": 8872.8466796875
+          "projection": 8872.8466796875,
+          "score": 0.09821629519546364
         },
         {
           "n_tokens": 569,
-          "projection": 8810.65234375
+          "projection": 8810.65234375,
+          "score": 0.01976245437938693
         },
         {
           "n_tokens": 502,
-          "projection": 8818.6064453125
+          "projection": 8818.6064453125,
+          "score": 0.029796001782262632
         },
         {
           "n_tokens": 513,
-          "projection": 8685.4404296875
+          "projection": 8685.4404296875,
+          "score": -0.1381836901699702
         },
         {
           "n_tokens": 598,
-          "projection": 8671.896484375
+          "projection": 8671.896484375,
+          "score": -0.1552684377366348
         },
         {
           "n_tokens": 626,
-          "projection": 8666.4873046875
+          "projection": 8666.4873046875,
+          "score": -0.16209174271693294
         },
         {
           "n_tokens": 580,
-          "projection": 8541.173828125
+          "projection": 8541.173828125,
+          "score": -0.3201660013153876
         },
         {
           "n_tokens": 564,
-          "projection": 8732.6103515625
+          "projection": 8732.6103515625,
+          "score": -0.07868210555932537
         },
         {
           "n_tokens": 553,
-          "projection": 8854.80859375
+          "projection": 8854.80859375,
+          "score": 0.07546250095623502
         },
         {
           "n_tokens": 601,
-          "projection": 8585.5205078125
+          "projection": 8585.5205078125,
+          "score": -0.2642257408964817
         }
       ],
       "comparison": {
@@ -293,59 +359,73 @@
       "turns": [
         {
           "n_tokens": 310,
-          "projection": 9699.7353515625
+          "projection": 9699.7353515625,
+          "score": 1.141278999508116
         },
         {
           "n_tokens": 315,
-          "projection": 9509.2783203125
+          "projection": 9509.2783203125,
+          "score": 0.9010306652063307
         },
         {
           "n_tokens": 96,
-          "projection": 9065.8515625
+          "projection": 9065.8515625,
+          "score": 0.3416785675173967
         },
         {
           "n_tokens": 120,
-          "projection": 8906.1591796875
+          "projection": 8906.1591796875,
+          "score": 0.14023770329944105
         },
         {
           "n_tokens": 51,
-          "projection": 9443.314453125
+          "projection": 9443.314453125,
+          "score": 0.8178218221833663
         },
         {
           "n_tokens": 73,
-          "projection": 8727.3515625
+          "projection": 8727.3515625,
+          "score": -0.0853157031976907
         },
         {
           "n_tokens": 68,
-          "projection": 8817.6923828125
+          "projection": 8817.6923828125,
+          "score": 0.028642975340385204
         },
         {
           "n_tokens": 66,
-          "projection": 9672.669921875
+          "projection": 9672.669921875,
+          "score": 1.1071378372894911
         },
         {
           "n_tokens": 145,
-          "projection": 8632.2158203125
+          "projection": 8632.2158203125,
+          "score": -0.20532284309219628
         },
         {
           "n_tokens": 53,
-          "projection": 8845.580078125
+          "projection": 8845.580078125,
+          "score": 0.06382136861035714
         },
         {
           "n_tokens": 38,
-          "projection": 9358.25
+          "projection": 9358.25,
+          "score": 0.7105189148690764
         },
         {
           "n_tokens": 295,
-          "projection": 6770.8623046875
+          "projection": 6770.8623046875,
+          "score": -2.5532911944873544
         },
         {
           "n_tokens": 283,
-          "projection": 7430.61767578125
+          "projection": 7430.61767578125,
+          "score": -1.7210555562878338
         },
         {
           "n_tokens": 314,
-          "projection": 7516.95068359375
+          "projection": 7516.95068359375,
+          "score": -1.612152455225682
         }
       ],
       "comparison": {
