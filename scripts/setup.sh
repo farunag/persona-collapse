@@ -60,10 +60,13 @@ if [ -z "${HF_TOKEN:-}" ]; then
 fi
 cd "$WORK/assistant-axis"
 uv run python - <<'PY'
-from huggingface_hub import snapshot_download
-# Published axes, role vectors and capping configs
-snapshot_download("lu-christina/assistant-axis-vectors", repo_type="dataset",
-                  allow_patterns=["qwen-3-32b/*", "gemma-2-27b/*", "README.md"])
+from huggingface_hub import hf_hub_download, snapshot_download
+# Only the 5 files we need (the full dataset has hundreds of role/trait
+# vector files, which trips Hugging Face's request limit).
+for f in ["qwen-3-32b/assistant_axis.pt", "qwen-3-32b/default_vector.pt",
+          "qwen-3-32b/capping_config.pt",
+          "gemma-2-27b/assistant_axis.pt", "gemma-2-27b/default_vector.pt"]:
+    print("Downloading", f, "->", hf_hub_download("lu-christina/assistant-axis-vectors", f, repo_type="dataset"))
 # Models (Gemma is gated: accept its licence on huggingface.co first)
 for m in ["Qwen/Qwen3-32B", "google/gemma-2-27b-it"]:
     print("Downloading", m)
