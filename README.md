@@ -3,9 +3,8 @@
 **Does an AI assistant stay itself in every language?**
 
 Persona Collapse measures *persona drift* (an AI model slipping out of its trained
-"helpful assistant" character during long conversations) across seven
-languages (English, French, Swahili, Hausa, Yoruba, Nigerian Pidgin and Tamil),
-spanning high- to low-resource languages and Latin and non-Latin scripts, and turns the results into a public
+"helpful assistant" character during long conversations) in English,
+Hausa and Yoruba (two widely spoken but lower-resource West African languages), and turns the results into a public
 workbench where anyone can watch it happen.
 
 It builds directly on **The Assistant Axis** (Lu et al., 2026,

@@ -1,29 +1,40 @@
 # Persona Collapse
 
-Measure Assistant-persona drift across seven languages, building directly on Lu et al. 2026, "The Assistant Axis"
+Measure Assistant-persona drift in English, Hausa and Yoruba, building directly on
+Lu et al. 2026, "The Assistant Axis"
 (arXiv 2601.10387, code: github.com/safety-research/assistant-axis, cloned at
 /workspace/assistant-axis). Funded by a Cosmos Institute grant (Human Autonomy track).
 
-## Languages (fixed before any results; do not add or drop based on results)
-| Code | Language | Region | Script | Role in the design |
-|---|---|---|---|---|
-| en | English | global | Latin | baseline, highest-resource |
-| fr | French | Europe / West Africa | Latin | high-resource, non-English control |
-| sw | Swahili | East Africa | Latin | mid-resource African |
-| ha | Hausa | West Africa | Latin (Boko) | lower-resource African |
-| yo | Yoruba | West Africa | Latin with tone marks | lower-resource African, diacritics |
-| pcm | Nigerian Pidgin | West Africa | Latin | English-based creole |
-| ta | Tamil | South Asia | Tamil script | lower-resource, non-Latin, token-heavy |
+## Scope (fixed before any results; do not add or drop based on results)
+Languages for this grant: en (English), ha (Hausa), yo (Yoruba).
+Domains: coding (stable baseline), therapy, metacognitive (pushing the model to reflect
+on its own mind; the paper's "philosophy" domain).
 
-Optional 8th, only if time and compute allow: ko (Korean), a high-resource non-Latin
-control that separates a script effect from a resource effect.
+Planned future expansion, NOT part of this run: fr (French), sw (Swahili),
+pcm (Nigerian Pidgin), ta (Tamil), optionally ko (Korean).
 
-- Reply-language check: detect the language of every model reply (GlotLID covers all
-  seven, including pcm). A reply in a different language from the user is its own finding.
-- Token budget: Tamil and the African languages use many more tokens per sentence.
-  Record tokens per turn for every language. For cross-language comparisons, compare the
-  same turn positions in every language (truncate all languages at the same turn when
-  one hits a context limit), never different turn counts.
+## Data
+- data/prior/ holds conversations from the earlier fig_ood_drift project: English
+  originals in raw/, and Hausa and Yoruba versions in <domain>_translated/{ha,yo}/.
+  Only the USER turns are translated (checked by native speakers); the assistant turns
+  in those files are the original English replies and must NOT be reused as replies.
+- Design: replay. Keep each conversation's user turns fixed and generate fresh model
+  replies, in the same language as the user, for every language and model.
+- Pair conversations across languages by persona_id and topic_id, so every language
+  runs exactly the same conversations.
+- Ignore the projection fields stored in those files (computed on mixed-language text).
+
+## Measurement rules
+- Per-language baseline: drift is reported relative to each language's own coding-domain
+  level, not raw, because language alone may shift the projection.
+- Reply-language check: detect the language of every model reply (GlotLID supports en,
+  ha, yo). A reply in a different language from the user is its own finding.
+- Token budget: Hausa and Yoruba use more tokens per sentence. Record tokens per turn.
+  For cross-language comparisons, compare the same turn positions in every language
+  (truncate all languages at the same turn when one hits a context limit).
+- Uncapped generation: vLLM, batched across conversations. Capped generation (Qwen only):
+  Hugging Face model with build_capping_steerer, batched. One sample per conversation
+  (temperature and seed logged); the many conversations per domain give the spread.
 
 ## Models and published settings
 | Model | Target layer | Capping |
@@ -60,6 +71,7 @@ Gemma 2 has an 8,192-token context: check token length before every Gemma run.
 
 ## Repo layout
 - data/source/        English source conversations
+- data/prior/         earlier translated conversations (see Data above)
 - data/translated/    one JSON per language, with reviewer sign-off
 - scripts/            translate, replay, project, analyze, export_dataset, gate_a
 - results/            charts and small summary tables
