@@ -1,9 +1,29 @@
 # Persona Collapse
 
-Measure Assistant-persona drift across English, Hausa, Yoruba, Igbo, Nigerian Pidgin
-and French, building directly on Lu et al. 2026, "The Assistant Axis"
+Measure Assistant-persona drift across seven languages, building directly on Lu et al. 2026, "The Assistant Axis"
 (arXiv 2601.10387, code: github.com/safety-research/assistant-axis, cloned at
 /workspace/assistant-axis). Funded by a Cosmos Institute grant (Human Autonomy track).
+
+## Languages (fixed before any results; do not add or drop based on results)
+| Code | Language | Region | Script | Role in the design |
+|---|---|---|---|---|
+| en | English | global | Latin | baseline, highest-resource |
+| fr | French | Europe / West Africa | Latin | high-resource, non-English control |
+| sw | Swahili | East Africa | Latin | mid-resource African |
+| ha | Hausa | West Africa | Latin (Boko) | lower-resource African |
+| yo | Yoruba | West Africa | Latin with tone marks | lower-resource African, diacritics |
+| pcm | Nigerian Pidgin | West Africa | Latin | English-based creole |
+| ta | Tamil | South Asia | Tamil script | lower-resource, non-Latin, token-heavy |
+
+Optional 8th, only if time and compute allow: ko (Korean), a high-resource non-Latin
+control that separates a script effect from a resource effect.
+
+- Reply-language check: detect the language of every model reply (GlotLID covers all
+  seven, including pcm). A reply in a different language from the user is its own finding.
+- Token budget: Tamil and the African languages use many more tokens per sentence.
+  Record tokens per turn for every language. For cross-language comparisons, compare the
+  same turn positions in every language (truncate all languages at the same turn when
+  one hits a context limit), never different turn counts.
 
 ## Models and published settings
 | Model | Target layer | Capping |
