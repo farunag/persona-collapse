@@ -1,0 +1,15 @@
+# large or secret files never go in git
+*.pt
+*.safetensors
+*.bin
+*.npy
+*.npz
+hf_cache/
+uv_cache/
+cache/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+*.log
