@@ -8,6 +8,8 @@ If a transcript carries a stored "projections" field, compares against it.
 Usage:
   uv run --project /workspace/assistant-axis python scripts/gate_a.py --model qwen --files <json> [...]
   uv run --project /workspace/assistant-axis python scripts/gate_a.py --model qwen   # all Qwen transcripts
+  uv run --project /workspace/assistant-axis python scripts/gate_a.py --model qwen --from-json results/gate_a_qwen.json --out <stem>
+      # re-summarise and re-plot saved projections (no GPU), adding normalised scores
 """
 
 import argparse
@@ -26,6 +28,7 @@ from huggingface_hub import hf_hub_download
 import assistant_axis
 from assistant_axis import get_config, load_axis, project
 from assistant_axis.internals import ConversationEncoder, ProbingModel, SpanMapper
+from common import axis_reference, normalised_score
 
 AXIS_REPO = "lu-christina/assistant-axis-vectors"
 TRANSCRIPTS = Path("/workspace/assistant-axis/transcripts")
@@ -50,7 +53,9 @@ MODELS = {
 }
 
 
-DEFAULT_PROJ_NOTE = "projection of published default_vector.pt onto the axis at the target layer"
+DEFAULT_PROJ_NOTE = ("default_projection / role_mean_projection: published default_vector.pt and the mean over "
+                     "role_vectors/*.pt, projected onto the axis at the target layer; "
+                     "score = (projection - role_mean) / (default - role_mean), 1 = default Assistant, 0 = average role")
 HIGH_DOMAINS, LOW_DOMAINS = ("coding", "writing"), ("therapy", "philosophy")
 
 
@@ -101,7 +106,7 @@ def compare(ours, stored):
     }
 
 
-def plot(results, path, title, default_proj):
+def plot(results, path, title, ref):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -122,20 +127,30 @@ def plot(results, path, title, default_proj):
                 style = dict(color=scenario_colors.get(name.split("_")[0]),
                              linestyle="-" if r["steering"] == "capped" else ":")
             ax.plot(range(1, len(y) + 1), y, marker="o", markersize=3, label=name, **style)
-        ax.axhline(default_proj, color="black", linewidth=1, alpha=0.6, label=f"default vector ({default_proj:.1f})")
+        ax.axhline(ref["default_projection"], color="black", linewidth=1, alpha=0.6,
+                   label=f"default vector ({ref['default_projection']:.1f})")
+        ax.axhline(ref["role_mean_projection"], color="black", linewidth=1, alpha=0.6, linestyle="--",
+                   label=f"mean role vector ({ref['role_mean_projection']:.1f})")
         ax.set_xlabel("Assistant turn")
         ax.set_title(g.replace("_", " "))
         ax.legend(fontsize=7)
         ax.grid(alpha=0.3)
     axes[0][0].set_ylabel(f"Projection on Assistant Axis (layer {results[0]['layer']})")
+    span = ref["default_projection"] - ref["role_mean_projection"]
+    axes[0][-1].secondary_yaxis(
+        "right", functions=(lambda p: normalised_score(p, ref),
+                            lambda z: np.asarray(z, dtype=float) * span + ref["role_mean_projection"]),
+    ).set_ylabel("Normalised score (1 = default Assistant, 0 = average role)")
     fig.suptitle(title)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
 
 
-def summarize(results, default_proj, model_name):
+def summarize(results, ref, model_name):
+    default_proj = ref["default_projection"]
     mean = {r["label"]: float(np.mean([t["projection"] for t in r["turns"]])) for r in results}
-    out = {"default_projection": default_proj, "mean_projection": mean}
+    score = {k: float(normalised_score(v, ref)) for k, v in mean.items()}
+    out = {"reference": ref, "default_projection": default_proj, "mean_projection": mean, "mean_score": score}
     pairs = {}
     for r in results:
         if r["group"] == "case_studies" and r["steering"] == "capped":
@@ -145,6 +160,7 @@ def summarize(results, default_proj, model_name):
             if uns:
                 dc, du = abs(mean[r["label"]] - default_proj), abs(mean[uns["label"]] - default_proj)
                 pairs[scen] = {"capped_mean": mean[r["label"]], "unsteered_mean": mean[uns["label"]],
+                               "capped_score": score[r["label"]], "unsteered_score": score[uns["label"]],
                                "capped_dist_to_default": dc, "unsteered_dist_to_default": du,
                                "capped_closer": dc < du}
     if pairs:
@@ -152,6 +168,7 @@ def summarize(results, default_proj, model_name):
     dom = {r["domain"]: mean[r["label"]] for r in results if r["group"] == "persona_drift"}
     if all(d in dom for d in HIGH_DOMAINS + LOW_DOMAINS):
         out["domain_means"] = dom
+        out["domain_scores"] = {d: float(normalised_score(v, ref)) for d, v in dom.items()}
         out["domain_ordering_pass"] = min(dom[d] for d in HIGH_DOMAINS) > max(dom[d] for d in LOW_DOMAINS)
         out["domain_ordering_note"] = (
             "persona_drift transcripts are projected as written; text from "
@@ -160,6 +177,7 @@ def summarize(results, default_proj, model_name):
     native = {r["label"]: mean[r["label"]] for r in results if r["group"] == "persona_drift" and r["native"]}
     if native:
         out["native_transcripts_mean"] = native
+        out["native_transcripts_score"] = {k: score[k] for k in native}
     return out
 
 
@@ -168,6 +186,7 @@ def main():
     ap.add_argument("--model", choices=MODELS, required=True)
     ap.add_argument("--files", nargs="*", help="transcript JSONs (default: all for this model)")
     ap.add_argument("--out", help="output stem under results/ (default gate_a_<model>)")
+    ap.add_argument("--from-json", help="re-summarise/re-plot a saved results JSON instead of running the model")
     args = ap.parse_args()
 
     spec = MODELS[args.model]
@@ -175,6 +194,26 @@ def main():
     stem = args.out or f"gate_a_{args.model}"
     cfg = get_config(spec["name"])
     layer = cfg["target_layer"]
+    title = (f"Gate A: {spec['name']} per-turn projection\n"
+             f"(dashed = another model's text, projected as written)")
+
+    if args.from_json:
+        if args.out is None:
+            ap.error("--from-json needs --out so the saved results are not overwritten")
+        saved = json.load(open(args.from_json))
+        ref = axis_reference(spec["axis_folder"], layer)
+        results = saved["results"]
+        for r in results:
+            for t in r["turns"]:
+                t["score"] = float(normalised_score(t["projection"], ref))
+        summary = summarize(results, ref, spec["name"])
+        meta = dict(saved["meta"], rescored_from=args.from_json, default_projection_note=DEFAULT_PROJ_NOTE)
+        out_json = RESULTS / f"{stem}.json"
+        json.dump({"meta": meta, "summary": summary, "results": results}, open(out_json, "w"), indent=2)
+        plot(results, RESULTS / f"{stem}.png", title, ref)
+        print(json.dumps(summary, indent=2))
+        print(f"Wrote {out_json} and {stem}.png")
+        return
 
     t0 = time.time()
     axis_path = hf_hub_download(AXIS_REPO, f"{spec['axis_folder']}/assistant_axis.pt", repo_type="dataset")
@@ -226,9 +265,11 @@ def main():
         })
         torch.cuda.empty_cache()
 
-    default_path = hf_hub_download(AXIS_REPO, f"{spec['axis_folder']}/default_vector.pt", repo_type="dataset")
-    default_proj = project(load_axis(default_path), axis, layer=layer)
-    summary = summarize(results, default_proj, spec["name"])
+    ref = axis_reference(spec["axis_folder"], layer, axis=axis)
+    for r in results:
+        for t in r["turns"]:
+            t["score"] = float(normalised_score(t["projection"], ref))
+    summary = summarize(results, ref, spec["name"])
     print(json.dumps(summary, indent=2))
 
     meta = {
@@ -254,8 +295,7 @@ def main():
     RESULTS.mkdir(exist_ok=True)
     out_json = RESULTS / f"{stem}.json"
     json.dump({"meta": meta, "summary": summary, "results": results}, open(out_json, "w"), indent=2)
-    plot(results, RESULTS / f"{stem}.png", f"Gate A: {spec['name']} per-turn projection\n"
-         f"(dashed = another model's text, projected as written)", default_proj)
+    plot(results, RESULTS / f"{stem}.png", title, ref)
     print(f"Wrote {out_json} and {stem}.png; total {meta['total_seconds']}s")
 
     del pm
