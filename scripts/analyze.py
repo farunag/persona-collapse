@@ -8,7 +8,11 @@ Inputs (from replay.py / project.py / langid.py; one or more files each):
 Method:
   - condition = (model, capped).
   - Comparable turns: per condition and domain, the turn positions reached by >= --min-convs
-    conversations in EVERY language present for that domain. All statistics use only these.
+    conversations in EVERY language present for that domain, AND by >= --min-retention of that
+    language's conversations (relative to turn 1). The window is the unbroken run of such turns
+    from turn 1, so a language whose conversations hit a context limit early (e.g. Yoruba on
+    Gemma's 8,192 tokens) cannot leave only its shortest conversations in the later turns.
+    All statistics use only these turns.
   - Per model x capped x lang x domain x turn: mean normalised score, 95% percentile bootstrap
     CI over conversations.
   - Per-language baseline: that language's coding-domain level = mean over coding conversations
@@ -26,6 +30,7 @@ Usage:
 """
 
 import argparse
+import math
 import csv
 import random
 import statistics as st
@@ -69,8 +74,10 @@ def bootstrap_ci(stat, samples, n_boot, rng):
     return percentile(boots, 0.025), percentile(boots, 0.975)
 
 
-def comparable_turns(rows, min_convs):
-    """{(cond, domain): sorted turns reached by >= min_convs conversations in every language}."""
+def comparable_turns(rows, min_convs, min_retention=0.0):
+    """{(cond, domain): turns 1..K reached, in every language, by >= min_convs conversations and by
+    >= min_retention of that language's turn-1 conversations (unbroken from turn 1 when
+    min_retention > 0)."""
     convs = defaultdict(set)  # (cond, domain, lang, turn) -> conv_ids
     langs = defaultdict(set)
     for r in rows:
@@ -79,8 +86,18 @@ def comparable_turns(rows, min_convs):
         langs[(c, r["domain"])].add(r["lang"])
     out = {}
     for (c, d), ls in langs.items():
-        turns = {t for (c2, d2, _, t) in convs if (c2, d2) == (c, d)}
-        out[(c, d)] = sorted(t for t in turns if all(len(convs[(c, d, l, t)]) >= min_convs for l in ls))
+        turns = sorted({t for (c2, d2, _, t) in convs if (c2, d2) == (c, d)})
+        n1 = {l: len(convs[(c, d, l, turns[0])]) if turns else 0 for l in ls}
+        ok = [t for t in turns if all(len(convs[(c, d, l, t)]) >= max(min_convs, math.ceil(min_retention * n1[l]))
+                                      for l in ls)]
+        if min_retention > 0:  # unbroken window from the first turn
+            win = []
+            for t in turns:
+                if t not in ok:
+                    break
+                win.append(t)
+            ok = win
+        out[(c, d)] = ok
     return out
 
 
@@ -299,7 +316,8 @@ def summary_md(meta, comp, dtable, gaps, base, lover, ttable, flags, charts):
     L = ["# Stage 2 summary", "",
          f"Generated {meta['created']} by `scripts/analyze.py`. Inputs: " + ", ".join(f"`{p}`" for p in meta["inputs"]) + ".",
          f"Bootstrap: {meta['n_boot']} resamples over conversations, seed {meta['seed']}. "
-         f"Comparable turns: reached by >= {meta['min_convs']} conversations in every language of the domain.",
+         f"Comparable turns: reached by >= {meta['min_convs']} conversations and by >= {meta.get('min_retention', 0):.0%} of each "
+         f"language's conversations, in every language of the domain (unbroken from turn 1).",
          "Score: normalised projection (1 = default Assistant vector, 0 = mean role vector). "
          "Drift: score minus the same language's coding-domain mean.", ""]
     L += ["## Comparable turns", "", "| Condition | Domain | Turns |", "|---|---|---|"]
@@ -367,7 +385,7 @@ def make_flags(base, lover, ttable, max_lang_baseline_gap=0.1, min_share=0.9):
 
 
 def analyze(proj_paths, langid_paths=(), replay_paths=(), out=RESULTS, min_convs=10, n_boot=2000, seed=0,
-            plots=True, overwrite=False, prefix="stage2"):
+            plots=True, overwrite=False, prefix="stage2", min_retention=0.0):
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     rows = [r for p in proj_paths for r in read_jsonl(p)]
@@ -375,7 +393,7 @@ def analyze(proj_paths, langid_paths=(), replay_paths=(), out=RESULTS, min_convs
     replays = [r for p in replay_paths for r in read_jsonl(p)]
     rng = random.Random(seed)
 
-    comp = comparable_turns(rows, min_convs)
+    comp = comparable_turns(rows, min_convs, min_retention)
     cm = per_conv_means(rows, comp)
     base = baselines(cm)
     trows = turn_table(rows, comp, base, n_boot, rng)
@@ -416,6 +434,7 @@ def analyze(proj_paths, langid_paths=(), replay_paths=(), out=RESULTS, min_convs
             plot_reply_language(lturn, c, out / f"{prefix}_reply_language_{c[0]}_{'capped' if c[1] else 'uncapped'}.png", plt)
 
     meta = {"created": datetime.now(timezone.utc).isoformat(), "n_boot": n_boot, "seed": seed, "min_convs": min_convs,
+            "min_retention": min_retention,
             "inputs": [Path(p).name for p in (*proj_paths, *langid_paths, *replay_paths)]}
     models = sorted({(r["model"], r.get("model_revision"), r.get("seed")) for r in rows})
     md = summary_md(meta, comp, dtable, gaps, base, lover, ttable, flags, charts)
@@ -435,13 +454,15 @@ def main():
     ap.add_argument("--replay", nargs="*", default=[])
     ap.add_argument("--out", default=str(RESULTS))
     ap.add_argument("--min-convs", type=int, default=10)
+    ap.add_argument("--min-retention", type=float, default=0.8,
+                    help="a turn counts only if >= this share of each language's conversations reach it")
     ap.add_argument("--n-boot", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--no-plots", action="store_true")
     ap.add_argument("--overwrite", action="store_true", help="replace existing stage2_* files in --out")
     args = ap.parse_args()
     res = analyze(args.proj, args.langid, args.replay, args.out, args.min_convs, args.n_boot, args.seed,
-                  plots=not args.no_plots, overwrite=args.overwrite)
+                  plots=not args.no_plots, overwrite=args.overwrite, min_retention=args.min_retention)
     print((Path(args.out) / "stage2_summary.md").read_text(encoding="utf-8"))
     print("Wrote:\n  " + "\n  ".join(res["files"]))
 
