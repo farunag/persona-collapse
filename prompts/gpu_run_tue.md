@@ -38,10 +38,14 @@ block prints an error. P = the assistant-axis env; V = the separate vLLM env.
   difference is tiny; a few Hausa and Yoruba replies read sensibly; tokens/s per turn.
   Send the numbers to Claude (chat) before the full run.
 
-## 3. Full Qwen run (uncapped ~30-60 min with vLLM; capped ~1-2 h)
+## 3. Full Qwen run (uncapped with vLLM, then capped; run them one after the other)
+  The pilot hit the 400-token reply cap on ~99% of replies, so both runs use
+  --max-new-tokens 1024. The capped run uses --hf-token-budget 65000 (the pilot peaked
+  near 90 GiB at 60000) and --limit 10 per domain.
     R=/workspace/outputs/replay
-    $V replay.py --model qwen --out $R
-    $P python replay.py --model qwen --capped --domains therapy,metacognitive --limit 20 --spread --out $R
+    $V replay.py --model qwen --max-new-tokens 1024 --out $R
+    $P python replay.py --model qwen --capped --domains therapy,metacognitive --limit 10 --spread \
+       --max-new-tokens 1024 --hf-token-budget 65000 --out $R
   If interrupted: rerun the same line with --resume.
 
 ## 4. Projection, language ID, analysis
