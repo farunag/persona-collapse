@@ -117,7 +117,8 @@ class VLLMBackend:
         self.args = args
         self.llm = LLM(model=path, tokenizer=path, dtype="bfloat16", max_model_len=args.max_context,
                        gpu_memory_utilization=args.gpu_memory_utilization, seed=args.seed,
-                       enable_prefix_caching=True, kv_cache_dtype=args.kv_cache_dtype)
+                       enable_prefix_caching=True, kv_cache_dtype=args.kv_cache_dtype,
+                       **({"attention_backend": args.attention_backend} if args.attention_backend else {}))
         self.stop_ids = stop_token_ids(self.tokenizer, spec)
 
     def prompt_ids(self, messages):
@@ -319,6 +320,9 @@ def main(argv=None):
     ap.add_argument("--kv-cache-dtype", default="auto",
                     help="vLLM KV cache dtype; 'fp8' roughly doubles how many conversations fit at once "
                          "(generation only; projection always reloads the bf16 model)")
+    ap.add_argument("--attention-backend", default=None,
+                    help="vLLM attention backend, e.g. TRITON_ATTN (FlashInfer's fp8 KV kernel needs CUDA >= 12.9 "
+                         "to JIT-compile for sm_120); default: vLLM's choice")
     ap.add_argument("--hf-token-budget", type=int, default=60000,
                     help="HF backend: max (padded prompt + new tokens) x batch rows per sub-batch")
     ap.add_argument("--conversations", type=Path, default=CONVERSATIONS)
@@ -386,6 +390,7 @@ def main(argv=None):
         "chat_kwargs": spec["chat_kwargs"], "system_prompt": None, "max_context": args.max_context,
         "kv_cache_dtype": args.kv_cache_dtype if backend.name == "vllm" else "model dtype (bf16)",
         "gpu_memory_utilization": args.gpu_memory_utilization if backend.name == "vllm" else None,
+        "attention_backend": (args.attention_backend or "vllm default") if backend.name == "vllm" else None,
         "versions": versions,
     }
     state = [{"conv": c, "messages": [], "prompt_tokens": [], "reply_tokens": [], "finish_reasons": [],
