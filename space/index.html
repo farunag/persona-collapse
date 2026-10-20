@@ -14,7 +14,7 @@
   --bg:#EDF1F2; --panel:#FFFFFF; --ink:#14213D; --ink-2:#4A5872; --rule:#CBD4DA; --rule-2:#E3E8EB;
   --bubble-u:#24324F; --bubble-u-ink:#F3F6F8; --bubble-m:#EEF2F5;
   --assist:#2F5BD3; --assist-tint:rgba(47,91,211,.10); --role:#B4245E; --role-tint:rgba(180,36,94,.07);
-  --en:#14213D; --ha:#0E8A6B; --yo:#C77A09; --warn:#8A5A00; --warn-bg:#FFF4DC;
+  --en:#14213D; --ha:#0E8A6B; --yo:#C77A09; --warn:#8A5A00; --warn-bg:#FFF4DC; --default:#7A879B;
   --font-body:"Noto Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --font-display:"Noto Serif Display",Georgia,"Times New Roman",serif;
 }
@@ -23,14 +23,14 @@
     --bg:#0E151C; --panel:#151F29; --ink:#E4ECF1; --ink-2:#9AAAB8; --rule:#2B3946; --rule-2:#1E2A35;
     --bubble-u:#2C3E5C; --bubble-u-ink:#EEF3F7; --bubble-m:#1C2834;
     --assist:#7C9BFF; --assist-tint:rgba(124,155,255,.13); --role:#F0679B; --role-tint:rgba(240,103,155,.09);
-    --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414; color-scheme:dark;
+    --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414; --default:#9AA8BA; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0E151C; --panel:#151F29; --ink:#E4ECF1; --ink-2:#9AAAB8; --rule:#2B3946; --rule-2:#1E2A35;
   --bubble-u:#2C3E5C; --bubble-u-ink:#EEF3F7; --bubble-m:#1C2834;
   --assist:#7C9BFF; --assist-tint:rgba(124,155,255,.13); --role:#F0679B; --role-tint:rgba(240,103,155,.09);
-  --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414; color-scheme:dark;
+  --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414; --default:#9AA8BA; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -46,7 +46,7 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justif
 .pilot{padding:4px 10px;border-radius:4px;background:var(--warn-bg);color:var(--warn);font-size:13.5px;white-space:nowrap}
 
 .controls{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-end;padding-block:14px;border-top:1px solid var(--rule)}
-.ctl{display:flex;flex-direction:column;gap:5px}
+.ctl{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
 .ctl > span{font-size:12.5px;color:var(--ink-2)}
 .seg{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;background:var(--panel)}
 .seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:14.5px}
@@ -82,6 +82,14 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justif
 .chip.cut{border-style:dashed}
 .chip.lang-bad{border-color:var(--role);color:var(--role)}
 .more{border:0;background:none;color:var(--assist);cursor:pointer;padding:0;font-size:12.5px}
+.chat-head p{margin:0;font-size:12.5px;color:var(--ink-2)}
+.chat-head .tag{font-size:12px;color:var(--ink-2)}
+.empty{padding:22px 18px;color:var(--ink-2);max-width:42ch}
+#trace .ghost{fill:none;stroke-width:1.4;opacity:.55;stroke-dasharray:4 3}
+.key{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px}
+.key span{display:inline-flex;align-items:center;gap:5px}
+.key i{display:inline-block;width:14px;height:3px;border-radius:2px}
+.convnav .has{font-size:12px;color:var(--ink-2);margin-left:6px}
 
 /* Trace */
 .trace{background:var(--panel);border:1px solid var(--rule);border-radius:12px;display:flex;flex-direction:column;min-height:0}
@@ -95,6 +103,7 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justif
 #trace .zone-a{fill:var(--assist-tint)} #trace .zone-r{fill:var(--role-tint)}
 #trace .line{fill:none;stroke-width:2.2;stroke-linejoin:round}
 #trace .dot{stroke:var(--panel);stroke-width:1.5}
+#trace .dot,#trace .line,#trace .ghost,#trace text,#trace .ref,#trace .zone-a,#trace .zone-r{pointer-events:none}
 .trace-foot{padding:8px 12px 10px;border-top:1px solid var(--rule-2);font-size:12.5px;color:var(--ink-2)}
 .readout{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-top:4px}
 .readout b{color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
@@ -128,7 +137,7 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
   <header class="top">
     <div>
       <h1>Is the assistant still itself?</h1>
-      <p>The same conversation in two languages, side by side. The trace in the middle shows, turn by turn, how close the model stays to its trained assistant.</p>
+      <p>The same conversation twice: the model as it is, and with its persona held inside the assistant range. The trace between them shows, turn by turn, how close the model stays to its trained assistant.</p>
     </div>
     <span class="pilot" id="pilot"></span>
   </header>
@@ -136,22 +145,24 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
   <section class="controls" aria-label="Choose a conversation">
     <div class="ctl"><span id="lbl-topic">Topic</span><div class="seg" role="group" aria-labelledby="lbl-topic" id="topic"></div></div>
     <div class="ctl"><span id="lbl-conv">Conversation</span>
-      <div class="convnav" aria-labelledby="lbl-conv"><button id="prev" aria-label="Previous conversation">‹</button><output id="convpos"></output><button id="next" aria-label="Next conversation">›</button></div></div>
-    <div class="ctl"><span id="lbl-cap">Safety capping</span><div class="seg" role="group" aria-labelledby="lbl-cap" id="cap"></div></div>
+      <div class="convnav" aria-labelledby="lbl-conv"><button id="prev" aria-label="Previous conversation">‹</button><output id="convpos"></output><button id="next" aria-label="Next conversation">›</button><span class="has" id="hascap"></span></div></div>
+    <div class="ctl"><span id="lbl-lang">Language</span><div class="seg" role="group" aria-labelledby="lbl-lang" id="lang"></div></div>
+    <div class="ctl"><span id="lbl-cmp">Other languages in the trace</span><div class="seg" role="group" aria-labelledby="lbl-cmp" id="cmp"></div></div>
   </section>
 
   <section class="stage">
     <div class="chat" id="chatA"></div>
     <div class="trace">
       <div class="trace-head"><b>Playing a character</b><b class="a">Assistant</b></div>
-      <svg id="trace" role="img" aria-label="Persona reading per turn for both languages"></svg>
+      <svg id="trace" role="img" aria-label="Persona reading per turn, default and capped"></svg>
       <div class="trace-foot" id="readout"></div>
     </div>
     <div class="chat" id="chatB"></div>
   </section>
 
   <section class="notes">
-    <div><h3>Reading the trace</h3><p>Each row is one turn. Further right is closer to the model's default assistant (1.0); the dashed line at 0 is where an average role-played character sits. Click a row or a message to line both chats up on that turn.</p></div>
+    <div><h3>Reading the trace</h3><p>Each row is one turn. Further right is closer to the model's default assistant (1.0); the dashed line at 0 is where an average role-played character sits. Grey is the default model, blue is the capped one. Click a row or a message to line both chats up on that turn.</p></div>
+    <div><h3>What capping does</h3><p>Capping comes from the same research. While the model writes, its reading is never allowed to fall below the assistant's normal range; above that range nothing changes. The user messages are identical on both sides. Capped runs cover 10 therapy and 10 self-reflection conversations per language.</p></div>
     <div><h3>A steady reading is not a good answer</h3><p>In Hausa and Yoruba the model often stays near its assistant mode while missing what the user said. Read the replies, not only the trace.</p></div>
     <div><h3>How it was made</h3><p>Each conversation was written once in English, and its user messages were translated into Hausa and Yoruba and checked by native speakers. Qwen 3 32B answered every message fresh in each language, with no instructions about length; replies stop at <span id="maxtok">400</span> tokens.</p></div>
     <div><h3>Sources</h3><p>The Assistant Axis, Lu et al. 2026, <a href="https://arxiv.org/abs/2601.10387">arXiv:2601.10387</a>. Code and data: <a href="https://github.com/farunag/persona-collapse">github.com/farunag/persona-collapse</a>. Supported by the Cosmos Institute.</p></div>
@@ -169,12 +180,13 @@ const LANGS=[{k:"en",name:"English",css:"--en"},{k:"ha",name:"Hausa",css:"--ha"}
 const TOPICS=[{k:"coding",name:"Coding"},{k:"therapy",name:"Therapy"},{k:"metacognitive",name:"Self-reflection"}];
 const LNAME={en:"English",ha:"Hausa",yo:"Yorùbá",other:"another language"};
 const X0=-1.6,X1=1.3;
-const st={topic:"metacognitive",idx:0,run:"uncapped",turn:1,A:"en",B:"ha",warned:false,open:new Set()};
+const st={topic:"metacognitive",idx:0,lang:"en",turn:1,cmp:false,warned:false,open:new Set()};
 let DATA=null;
 const $=s=>document.querySelector(s);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SIDES={A:{run:"uncapped",name:"Default",note:"The model as it is.",css:"--default"},B:{run:"capped",name:"Capped",note:"Persona held inside the assistant range.",css:"--assist"}};
 
 function md(text){
   return text.split(/```/).map((p,i)=>{
@@ -189,33 +201,38 @@ function md(text){
 }
 const convs=()=>DATA.conversations.filter(c=>c.domain===st.topic);
 const conv=()=>convs()[st.idx];
-const turns=lang=>((conv().runs[st.run]||{})[lang])||[];
+const turns=(run,lang)=>((conv().runs[run]||{})[lang||st.lang])||[];
+const hasCap=c=>!!(c.runs.capped&&c.runs.capped[st.lang]);
 
-function seg(el,items,cur,onPick,disabled,small){
-  el.innerHTML="";if(small)el.classList.add("small");
+function seg(el,items,cur,onPick,disabled){
+  el.innerHTML="";
   items.forEach(it=>{const b=document.createElement("button");b.type="button";b.textContent=it.name;
     b.setAttribute("aria-pressed",String(cur===it.k));if(disabled&&disabled(it))b.disabled=true;
     b.onclick=()=>onPick(it.k);el.appendChild(b)});
 }
 
+function firstWithCap(){const i=convs().findIndex(hasCap);return i<0?0:i}
+
 function renderControls(){
   seg($("#topic"),TOPICS,st.topic,k=>{
     if(k==="therapy"&&!st.warned){$("#warn").showModal();return}
-    st.topic=k;st.idx=0;st.turn=1;st.open.clear();render()});
+    st.topic=k;st.idx=firstWithCap();st.turn=1;st.open.clear();render()});
   const n=convs().length;$("#convpos").value=`${st.idx+1} of ${n}`;
   $("#prev").disabled=st.idx===0;$("#next").disabled=st.idx>=n-1;
-  const hasCap=!!conv().runs.capped; if(!hasCap)st.run="uncapped";
-  seg($("#cap"),[{k:"uncapped",name:"Off"},{k:"capped",name:"On"}],st.run,k=>{st.run=k;render()},it=>it.k==="capped"&&!hasCap);
+  const withCap=convs().filter(hasCap).length;
+  $("#hascap").textContent=hasCap(conv())?"has a capped run":(withCap?`no capped run (${withCap} of ${n} have one)`:"no capped runs for this topic");
+  seg($("#lang"),LANGS,st.lang,k=>{st.lang=k;st.open.clear();render()});
+  seg($("#cmp"),[{k:false,name:"Hide"},{k:true,name:"Show"}],st.cmp,k=>{st.cmp=k;drawTrace()});
 }
 
 function renderChat(side){
-  const lang=st[side],box=$("#chat"+side),ts=turns(lang),L=LANGS.find(l=>l.k===lang);
-  box.innerHTML=`<div class="chat-head"><h2><i style="background:var(${L.css})"></i>${L.name}${st.run==="capped"?", capped":""}</h2><div class="seg" role="group" aria-label="Language for this chat"></div></div><div class="msgs" id="msgs${side}"></div>`;
-  seg(box.querySelector(".seg"),LANGS,lang,k=>{st[side]=k;render()},it=>it.k===st[side==="A"?"B":"A"],true);
+  const S=SIDES[side],box=$("#chat"+side),ts=turns(S.run);
+  box.innerHTML=`<div class="chat-head"><h2><i style="background:var(${S.css})"></i>${S.name}</h2><p>${S.note}</p></div><div class="msgs" id="msgs${side}"></div>`;
   const list=box.querySelector(".msgs");
+  if(!ts.length){list.innerHTML=`<p class="empty">${side==="B"?"This conversation was not run with capping. Capped runs cover 10 therapy and 10 self-reflection conversations per language; use the arrows to find one marked “has a capped run”.":"No replies for this conversation in this language yet."}</p>`;return}
   list.innerHTML=ts.map((d,i)=>{
     const t=i+1,key=`${side}${t}`,open=st.open.has(key),long=d.a.length>420;
-    const langBad=!d.code&&d.lang&&d.lang!==lang;
+    const langBad=!d.code&&d.lang&&d.lang!==st.lang;
     return `<article class="pair" data-t="${t}" aria-current="${t===st.turn}" tabindex="0">
       <div class="bubble u"><div class="t">User, turn ${t}</div>${esc(d.u)}</div>
       <div class="bubble m"><div class="body ${long&&!open?"fold":""}">${md(d.a)}</div>
@@ -223,7 +240,7 @@ function renderChat(side){
           ${d.cut?`<span class="chip cut">cut off at ${DATA.max_new_tokens} tokens</span>`:""}
           ${langBad?`<span class="chip lang-bad">replied in ${LNAME[d.lang]||"another language"}</span>`:""}
           ${long?`<button class="more" data-k="${key}">${open?"Show less":"Show full reply"}</button>`:""}</div></div></article>`;
-  }).join("")||`<p style="color:var(--ink-2)">No replies in this language for this conversation.</p>`;
+  }).join("");
   list.querySelectorAll(".pair").forEach(el=>{
     const go=()=>{st.turn=+el.dataset.t;sync(side)};
     el.onclick=e=>{if(e.target.closest(".more"))return;go()};
@@ -235,7 +252,7 @@ function renderChat(side){
 function drawTrace(){
   const svg=$("#trace"),r=svg.getBoundingClientRect(),W=Math.max(220,Math.round(r.width)),H=Math.max(180,Math.round(r.height));
   svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
-  const n=Math.max(turns(st.A).length,turns(st.B).length,1),L=26,R=12,T=18,B=10;
+  const n=Math.max(turns("uncapped").length,turns("capped").length,1),L=26,R=12,T=18,B=10;
   const x=v=>L+(Math.max(X0,Math.min(X1,v))-X0)*(W-L-R)/(X1-X0), y=t=>T+(n===1?0:(t-1)*(H-T-B)/(n-1));
   const rowH=(H-T-B)/Math.max(n-1,1);
   let s=`<rect class="zone-r" x="${x(X0)}" y="${T-8}" width="${x(0.25)-x(X0)}" height="${H-T-B+16}"/><rect class="zone-a" x="${x(0.6)}" y="${T-8}" width="${x(X1)-x(0.6)}" height="${H-T-B+16}"/>`;
@@ -243,16 +260,20 @@ function drawTrace(){
   s+=`<line class="ref" x1="${x(0)}" x2="${x(0)}" y1="${T-8}" y2="${H-B+8}"/><line class="ref" x1="${x(1)}" x2="${x(1)}" y1="${T-8}" y2="${H-B+8}"/>`;
   s+=`<text x="${x(0)}" y="11" text-anchor="middle">0</text><text x="${x(1)}" y="11" text-anchor="middle">1.0</text>`;
   for(let t=1;t<=n;t++) if(n<=16||t%2===1) s+=`<text x="${L-6}" y="${y(t)+4}" text-anchor="end">${t}</text>`;
-  [st.B,st.A].forEach(lang=>{
-    const col=css(LANGS.find(l=>l.k===lang).css),pts=turns(lang).map((d,i)=>d.s==null?null:[x(d.s),y(i+1)]).filter(Boolean);
-    if(!pts.length)return;
-    s+=`<polyline class="line" stroke="${col}" points="${pts.map(p=>p.join(",")).join(" ")}"/>`;
-    pts.forEach((p,i)=>{s+=`<circle class="dot" cx="${p[0]}" cy="${p[1]}" r="${i+1===st.turn?6:3.6}" fill="${col}"/>`});
+  const pts=ts=>ts.map((d,i)=>d.s==null?null:[x(d.s),y(i+1)]).filter(Boolean);
+  if(st.cmp) LANGS.filter(l=>l.k!==st.lang).forEach(l=>{const p=pts(turns("uncapped",l.k));
+    if(p.length) s+=`<polyline class="ghost" stroke="${css(l.css)}" points="${p.map(q=>q.join(",")).join(" ")}"/>`});
+  [["uncapped","--default"],["capped","--assist"]].forEach(([run,c])=>{
+    const p=pts(turns(run)),col=css(c);if(!p.length)return;
+    s+=`<polyline class="line" stroke="${col}" points="${p.map(q=>q.join(",")).join(" ")}"/>`;
+    p.forEach((q,i)=>{s+=`<circle class="dot" cx="${q[0]}" cy="${q[1]}" r="${i+1===st.turn?6:3.6}" fill="${col}"/>`});
   });
   svg.innerHTML=s;
   svg.querySelectorAll(".lane").forEach(el=>el.onclick=()=>{st.turn=+el.dataset.t;sync()});
-  const ro=[st.A,st.B].map(l=>{const d=turns(l)[st.turn-1];return `<span>${LNAME[l]}</span><b>${d&&d.s!=null?d.s.toFixed(2):"–"}</b>`}).join("");
-  $("#readout").innerHTML=`Turn ${st.turn}<div class="readout">${ro}</div>`;
+  const v=run=>{const d=turns(run)[st.turn-1];return d&&d.s!=null?d.s.toFixed(2):"–"};
+  let key=`<div class="key"><span><i style="background:var(--default)"></i>Default</span><span><i style="background:var(--assist)"></i>Capped</span>`;
+  if(st.cmp) LANGS.filter(l=>l.k!==st.lang).forEach(l=>key+=`<span><i style="background:var(${l.css});opacity:.6"></i>${l.name}, default</span>`);
+  $("#readout").innerHTML=`Turn ${st.turn}, ${LNAME[st.lang]}<div class="readout"><span>Default</span><b>${v("uncapped")}</b><span>Capped</span><b>${v("capped")}</b></div>${key}</div>`;
 }
 
 function mark(){document.querySelectorAll(".pair").forEach(el=>el.setAttribute("aria-current",String(+el.dataset.t===st.turn)))}
@@ -263,16 +284,16 @@ function render(){renderControls();renderChat("A");renderChat("B");drawTrace();m
 
 $("#prev").onclick=()=>{st.idx--;st.turn=1;st.open.clear();render()};
 $("#next").onclick=()=>{st.idx++;st.turn=1;st.open.clear();render()};
-$("#warn-yes").onclick=()=>{st.warned=true;$("#warn").close();st.topic="therapy";st.idx=0;st.turn=1;st.open.clear();render()};
+$("#warn-yes").onclick=()=>{st.warned=true;$("#warn").close();st.topic="therapy";st.idx=firstWithCap();st.turn=1;st.open.clear();render()};
 $("#warn-no").onclick=()=>$("#warn").close();
 document.addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("input,textarea,dialog"))return;
-  const n=Math.max(turns(st.A).length,turns(st.B).length);
+  const n=Math.max(turns("uncapped").length,turns("capped").length);
   if((e.key==="ArrowDown"||e.key==="j")&&st.turn<n){e.preventDefault();st.turn++;sync()}
   if((e.key==="ArrowUp"||e.key==="k")&&st.turn>1){e.preventDefault();st.turn--;sync()}});
 let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>DATA&&drawTrace(),120)});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>DATA&&drawTrace());
 
-function start(d){DATA=d;$("#pilot").textContent=d.label;$("#maxtok").textContent=d.max_new_tokens;render()}
+function start(d){DATA=d;$("#pilot").textContent=d.label;$("#maxtok").textContent=d.max_new_tokens;st.idx=firstWithCap();render()}
 if(window.PC_DATA)start(window.PC_DATA);else fetch("data.json").then(r=>r.json()).then(start)
   .catch(()=>{$("#chatA").innerHTML="<p style='padding:16px'>The data file did not load. Check that data.json sits next to this page.</p>"});
 </script>
