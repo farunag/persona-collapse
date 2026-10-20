@@ -45,7 +45,7 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justif
 .top p{margin:6px 0 0;color:var(--ink-2);max-width:60ch}
 .pilot{padding:4px 10px;border-radius:4px;background:var(--warn-bg);color:var(--warn);font-size:13.5px;white-space:nowrap}
 
-.controls{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-end;padding-block:14px;border-top:1px solid var(--rule)}
+.controls{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-start;padding-block:14px;border-top:1px solid var(--rule)}
 .ctl{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
 .ctl > span{font-size:12.5px;color:var(--ink-2)}
 .seg{display:inline-flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;background:var(--panel)}
@@ -89,6 +89,7 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justif
 .key{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px}
 .key span{display:inline-flex;align-items:center;gap:5px}
 .key i{display:inline-block;width:14px;height:3px;border-radius:2px}
+.ctl .about{margin:0;font-size:12.5px;color:var(--ink-2);max-width:48ch}
 .convnav .has{font-size:12px;color:var(--ink-2);margin-left:6px}
 
 /* Trace */
@@ -143,7 +144,7 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
   </header>
 
   <section class="controls" aria-label="Choose a conversation">
-    <div class="ctl"><span id="lbl-topic">Topic</span><div class="seg" role="group" aria-labelledby="lbl-topic" id="topic"></div></div>
+    <div class="ctl"><span id="lbl-topic">Topic</span><div class="seg" role="group" aria-labelledby="lbl-topic" id="topic"></div><p class="about" id="topic-about"></p></div>
     <div class="ctl"><span id="lbl-conv">Conversation</span>
       <div class="convnav" aria-labelledby="lbl-conv"><button id="prev" aria-label="Previous conversation">‹</button><output id="convpos"></output><button id="next" aria-label="Next conversation">›</button><span class="has" id="hascap"></span></div></div>
     <div class="ctl"><span id="lbl-lang">Language</span><div class="seg" role="group" aria-labelledby="lbl-lang" id="lang"></div></div>
@@ -177,7 +178,7 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
 
 <script>
 const LANGS=[{k:"en",name:"English",css:"--en"},{k:"ha",name:"Hausa",css:"--ha"},{k:"yo",name:"Yorùbá",css:"--yo"}];
-const TOPICS=[{k:"coding",name:"Coding"},{k:"therapy",name:"Therapy"},{k:"metacognitive",name:"Self-reflection"}];
+const TOPICS=[{k:"coding",name:"Coding",about:"Programming help. The model usually stays in assistant mode here, so this is the baseline."},{k:"therapy",name:"Therapy",about:"A user in emotional difficulty asks for support. The paper found harmful drift in conversations like these."},{k:"metacognitive",name:"Self-reflection (metacognitive)",about:"The user presses the model to reflect on its own mind and experience. This is where drift is usually strongest."}];
 const LNAME={en:"English",ha:"Hausa",yo:"Yorùbá",other:"another language"};
 const X0=-1.6,X1=1.3;
 const st={topic:"metacognitive",idx:0,lang:"en",turn:1,cmp:false,warned:false,open:new Set()};
@@ -217,6 +218,7 @@ function renderControls(){
   seg($("#topic"),TOPICS,st.topic,k=>{
     if(k==="therapy"&&!st.warned){$("#warn").showModal();return}
     st.topic=k;st.idx=firstWithCap();st.turn=1;st.open.clear();render()});
+  $("#topic-about").textContent=TOPICS.find(t=>t.k===st.topic).about;
   const n=convs().length;$("#convpos").value=`${st.idx+1} of ${n}`;
   $("#prev").disabled=st.idx===0;$("#next").disabled=st.idx>=n-1;
   const withCap=convs().filter(hasCap).length;
