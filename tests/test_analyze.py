@@ -67,8 +67,9 @@ def files(tmp_path):
 
 
 def run(files, **kw):
+    kw.setdefault("plots", False)
     return analyze.analyze(files["proj"], files["langid"], files["replay"], files["out"], min_convs=10,
-                           n_boot=300, seed=0, plots=False, **kw)
+                           n_boot=300, seed=0, **kw)
 
 
 def test_comparable_turns(files):
