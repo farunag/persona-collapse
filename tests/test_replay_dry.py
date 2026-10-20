@@ -87,3 +87,11 @@ def test_real_conversations_file_selection():
     rows = replay.select_conversations(replay.CONVERSATIONS, ["en", "ha", "yo"], ["coding", "therapy", "metacognitive"], 2)
     assert len(rows) == 2 * 3 * 3
     assert {r["conv_id"] for r in rows if r["domain"] == "coding"} == {"coding_p0_t0", "coding_p0_t1"}
+
+
+def test_spread_selection_covers_personas():
+    rows = replay.select_conversations(replay.CONVERSATIONS, ["en", "ha", "yo"], ["therapy", "metacognitive"], 20, spread=True)
+    assert len(rows) == 20 * 2 * 3
+    for d in ("therapy", "metacognitive"):
+        personas = {r["persona_id"] for r in rows if r["domain"] == d}
+        assert len(personas) >= 6, (d, personas)

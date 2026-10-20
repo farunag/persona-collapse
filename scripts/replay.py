@@ -270,12 +270,24 @@ def make_backend(args, spec):
         return HFBackend(args, spec)
 
 
-def select_conversations(path, langs, domains, limit):
+def spread_pick(items, k):
+    """k items evenly spaced over the sorted list (covers every persona), deterministic."""
+    n = len(items)
+    if k >= n:
+        return list(items)
+    if k == 1:
+        return [items[0]]
+    return [items[round(i * (n - 1) / (k - 1))] for i in range(k)]
+
+
+def select_conversations(path, langs, domains, limit, spread=False):
     rows = [r for r in read_jsonl(path) if r["lang"] in langs and r["domain"] in domains]
     keep = set()
     for d in domains:
         ids = sorted({(r["persona_id"], r["topic_id"], r["conv_id"]) for r in rows if r["domain"] == d})
-        keep.update(c for _, _, c in (ids[:limit] if limit else ids))
+        if limit:
+            ids = spread_pick(ids, limit) if spread else ids[:limit]
+        keep.update(c for _, _, c in ids)
     rows = [r for r in rows if r["conv_id"] in keep]
     for cid in keep:  # every language runs exactly the same conversations
         got = {r["lang"] for r in rows if r["conv_id"] == cid}
@@ -289,6 +301,9 @@ def main(argv=None):
     ap.add_argument("--langs", default=",".join(LANGS))
     ap.add_argument("--domains", default=",".join(DOMAINS))
     ap.add_argument("--limit", type=int, default=0, help="conversations per domain (0 = all)")
+    ap.add_argument("--spread", action="store_true",
+                    help="with --limit: pick conversations evenly spread across personas/topics "
+                         "instead of the first N (use for the capped subset)")
     ap.add_argument("--capped", action="store_true", help="activation capping (Qwen only, HF backend)")
     ap.add_argument("--max-new-tokens", type=int, default=400)
     ap.add_argument("--temperature", type=float, default=0.7)
@@ -317,7 +332,7 @@ def main(argv=None):
     if out_path.exists() and not args.resume:
         ap.error(f"{out_path} exists; pass --resume to continue it or choose another --out")
 
-    convs = select_conversations(args.conversations, langs, domains, args.limit)
+    convs = select_conversations(args.conversations, langs, domains, args.limit, args.spread)
     done = set()
     if args.resume and out_path.exists():
         prev = read_jsonl(out_path)
