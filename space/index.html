@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persona Collapse</title>
+<meta name="description" content="Watch an AI assistant's internal persona reading, turn by turn, in English, Hausa and Yoruba.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1F2; --panel:#FFFFFF; --ink:#14213D; --ink-2:#4A5872; --rule:#CBD4DA; --rule-2:#E1E7EA;
+  --assist:#2F5BD3; --assist-tint:rgba(47,91,211,.10); --role:#B4245E; --role-tint:rgba(180,36,94,.08);
+  --en:#14213D; --ha:#0E8A6B; --yo:#C77A09; --warn:#8A5A00; --warn-bg:#FFF4DC;
+  --shadow:0 1px 0 rgba(20,33,61,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E151C; --panel:#151F29; --ink:#E4ECF1; --ink-2:#9AAAB8; --rule:#2B3946; --rule-2:#1E2A35;
+    --assist:#7C9BFF; --assist-tint:rgba(124,155,255,.12); --role:#F0679B; --role-tint:rgba(240,103,155,.10);
+    --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414;
+    --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E151C; --panel:#151F29; --ink:#E4ECF1; --ink-2:#9AAAB8; --rule:#2B3946; --rule-2:#1E2A35;
+  --assist:#7C9BFF; --assist-tint:rgba(124,155,255,.12); --role:#F0679B; --role-tint:rgba(240,103,155,.10);
+  --en:#E4ECF1; --ha:#3CC9A0; --yo:#F2B23D; --warn:#F2C76A; --warn-bg:#2A2414; --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "Noto Sans",system-ui,sans-serif}
+a{color:var(--assist)}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--assist);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.top{padding:40px 0 20px}
+.top h1{font-family:"Noto Serif Display",Georgia,serif;font-weight:600;font-size:clamp(34px,5.2vw,58px);line-height:1.04;letter-spacing:-.01em;margin:0 0 14px;max-width:16ch}
+.top p.lead{font-size:18px;color:var(--ink-2);max-width:62ch;margin:0}
+.pilot{display:inline-block;margin-top:16px;padding:4px 10px;border-radius:4px;background:var(--warn-bg);color:var(--warn);font-size:14px}
+
+.controls{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.ctl > span{font-size:13px;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:transparent;padding:7px 13px;cursor:pointer;font-size:15px}
+.seg button + button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:disabled{opacity:.4;cursor:not-allowed}
+.convnav{display:flex;align-items:center;gap:8px}
+.convnav button{border:1px solid var(--rule);background:var(--panel);border-radius:6px;padding:6px 11px;cursor:pointer}
+.convnav output{min-width:5.5em;text-align:center;font-variant-numeric:tabular-nums}
+
+/* The instrument */
+.instrument{margin:22px 0 8px;background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:18px 18px 10px;box-shadow:var(--shadow)}
+.instrument-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;align-items:baseline}
+.instrument-head h2{font-size:19px;font-weight:600;margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--ink-2)}
+.legend label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px}
+#trace{width:100%;height:auto;display:block;margin-top:8px;touch-action:manipulation}
+#trace .zone-a{fill:var(--assist-tint)} #trace .zone-r{fill:var(--role-tint)}
+#trace .grid{stroke:var(--rule-2);stroke-width:1}
+#trace .ref{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 4}
+#trace text{fill:var(--ink-2);font-size:12px;font-family:"Noto Sans",sans-serif}
+#trace .tick{font-variant-numeric:tabular-nums}
+#trace .line{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+#trace .line.dim{stroke-width:1.4;opacity:.45}
+#trace .dot{stroke:var(--panel);stroke-width:1.5}
+#trace .cursor{stroke:var(--ink);stroke-width:1}
+#trace .hit{fill:transparent;cursor:pointer}
+.caption{font-size:14px;color:var(--ink-2);margin:4px 2px 6px;max-width:80ch}
+
+/* Reading */
+.reading{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;margin:18px 0 40px}
+.transcript{background:var(--panel);border:1px solid var(--rule);border-radius:10px;max-height:760px;overflow:auto;box-shadow:var(--shadow)}
+.turn{padding:14px 18px;border-bottom:1px solid var(--rule-2);cursor:pointer;scroll-margin-top:8px}
+.turn:last-child{border-bottom:0}
+.turn[aria-current="true"]{background:var(--assist-tint);box-shadow:inset 3px 0 0 var(--assist)}
+.turn .who{font-size:13px;color:var(--ink-2);margin:0 0 4px;display:flex;justify-content:space-between;gap:10px}
+.turn .user{margin:0 0 12px;font-weight:500}
+.turn .reply{margin:0;color:var(--ink);overflow-wrap:anywhere}
+.turn .reply.clamp{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.turn[aria-current="true"] .reply.clamp{-webkit-line-clamp:unset;display:block}
+.turn pre{white-space:pre-wrap;background:var(--rule-2);padding:8px 10px;border-radius:6px;font-size:13.5px;overflow:auto}
+.turn code{background:var(--rule-2);padding:0 4px;border-radius:3px;font-size:.92em}
+.score-chip{font-variant-numeric:tabular-nums;font-weight:600}
+
+.side{display:flex;flex-direction:column;gap:18px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:18px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 4px;font-size:17px;font-weight:600}
+.card p{margin:8px 0 0;color:var(--ink-2);font-size:15px}
+.gauge{position:relative;height:56px;margin:18px 4px 6px}
+.gauge .bar{position:absolute;left:0;right:0;top:20px;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--role) 0%,var(--rule) 50%,var(--assist) 100%);opacity:.9}
+.gauge .mark{position:absolute;top:14px;width:1px;height:24px;background:var(--ink-2)}
+.gauge .needle{position:absolute;top:8px;width:4px;height:36px;margin-left:-2px;border-radius:2px;background:var(--ink);transition:left .45s cubic-bezier(.2,.8,.2,1)}
+.gauge .ends{position:absolute;left:0;right:0;top:40px;display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2)}
+.bignum{font-family:"Noto Serif Display",Georgia,serif;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.facts{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:15px}
+.facts li{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--rule-2);padding-top:8px}
+.facts b{font-weight:600}
+.ok{color:var(--ha)} .bad{color:var(--role)}
+
+.about{border-top:1px solid var(--rule);padding:28px 0 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px 36px}
+.about h3{font-size:17px;margin:0 0 6px}
+.about p{margin:0;color:var(--ink-2);font-size:15px;max-width:60ch}
+
+dialog{border:1px solid var(--rule);border-radius:10px;background:var(--panel);color:var(--ink);max-width:460px;padding:22px}
+dialog::backdrop{background:rgba(10,15,20,.55)}
+dialog h2{margin:0 0 8px;font-size:20px}
+dialog p{color:var(--ink-2);margin:0 0 16px}
+dialog .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+dialog button{border:1px solid var(--rule);background:transparent;border-radius:6px;padding:8px 14px;cursor:pointer}
+dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+@media (max-width:860px){
+  .reading{grid-template-columns:1fr}
+  .side{order:-1}
+  .transcript{max-height:none}
+}
+@media (prefers-reduced-motion:reduce){ .gauge .needle{transition:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Is the assistant still itself?</h1>
+    <p class="lead">Inside an AI model there is a measurable direction for "being the helpful assistant". Follow that reading turn by turn through the same conversation in English, Hausa and Yoruba, and see where it holds and where it slips.</p>
+    <span class="pilot" id="pilot"></span>
+  </header>
+
+  <section class="controls" aria-label="Choose a conversation">
+    <div class="ctl"><span id="lbl-topic">Topic</span>
+      <div class="seg" role="group" aria-labelledby="lbl-topic" id="topic"></div></div>
+    <div class="ctl"><span id="lbl-conv">Conversation</span>
+      <div class="convnav" aria-labelledby="lbl-conv">
+        <button id="prev" aria-label="Previous conversation">‹</button><output id="convpos">1 of 2</output><button id="next" aria-label="Next conversation">›</button>
+      </div></div>
+    <div class="ctl"><span id="lbl-lang">Read the transcript in</span>
+      <div class="seg" role="group" aria-labelledby="lbl-lang" id="lang"></div></div>
+    <div class="ctl"><span id="lbl-cap">Safety capping</span>
+      <div class="seg" role="group" aria-labelledby="lbl-cap" id="cap"></div></div>
+  </section>
+
+  <section class="instrument" aria-labelledby="trace-title">
+    <div class="instrument-head">
+      <h2 id="trace-title">Persona reading, turn by turn</h2>
+      <div class="legend" id="legend"></div>
+    </div>
+    <svg id="trace" viewBox="0 0 1100 340" preserveAspectRatio="xMinYMin meet" role="img" aria-label="Persona reading for each language across the conversation"></svg>
+    <p class="caption">Higher is closer to the model's default assistant. The shaded top band is where the assistant normally sits; the lower band is where role-played characters sit. Tap a turn to read it.</p>
+  </section>
+
+  <section class="reading">
+    <div class="transcript" id="transcript" aria-live="polite"></div>
+    <aside class="side">
+      <div class="card" id="turncard"></div>
+      <div class="card">
+        <h3>What this reading is</h3>
+        <p>Researchers at Anthropic found a single direction inside language models that tracks how much the model is acting as its trained assistant (Lu et al., 2026). We measure the model's internal activity on every reply and place it on that direction.</p>
+        <p>A steady reading does not mean a good answer. In Hausa and Yoruba, read the replies themselves: a model can sound like an assistant while missing what you said.</p>
+      </div>
+    </aside>
+  </section>
+
+  <section class="about">
+    <div><h3>How it was made</h3><p>Each conversation was written once in English, then its user messages were translated into Hausa and Yoruba and checked by native speakers. The model, Qwen 3 32B, answered every message fresh in each language. Replies were limited to <span id="maxtok">400</span> tokens.</p></div>
+    <div><h3>What the score means</h3><p>1.0 is the model's default assistant. 0 is an average role-played character, such as a poet or a ghost. Below 0 is further into character than average.</p></div>
+    <div><h3>Safety capping</h3><p>A light-touch fix from the same research: whenever the reading falls below the assistant's normal range, it is held at the edge of that range. Compare the same conversation with capping off and on.</p></div>
+    <div><h3>Sources</h3><p>The Assistant Axis, Lu et al. 2026, <a href="https://arxiv.org/abs/2601.10387">arXiv:2601.10387</a>. Code and data: <a href="https://github.com/farunag/persona-collapse">github.com/farunag/persona-collapse</a>. Supported by the Cosmos Institute.</p></div>
+  </section>
+</div>
+
+<dialog id="warn">
+  <h2>This conversation is about mental health</h2>
+  <p>Therapy-style conversations can include distress and mentions of self-harm. This is a research tool, not support. If you need help now, findahelpline.com lists services by country.</p>
+  <div class="row"><button id="warn-no">Choose another topic</button><button class="primary" id="warn-yes">Show the conversation</button></div>
+</dialog>
+
+<script>
+const LANGS=[{k:"en",name:"English",css:"--en"},{k:"ha",name:"Hausa",css:"--ha"},{k:"yo",name:"Yorùbá",css:"--yo"}];
+const TOPICS=[{k:"coding",name:"Coding"},{k:"therapy",name:"Therapy"},{k:"metacognitive",name:"Self-reflection"}];
+const LANGNAME={en:"English",ha:"Hausa",yo:"Yorùbá",other:"another language"};
+const Y0=-1.6,Y1=1.3;
+const st={topic:"metacognitive",idx:0,lang:"en",run:"uncapped",turn:1,show:{en:true,ha:true,yo:true},warned:false};
+let DATA=null;
+const $=s=>document.querySelector(s);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function md(text){
+  const parts=text.split(/```/);
+  return parts.map((p,i)=>{
+    if(i%2) return "<pre>"+esc(p.replace(/^[^\n]*\n/,""))+"</pre>";
+    return esc(p).split(/\n{2,}/).map(par=>{
+      par=par.replace(/^#{1,6}\s*/gm,"").replace(/^\s*---+\s*$/gm,"")
+        .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/(^|\W)\*([^*\n]+)\*(?=\W|$)/g,"$1<em>$2</em>")
+        .replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\n/g,"<br>");
+      return par.trim()?"<p class='para'>"+par+"</p>":"";
+    }).join("");
+  }).join("");
+}
+
+function convs(){return DATA.conversations.filter(c=>c.domain===st.topic)}
+function conv(){return convs()[st.idx]}
+function turns(lang,run){const c=conv();return (c.runs[run||st.run]||{})[lang]||[]}
+
+function seg(el,items,key,onPick,disabled){
+  el.innerHTML="";
+  items.forEach(it=>{const b=document.createElement("button");b.type="button";b.textContent=it.name;
+    b.setAttribute("aria-pressed",String(st[key]===it.k));
+    if(disabled&&disabled(it)){b.disabled=true}
+    b.onclick=()=>onPick(it.k);el.appendChild(b)});
+}
+
+function renderControls(){
+  seg($("#topic"),TOPICS,"topic",k=>{
+    if(k==="therapy"&&!st.warned){ $("#warn").showModal(); return; }
+    st.topic=k;st.idx=0;st.turn=1;render()});
+  const n=convs().length;$("#convpos").value=(st.idx+1)+" of "+n;
+  $("#prev").disabled=st.idx===0;$("#next").disabled=st.idx>=n-1;
+  seg($("#lang"),LANGS,"lang",k=>{st.lang=k;render()});
+  const hasCap=!!conv().runs.capped;
+  if(!hasCap) st.run="uncapped";
+  seg($("#cap"),[{k:"uncapped",name:"Off"},{k:"capped",name:"On"}],"run",k=>{st.run=k;render()},it=>it.k==="capped"&&!hasCap);
+  const lg=$("#legend");lg.innerHTML="";
+  LANGS.forEach(L=>{const lab=document.createElement("label");
+    lab.innerHTML=`<input type="checkbox" ${st.show[L.k]?"checked":""}> <i style="background:var(${L.css})"></i>${L.name}`;
+    lab.querySelector("input").onchange=e=>{st.show[L.k]=e.target.checked;drawTrace()};lg.appendChild(lab)});
+}
+
+function drawTrace(){
+  const svg=$("#trace"),W=Math.max(300,Math.round(svg.parentElement.clientWidth-36)),narrow=W<640,H=narrow?260:340,L=narrow?40:56,R=narrow?10:24,T=16,B=36;
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const n=Math.max(...LANGS.map(l=>turns(l.k).length),1);
+  const x=t=>L+(n===1?0:(t-1)*(W-L-R)/(n-1)),y=v=>T+(Y1-Math.max(Y0,Math.min(Y1,v)))*(H-T-B)/(Y1-Y0);
+  let s=`<rect class="zone-a" x="${L}" y="${y(1.3)}" width="${W-L-R}" height="${y(0.6)-y(1.3)}"/>`;
+  s+=`<rect class="zone-r" x="${L}" y="${y(0.25)}" width="${W-L-R}" height="${y(-1.6)-y(0.25)}"/>`;
+  [-1.5,-1,-.5,0,.5,1].forEach(v=>{s+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="tick" x="${L-8}" y="${y(v)+4}" text-anchor="end">${v.toFixed(1)}</text>`});
+  s+=`<line class="ref" x1="${L}" x2="${W-R}" y1="${y(1)}" y2="${y(1)}"/><text x="${W-R}" y="${y(1)-6}" text-anchor="end">default assistant</text>`;
+  s+=`<line class="ref" x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}"/><text x="${W-R}" y="${y(0)+16}" text-anchor="end">average character</text>`;
+  for(let t=1;t<=n;t++) if(!narrow||t%2===1||t===n) s+=`<text class="tick" x="${x(t)}" y="${H-12}" text-anchor="middle">${t}</text>`;
+  s+=`<text x="${L}" y="${H-12}" text-anchor="end" dx="-8">turn</text>`;
+  s+=`<line class="cursor" x1="${x(st.turn)}" x2="${x(st.turn)}" y1="${T}" y2="${H-B}"/>`;
+  const order=[...LANGS].sort((a,b)=>(a.k===st.lang)-(b.k===st.lang));
+  order.forEach(Lg=>{ if(!st.show[Lg.k]) return; const ts=turns(Lg.k); const pts=ts.map((d,i)=>d.s==null?null:[x(i+1),y(d.s)]).filter(Boolean);
+    if(!pts.length) return; const col=css(Lg.css), cls=Lg.k===st.lang?"line":"line dim";
+    s+=`<polyline class="${cls}" stroke="${col}" points="${pts.map(p=>p.join(",")).join(" ")}"/>`;
+    if(Lg.k===st.lang) pts.forEach((p,i)=>{s+=`<circle class="dot" cx="${p[0]}" cy="${p[1]}" r="${i+1===st.turn?6:3.5}" fill="${col}"/>`});
+  });
+  for(let t=1;t<=n;t++){const w=(W-L-R)/Math.max(n-1,1);s+=`<rect class="hit" x="${x(t)-w/2}" y="${T}" width="${w}" height="${H-T-B}" data-t="${t}"><title>Turn ${t}</title></rect>`}
+  svg.innerHTML=s;
+  svg.querySelectorAll(".hit").forEach(r=>r.onclick=()=>{st.turn=+r.dataset.t;render(true)});
+}
+
+function renderTranscript(scroll){
+  const ts=turns(st.lang),box=$("#transcript");
+  box.innerHTML=ts.map((d,i)=>`<article class="turn" id="t${i+1}" aria-current="${i+1===st.turn}" tabindex="0">
+    <p class="who"><span>User, turn ${i+1}</span></p><p class="user">${esc(d.u)}</p>
+    <p class="who"><span>Model</span><span class="score-chip">${d.s==null?"–":d.s.toFixed(2)}</span></p>
+    <div class="reply clamp">${md(d.a)}</div></article>`).join("")||"<p style='padding:18px'>No replies for this language yet.</p>";
+  box.querySelectorAll(".turn").forEach((el,i)=>{const go=()=>{st.turn=i+1;render()};el.onclick=go;el.onkeydown=e=>{if(e.key==="Enter")go()}});
+  if(scroll){const el=$("#t"+st.turn); if(el) el.scrollIntoView({block:"nearest",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+}
+
+function renderCard(){
+  const d=turns(st.lang)[st.turn-1],c=$("#turncard");
+  if(!d){c.innerHTML="<h3>No reply at this turn</h3>";return}
+  const pos=Math.max(0,Math.min(100,(d.s-Y0)/(Y1-Y0)*100)), m1=(1-Y0)/(Y1-Y0)*100, m0=(0-Y0)/(Y1-Y0)*100;
+  const words=d.s>=0.6?"in its usual assistant range":d.s>=0.25?"between assistant and character":d.s>=0?"close to an average character":"further into character than average";
+  const langOk=d.code?null:d.lang===st.lang;
+  const others=LANGS.filter(l=>l.k!==st.lang).map(l=>{const o=turns(l.k)[st.turn-1];return `<li><span>${l.name}, same turn</span><b>${o&&o.s!=null?o.s.toFixed(2):"–"}</b></li>`}).join("");
+  c.innerHTML=`<h3>Turn ${st.turn}, ${LANGNAME[st.lang]}${st.run==="capped"?", capped":""}</h3>
+    <div class="bignum">${d.s.toFixed(2)}</div><p style="margin-top:6px">The model is ${words}.</p>
+    <div class="gauge" aria-hidden="true"><div class="bar"></div><div class="mark" style="left:${m0}%"></div><div class="mark" style="left:${m1}%"></div>
+      <div class="needle" style="left:${pos}%"></div><div class="ends"><span>playing a character</span><span>default assistant</span></div></div>
+    <ul class="facts">
+      <li><span>Replied in</span><b class="${langOk===false?"bad":"ok"}">${d.code?"mostly code":LANGNAME[d.lang]||"unknown"}</b></li>
+      <li><span>Reply length</span><b>${d.tok} tokens${d.cut?", cut off at the limit":""}</b></li>${others}</ul>`;
+}
+
+function render(scroll){renderControls();drawTrace();renderTranscript(scroll);renderCard()}
+
+$("#prev").onclick=()=>{st.idx--;st.turn=1;render()};
+$("#next").onclick=()=>{st.idx++;st.turn=1;render()};
+$("#warn-yes").onclick=()=>{st.warned=true;$("#warn").close();st.topic="therapy";st.idx=0;st.turn=1;render()};
+$("#warn-no").onclick=()=>$("#warn").close();
+document.addEventListener("keydown",e=>{ if(e.target.closest&&e.target.closest("input,select,textarea,dialog"))return;
+  const n=turns(st.lang).length; if(e.key==="ArrowRight"&&st.turn<n){st.turn++;render(true)} if(e.key==="ArrowLeft"&&st.turn>1){st.turn--;render(true)} });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>drawTrace());
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>DATA&&drawTrace(),120)});
+
+function start(d){DATA=d;$("#pilot").textContent=d.label;$("#maxtok").textContent=d.max_new_tokens;render()}
+if(window.PC_DATA) start(window.PC_DATA); else fetch("data.json").then(r=>r.json()).then(start)
+  .catch(()=>{$("#transcript").innerHTML="<p style='padding:18px'>The data file did not load. Check that data.json sits next to this page.</p>"});
+</script>
+</body>
+</html>
