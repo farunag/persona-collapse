@@ -115,7 +115,7 @@ class VLLMBackend:
         self.args = args
         self.llm = LLM(model=path, tokenizer=path, dtype="bfloat16", max_model_len=args.max_context,
                        gpu_memory_utilization=args.gpu_memory_utilization, seed=args.seed,
-                       enable_prefix_caching=True)
+                       enable_prefix_caching=True, kv_cache_dtype=args.kv_cache_dtype)
         self.stop_ids = stop_token_ids(self.tokenizer, spec)
 
     def prompt_ids(self, messages):
@@ -314,6 +314,9 @@ def main(argv=None):
     ap.add_argument("--backend", choices=("auto", "vllm", "hf"), default="auto")
     ap.add_argument("--max-context", type=int, help="override the model context limit (tests)")
     ap.add_argument("--gpu-memory-utilization", type=float, default=0.90)
+    ap.add_argument("--kv-cache-dtype", default="auto",
+                    help="vLLM KV cache dtype; 'fp8' roughly doubles how many conversations fit at once "
+                         "(generation only; projection always reloads the bf16 model)")
     ap.add_argument("--hf-token-budget", type=int, default=60000,
                     help="HF backend: max (padded prompt + new tokens) x batch rows per sub-batch")
     ap.add_argument("--conversations", type=Path, default=CONVERSATIONS)
@@ -362,6 +365,8 @@ def main(argv=None):
                         else "per HF sub-batch: torch.manual_seed(request seed of the sub-batch's first row)"),
         "sampling": sampling, "sampling_fixed": {"top_k": "off", "min_p": 0.0, "repetition_penalty": 1.0},
         "chat_kwargs": spec["chat_kwargs"], "system_prompt": None, "max_context": args.max_context,
+        "kv_cache_dtype": args.kv_cache_dtype if backend.name == "vllm" else "model dtype (bf16)",
+        "gpu_memory_utilization": args.gpu_memory_utilization if backend.name == "vllm" else None,
         "versions": versions,
     }
     state = [{"conv": c, "messages": [], "prompt_tokens": [], "reply_tokens": [], "finish_reasons": [],
