@@ -27,6 +27,8 @@ Usage:
 import argparse
 import gc
 import hashlib
+import json
+import os
 import platform
 import time
 from datetime import datetime, timezone
@@ -321,6 +323,7 @@ def main(argv=None):
                     help="HF backend: max (padded prompt + new tokens) x batch rows per sub-batch")
     ap.add_argument("--conversations", type=Path, default=CONVERSATIONS)
     ap.add_argument("--dry-run", action="store_true", help="stub generator, no model or GPU")
+    ap.add_argument("--stop-after-turn", type=int, default=0, help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
 
     spec = MODELS[args.model]
@@ -332,8 +335,11 @@ def main(argv=None):
     args.out.mkdir(parents=True, exist_ok=True)
     stem = replay_stem(args.model, args.capped)
     out_path, log_path = args.out / f"{stem}.jsonl", args.out / f"{stem}.log.jsonl"
-    if out_path.exists() and not args.resume:
-        ap.error(f"{out_path} exists; pass --resume to continue it or choose another --out")
+    ckpt_path = args.out / f"{stem}.ckpt.json"
+    if (out_path.exists() or ckpt_path.exists()) and not args.resume:
+        ap.error(f"{out_path} or its checkpoint exists; pass --resume to continue it or choose another --out")
+    fingerprint = {"seed": args.seed, "capped": args.capped, "temperature": args.temperature, "top_p": args.top_p,
+                   "max_new_tokens": args.max_new_tokens, "max_context": args.max_context}
 
     convs = select_conversations(args.conversations, langs, domains, args.limit, args.spread)
     done = set()
@@ -345,6 +351,19 @@ def main(argv=None):
         if changed:
             ap.error(f"--resume with different settings than the existing file: {sorted(changed)}")
     todo = [c for c in convs if (c["conv_id"], c["lang"]) not in done]
+    ckpt = None
+    if args.resume and ckpt_path.exists():
+        ckpt = json.loads(ckpt_path.read_text(encoding="utf-8"))
+        diff = sorted(k for k, v in fingerprint.items() if ckpt["settings"].get(k) != v)
+        if diff:
+            ap.error(f"--resume: checkpoint was written with different settings: {diff}")
+        ck_keys = {(v["conv_id"], v["lang"]) for v in ckpt["states"]}
+        todo_keys = {(c["conv_id"], c["lang"]) for c in todo}
+        if ck_keys != todo_keys:
+            ap.error(f"--resume: checkpoint holds {len(ck_keys)} unfinished conversations but this selection has "
+                     f"{len(todo_keys)} left to run ({len(ck_keys ^ todo_keys)} differ); use the same "
+                     f"--langs/--domains/--limit/--spread as the interrupted run")
+        print(f"Resuming from checkpoint: turns 1-{ckpt['next_t']} done for {len(ck_keys)} conversations", flush=True)
     print(f"{len(convs)} (conversation, language) pairs selected; {len(done & {(c['conv_id'], c['lang']) for c in convs})} "
           f"already done; {len(todo)} to run -> {out_path}", flush=True)
     if not todo:
@@ -370,7 +389,29 @@ def main(argv=None):
         "versions": versions,
     }
     state = [{"conv": c, "messages": [], "prompt_tokens": [], "reply_tokens": [], "finish_reasons": [],
-              "request_seeds": [], "stopped_at_turn": None, "start": None} for c in todo]
+              "request_seeds": [], "stopped_at_turn": None, "start": None, "done": False} for c in todo]
+    start_t = 0
+    if ckpt:
+        saved = {(v["conv_id"], v["lang"]): v for v in ckpt["states"]}
+        for s in state:
+            v = saved[(s["conv"]["conv_id"], s["conv"]["lang"])]
+            for k in ("messages", "prompt_tokens", "reply_tokens", "finish_reasons", "request_seeds", "stopped_at_turn"):
+                s[k] = v[k]
+            s["start"] = time.time() - v["elapsed"] if v["elapsed"] is not None else None
+        start_t = ckpt["next_t"]
+
+    def save_checkpoint(next_t):
+        """All unfinished conversations after a complete turn; atomic replace, so a crash loses at most one turn."""
+        rows = [{"conv_id": s["conv"]["conv_id"], "lang": s["conv"]["lang"],
+                 **{k: s[k] for k in ("messages", "prompt_tokens", "reply_tokens", "finish_reasons",
+                                      "request_seeds", "stopped_at_turn")},
+                 "elapsed": (time.time() - s["start"]) if s["start"] else None}
+                for s in state if not s["done"]]
+        tmp = ckpt_path.with_suffix(".tmp")
+        tmp.write_text(json.dumps({"settings": fingerprint, "next_t": next_t, "states": rows,
+                                   "saved": datetime.now(timezone.utc).isoformat()}, ensure_ascii=False),
+                       encoding="utf-8")
+        os.replace(tmp, ckpt_path)
     n_turns = max(len(c["user_turns"]) for c in todo)
     n_written = 0
 
@@ -386,9 +427,14 @@ def main(argv=None):
                "wall_seconds": round(time.time() - s["start"], 1),
                "created": datetime.now(timezone.utc).isoformat(), "source_file": c["source_file"]}
         append_jsonl(out_path, row)
+        s["done"] = True
         n_written += 1
 
-    for t in range(n_turns):
+    for t in range(start_t, n_turns):
+        if args.stop_after_turn and t >= args.stop_after_turn:
+            print(f"Stopping after turn {t} (--stop-after-turn, for tests)", flush=True)
+            backend.close()
+            return out_path
         turn = t + 1
         active, prompts = [], []
         for s in state:
@@ -431,8 +477,11 @@ def main(argv=None):
         print(f"turn {turn:2d}: {len(active):4d} active, {n_new:7d} new tokens in {dt:7.1f}s "
               f"({log['tokens_per_s']} tok/s), {n_len} hit max_new_tokens, {n_written} conversations written",
               flush=True)
+        save_checkpoint(turn)
 
     backend.close()
+    if ckpt_path.exists():
+        os.replace(ckpt_path, ckpt_path.with_suffix(".done.json"))
     print(f"Done: {n_written} conversations written to {out_path} in {time.time() - t0:.1f}s", flush=True)
     return out_path
 
