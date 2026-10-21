@@ -1,6 +1,6 @@
 # Stage 2 summary
 
-Generated 2026-10-21T08:34:20.923323+00:00 by `scripts/analyze.py`. Inputs: `gemma_uncapped.proj.jsonl`, `qwen_uncapped.proj.jsonl`, `gemma_uncapped.langid.jsonl`, `qwen_uncapped.langid.jsonl`, `gemma_uncapped.jsonl`, `qwen_uncapped.jsonl`.
+Generated 2026-10-21T11:42:43.498599+00:00 by `scripts/analyze.py`. Inputs: `gemma_uncapped.proj.jsonl`, `qwen_uncapped.proj.jsonl`, `qwen_capped.proj.jsonl`, `gemma_uncapped.langid.jsonl`, `qwen_uncapped.langid.jsonl`, `qwen_capped.langid.jsonl`, `gemma_uncapped.jsonl`, `qwen_uncapped.jsonl`, `qwen_capped.jsonl`.
 Bootstrap: 2000 resamples over conversations, seed 0. Comparable turns: reached by >= 10 conversations and by >= 80% of each language's conversations, in every language of the domain (unbroken from turn 1).
 Score: normalised projection (1 = default Assistant vector, 0 = mean role vector). Drift: score minus the same language's coding-domain mean.
 
@@ -11,6 +11,8 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 | Qwen3-32B uncapped | coding | 1-12 (12) |
 | Qwen3-32B uncapped | metacognitive | 1-15 (15) |
 | Qwen3-32B uncapped | therapy | 1-13 (13) |
+| Qwen3-32B capped | metacognitive | 1-15 (15) |
+| Qwen3-32B capped | therapy | 1-10 (10) |
 | gemma-2-27b-it uncapped | coding | 1-8 (8) |
 | gemma-2-27b-it uncapped | metacognitive | 1-8 (8) |
 | gemma-2-27b-it uncapped | therapy | 1-7 (7) |
@@ -39,32 +41,38 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 | Qwen3-32B uncapped | metacognitive | en | 60 | -0.552 | -0.89 [-0.96, -0.83] |
 | Qwen3-32B uncapped | metacognitive | ha | 60 | 0.131 | -0.14 [-0.16, -0.11] |
 | Qwen3-32B uncapped | metacognitive | yo | 60 | 0.107 | -0.20 [-0.22, -0.17] |
-| gemma-2-27b-it uncapped | coding | en | 60 | 0.661 | +0.00 [-0.09, +0.09] |
-| gemma-2-27b-it uncapped | coding | ha | 60 | -2.026 | +0.00 [-0.25, +0.25] |
-| gemma-2-27b-it uncapped | coding | yo | 60 | -1.938 | +0.00 [-0.24, +0.24] |
-| gemma-2-27b-it uncapped | therapy | en | 60 | 0.540 | -0.12 [-0.21, -0.03] |
+| Qwen3-32B capped | therapy | en | 10 | 0.479 | – |
+| Qwen3-32B capped | therapy | ha | 10 | 0.276 | – |
+| Qwen3-32B capped | therapy | yo | 10 | 0.219 | – |
+| Qwen3-32B capped | metacognitive | en | 10 | 0.051 | – |
+| Qwen3-32B capped | metacognitive | ha | 10 | 0.233 | – |
+| Qwen3-32B capped | metacognitive | yo | 10 | 0.244 | – |
+| gemma-2-27b-it uncapped | coding | en | 60 | 0.661 | +0.00 [-0.09, +0.10] |
+| gemma-2-27b-it uncapped | coding | ha | 60 | -2.026 | +0.00 [-0.26, +0.24] |
+| gemma-2-27b-it uncapped | coding | yo | 60 | -1.938 | +0.00 [-0.26, +0.25] |
+| gemma-2-27b-it uncapped | therapy | en | 60 | 0.540 | -0.12 [-0.22, -0.03] |
 | gemma-2-27b-it uncapped | therapy | ha | 60 | -2.939 | -0.91 [-1.11, -0.74] |
-| gemma-2-27b-it uncapped | therapy | yo | 60 | -1.922 | +0.02 [-0.29, +0.33] |
+| gemma-2-27b-it uncapped | therapy | yo | 60 | -1.922 | +0.02 [-0.30, +0.33] |
 | gemma-2-27b-it uncapped | metacognitive | en | 60 | 0.350 | -0.31 [-0.43, -0.20] |
-| gemma-2-27b-it uncapped | metacognitive | ha | 60 | -2.724 | -0.70 [-0.91, -0.47] |
-| gemma-2-27b-it uncapped | metacognitive | yo | 60 | -2.339 | -0.40 [-0.60, -0.21] |
+| gemma-2-27b-it uncapped | metacognitive | ha | 60 | -2.724 | -0.70 [-0.93, -0.46] |
+| gemma-2-27b-it uncapped | metacognitive | yo | 60 | -2.339 | -0.40 [-0.61, -0.20] |
 
 ## Drift gap vs English (language drift minus English drift, 95% CI)
 
 | Condition | Domain | Language | Gap |
 |---|---|---|---|
-| Qwen3-32B uncapped | coding | ha | +0.00 [-0.04, +0.04] |
+| Qwen3-32B uncapped | coding | ha | +0.00 [-0.05, +0.04] |
 | Qwen3-32B uncapped | coding | yo | +0.00 [-0.04, +0.04] |
 | Qwen3-32B uncapped | metacognitive | ha | +0.75 [+0.69, +0.82] |
-| Qwen3-32B uncapped | metacognitive | yo | +0.70 [+0.63, +0.77] |
+| Qwen3-32B uncapped | metacognitive | yo | +0.70 [+0.63, +0.76] |
 | Qwen3-32B uncapped | therapy | ha | +0.24 [+0.15, +0.33] |
 | Qwen3-32B uncapped | therapy | yo | +0.19 [+0.10, +0.28] |
-| gemma-2-27b-it uncapped | coding | ha | +0.00 [-0.26, +0.26] |
+| gemma-2-27b-it uncapped | coding | ha | +0.00 [-0.28, +0.26] |
 | gemma-2-27b-it uncapped | coding | yo | +0.00 [-0.27, +0.27] |
-| gemma-2-27b-it uncapped | metacognitive | ha | -0.39 [-0.66, -0.13] |
+| gemma-2-27b-it uncapped | metacognitive | ha | -0.39 [-0.64, -0.13] |
 | gemma-2-27b-it uncapped | metacognitive | yo | -0.09 [-0.33, +0.13] |
-| gemma-2-27b-it uncapped | therapy | ha | -0.79 [-1.01, -0.60] |
-| gemma-2-27b-it uncapped | therapy | yo | +0.14 [-0.20, +0.46] |
+| gemma-2-27b-it uncapped | therapy | ha | -0.79 [-1.02, -0.60] |
+| gemma-2-27b-it uncapped | therapy | yo | +0.14 [-0.19, +0.48] |
 
 ## Reply language (all turns)
 
@@ -79,6 +87,12 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 | Qwen3-32B uncapped | yo | coding | 817 | 96.8% | 18 / 0 / 791 / 8 |
 | Qwen3-32B uncapped | yo | metacognitive | 900 | 98.8% | 0 / 0 / 889 / 11 |
 | Qwen3-32B uncapped | yo | therapy | 831 | 97.7% | 2 / 0 / 812 / 17 |
+| Qwen3-32B capped | en | metacognitive | 150 | 100.0% | 150 / 0 / 0 / 0 |
+| Qwen3-32B capped | en | therapy | 141 | 100.0% | 141 / 0 / 0 / 0 |
+| Qwen3-32B capped | ha | metacognitive | 150 | 100.0% | 0 / 150 / 0 / 0 |
+| Qwen3-32B capped | ha | therapy | 141 | 100.0% | 0 / 141 / 0 / 0 |
+| Qwen3-32B capped | yo | metacognitive | 150 | 100.0% | 0 / 0 / 150 / 0 |
+| Qwen3-32B capped | yo | therapy | 141 | 100.0% | 0 / 0 / 141 / 0 |
 | gemma-2-27b-it uncapped | en | coding | 788 | 99.9% | 787 / 0 / 0 / 1 |
 | gemma-2-27b-it uncapped | en | metacognitive | 900 | 99.3% | 894 / 0 / 0 / 6 |
 | gemma-2-27b-it uncapped | en | therapy | 823 | 97.6% | 803 / 0 / 0 / 20 |
@@ -102,6 +116,12 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 | Qwen3-32B uncapped | yo | coding | 1022 | 97.9% | 0 | 16664 |
 | Qwen3-32B uncapped | yo | metacognitive | 1000 | 93.3% | 0 | 17536 |
 | Qwen3-32B uncapped | yo | therapy | 963 | 88.9% | 0 | 16207 |
+| Qwen3-32B capped | en | metacognitive | 743 | 9.3% | 0 | 13864 |
+| Qwen3-32B capped | en | therapy | 724 | 22.0% | 0 | 14279 |
+| Qwen3-32B capped | ha | metacognitive | 934 | 73.3% | 0 | 16102 |
+| Qwen3-32B capped | ha | therapy | 918 | 67.4% | 0 | 15513 |
+| Qwen3-32B capped | yo | metacognitive | 980 | 81.3% | 0 | 15931 |
+| Qwen3-32B capped | yo | therapy | 794 | 61.7% | 0 | 15391 |
 | gemma-2-27b-it uncapped | en | coding | 414 | 0.1% | 13 | 7063 |
 | gemma-2-27b-it uncapped | en | metacognitive | 218 | 0.0% | 0 | 6098 |
 | gemma-2-27b-it uncapped | en | therapy | 326 | 0.0% | 6 | 7096 |
@@ -126,6 +146,11 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 - Qwen3-32B uncapped yo/coding: 98% of replies cut at max_new_tokens.
 - Qwen3-32B uncapped yo/metacognitive: 93% of replies cut at max_new_tokens.
 - Qwen3-32B uncapped yo/therapy: 89% of replies cut at max_new_tokens.
+- Qwen3-32B capped en/therapy: 22% of replies cut at max_new_tokens.
+- Qwen3-32B capped ha/metacognitive: 73% of replies cut at max_new_tokens.
+- Qwen3-32B capped ha/therapy: 67% of replies cut at max_new_tokens.
+- Qwen3-32B capped yo/metacognitive: 81% of replies cut at max_new_tokens.
+- Qwen3-32B capped yo/therapy: 62% of replies cut at max_new_tokens.
 - gemma-2-27b-it uncapped en/coding: 13 conversations stopped at the context limit.
 - gemma-2-27b-it uncapped en/therapy: 6 conversations stopped at the context limit.
 - gemma-2-27b-it uncapped ha/coding: 24 conversations stopped at the context limit.
@@ -141,7 +166,9 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 
 - `stage2_drift_Qwen3-32B_uncapped.png`
 - `stage2_drift_gemma-2-27b-it_uncapped.png`
+- `stage2_capping_Qwen3-32B.png`
 - `stage2_reply_language_Qwen3-32B_uncapped.png`
+- `stage2_reply_language_Qwen3-32B_capped.png`
 - `stage2_reply_language_gemma-2-27b-it_uncapped.png`
 
 ## Provenance
@@ -149,3 +176,4 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 - Qwen/Qwen3-32B revision 9216db5781bf21249d130ec9da846c4624c16137, generation seed 0
 - google/gemma-2-27b-it revision aaf20e6b9f4c0fcf043f6fb2a2068419086d77b0, generation seed 0
 - projection libraries: {'torch': '2.9.0+cu128', 'transformers': '4.57.5', 'assistant_axis': '/workspace/assistant-axis/assistant_axis', 'python': '3.11.17', 'gpu': 'NVIDIA A100-SXM4-80GB'}
+- projection libraries: {'torch': '2.9.0+cu128', 'transformers': '4.57.5', 'assistant_axis': '/workspace/assistant-axis/assistant_axis', 'python': '3.11.17', 'gpu': 'NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition'}

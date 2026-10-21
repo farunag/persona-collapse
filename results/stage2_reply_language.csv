@@ -8,6 +8,12 @@ Qwen3-32B,False,ha,therapy,831,0.9687123947051745,0,805,0,26,0,0
 Qwen3-32B,False,yo,coding,817,0.9681762545899633,18,0,791,8,0,0
 Qwen3-32B,False,yo,metacognitive,900,0.9877777777777778,0,0,889,11,0,0
 Qwen3-32B,False,yo,therapy,831,0.9771359807460891,2,0,812,17,0,0
+Qwen3-32B,True,en,metacognitive,150,1.0,150,0,0,0,0,0
+Qwen3-32B,True,en,therapy,141,1.0,141,0,0,0,0,0
+Qwen3-32B,True,ha,metacognitive,150,1.0,0,150,0,0,0,0
+Qwen3-32B,True,ha,therapy,141,1.0,0,141,0,0,0,0
+Qwen3-32B,True,yo,metacognitive,150,1.0,0,0,150,0,0,0
+Qwen3-32B,True,yo,therapy,141,1.0,0,0,141,0,0,0
 gemma-2-27b-it,False,en,coding,788,0.998730964467005,787,0,0,1,0,0
 gemma-2-27b-it,False,en,metacognitive,900,0.9933333333333333,894,0,0,6,0,0
 gemma-2-27b-it,False,en,therapy,823,0.9756986634264885,803,0,0,20,0,0
