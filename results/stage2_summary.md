@@ -1,70 +1,70 @@
 # Stage 2 summary
 
-Generated 2026-10-21T08:19:04.558507+00:00 by `scripts/analyze.py`. Inputs: `gemma_uncapped.proj.jsonl`, `qwen_uncapped.proj.jsonl`, `gemma_uncapped.langid.jsonl`, `qwen_uncapped.langid.jsonl`, `gemma_uncapped.jsonl`, `qwen_uncapped.jsonl`.
-Bootstrap: 2000 resamples over conversations, seed 0. Comparable turns: reached by >= 10 conversations in every language of the domain.
+Generated 2026-10-21T08:34:20.923323+00:00 by `scripts/analyze.py`. Inputs: `gemma_uncapped.proj.jsonl`, `qwen_uncapped.proj.jsonl`, `gemma_uncapped.langid.jsonl`, `qwen_uncapped.langid.jsonl`, `gemma_uncapped.jsonl`, `qwen_uncapped.jsonl`.
+Bootstrap: 2000 resamples over conversations, seed 0. Comparable turns: reached by >= 10 conversations and by >= 80% of each language's conversations, in every language of the domain (unbroken from turn 1).
 Score: normalised projection (1 = default Assistant vector, 0 = mean role vector). Drift: score minus the same language's coding-domain mean.
 
 ## Comparable turns
 
 | Condition | Domain | Turns |
 |---|---|---|
-| Qwen3-32B uncapped | coding | 1-15 (15) |
+| Qwen3-32B uncapped | coding | 1-12 (12) |
 | Qwen3-32B uncapped | metacognitive | 1-15 (15) |
-| Qwen3-32B uncapped | therapy | 1-15 (15) |
-| gemma-2-27b-it uncapped | coding | 1-12 (12) |
-| gemma-2-27b-it uncapped | metacognitive | 1-15 (15) |
-| gemma-2-27b-it uncapped | therapy | 1-14 (14) |
+| Qwen3-32B uncapped | therapy | 1-13 (13) |
+| gemma-2-27b-it uncapped | coding | 1-8 (8) |
+| gemma-2-27b-it uncapped | metacognitive | 1-8 (8) |
+| gemma-2-27b-it uncapped | therapy | 1-7 (7) |
 
 ## Per-language coding baselines
 
 | Condition | Language | Coding mean score | Conversations |
 |---|---|---|---|
-| Qwen3-32B uncapped | en | 0.333 | 60 |
-| Qwen3-32B uncapped | ha | 0.265 | 60 |
-| Qwen3-32B uncapped | yo | 0.298 | 60 |
-| gemma-2-27b-it uncapped | en | 0.715 | 60 |
-| gemma-2-27b-it uncapped | ha | -1.979 | 60 |
-| gemma-2-27b-it uncapped | yo | -1.888 | 60 |
+| Qwen3-32B uncapped | en | 0.339 | 60 |
+| Qwen3-32B uncapped | ha | 0.270 | 60 |
+| Qwen3-32B uncapped | yo | 0.302 | 60 |
+| gemma-2-27b-it uncapped | en | 0.661 | 60 |
+| gemma-2-27b-it uncapped | ha | -2.026 | 60 |
+| gemma-2-27b-it uncapped | yo | -1.938 | 60 |
 
 ## Mean drift over comparable turns (95% CI)
 
 | Condition | Domain | Language | Conversations | Mean score | Drift |
 |---|---|---|---|---|---|
-| Qwen3-32B uncapped | coding | en | 60 | 0.333 | +0.00 [-0.03, +0.03] |
-| Qwen3-32B uncapped | coding | ha | 60 | 0.265 | +0.00 [-0.03, +0.03] |
-| Qwen3-32B uncapped | coding | yo | 60 | 0.298 | +0.00 [-0.02, +0.02] |
-| Qwen3-32B uncapped | therapy | en | 60 | -0.052 | -0.38 [-0.48, -0.30] |
-| Qwen3-32B uncapped | therapy | ha | 60 | 0.134 | -0.13 [-0.16, -0.10] |
-| Qwen3-32B uncapped | therapy | yo | 60 | 0.118 | -0.18 [-0.20, -0.16] |
-| Qwen3-32B uncapped | metacognitive | en | 60 | -0.552 | -0.88 [-0.95, -0.83] |
-| Qwen3-32B uncapped | metacognitive | ha | 60 | 0.131 | -0.13 [-0.16, -0.11] |
-| Qwen3-32B uncapped | metacognitive | yo | 60 | 0.107 | -0.19 [-0.21, -0.17] |
-| gemma-2-27b-it uncapped | coding | en | 60 | 0.715 | +0.00 [-0.08, +0.08] |
-| gemma-2-27b-it uncapped | coding | ha | 60 | -1.979 | +0.00 [-0.25, +0.26] |
-| gemma-2-27b-it uncapped | coding | yo | 60 | -1.888 | +0.00 [-0.24, +0.25] |
-| gemma-2-27b-it uncapped | therapy | en | 60 | 0.580 | -0.13 [-0.22, -0.05] |
-| gemma-2-27b-it uncapped | therapy | ha | 60 | -2.672 | -0.69 [-0.92, -0.50] |
-| gemma-2-27b-it uncapped | therapy | yo | 60 | -1.766 | +0.12 [-0.19, +0.42] |
-| gemma-2-27b-it uncapped | metacognitive | en | 60 | 0.237 | -0.48 [-0.63, -0.35] |
-| gemma-2-27b-it uncapped | metacognitive | ha | 60 | -2.455 | -0.48 [-0.70, -0.26] |
-| gemma-2-27b-it uncapped | metacognitive | yo | 60 | -2.159 | -0.27 [-0.46, -0.09] |
+| Qwen3-32B uncapped | coding | en | 60 | 0.339 | +0.00 [-0.03, +0.03] |
+| Qwen3-32B uncapped | coding | ha | 60 | 0.270 | +0.00 [-0.03, +0.03] |
+| Qwen3-32B uncapped | coding | yo | 60 | 0.302 | +0.00 [-0.02, +0.02] |
+| Qwen3-32B uncapped | therapy | en | 60 | -0.030 | -0.37 [-0.46, -0.28] |
+| Qwen3-32B uncapped | therapy | ha | 60 | 0.137 | -0.13 [-0.16, -0.11] |
+| Qwen3-32B uncapped | therapy | yo | 60 | 0.120 | -0.18 [-0.20, -0.16] |
+| Qwen3-32B uncapped | metacognitive | en | 60 | -0.552 | -0.89 [-0.96, -0.83] |
+| Qwen3-32B uncapped | metacognitive | ha | 60 | 0.131 | -0.14 [-0.16, -0.11] |
+| Qwen3-32B uncapped | metacognitive | yo | 60 | 0.107 | -0.20 [-0.22, -0.17] |
+| gemma-2-27b-it uncapped | coding | en | 60 | 0.661 | +0.00 [-0.09, +0.09] |
+| gemma-2-27b-it uncapped | coding | ha | 60 | -2.026 | +0.00 [-0.25, +0.25] |
+| gemma-2-27b-it uncapped | coding | yo | 60 | -1.938 | +0.00 [-0.24, +0.24] |
+| gemma-2-27b-it uncapped | therapy | en | 60 | 0.540 | -0.12 [-0.21, -0.03] |
+| gemma-2-27b-it uncapped | therapy | ha | 60 | -2.939 | -0.91 [-1.11, -0.74] |
+| gemma-2-27b-it uncapped | therapy | yo | 60 | -1.922 | +0.02 [-0.29, +0.33] |
+| gemma-2-27b-it uncapped | metacognitive | en | 60 | 0.350 | -0.31 [-0.43, -0.20] |
+| gemma-2-27b-it uncapped | metacognitive | ha | 60 | -2.724 | -0.70 [-0.91, -0.47] |
+| gemma-2-27b-it uncapped | metacognitive | yo | 60 | -2.339 | -0.40 [-0.60, -0.21] |
 
 ## Drift gap vs English (language drift minus English drift, 95% CI)
 
 | Condition | Domain | Language | Gap |
 |---|---|---|---|
 | Qwen3-32B uncapped | coding | ha | +0.00 [-0.04, +0.04] |
-| Qwen3-32B uncapped | coding | yo | +0.00 [-0.03, +0.04] |
-| Qwen3-32B uncapped | metacognitive | ha | +0.75 [+0.68, +0.82] |
-| Qwen3-32B uncapped | metacognitive | yo | +0.69 [+0.63, +0.76] |
-| Qwen3-32B uncapped | therapy | ha | +0.25 [+0.16, +0.34] |
-| Qwen3-32B uncapped | therapy | yo | +0.20 [+0.12, +0.30] |
+| Qwen3-32B uncapped | coding | yo | +0.00 [-0.04, +0.04] |
+| Qwen3-32B uncapped | metacognitive | ha | +0.75 [+0.69, +0.82] |
+| Qwen3-32B uncapped | metacognitive | yo | +0.70 [+0.63, +0.77] |
+| Qwen3-32B uncapped | therapy | ha | +0.24 [+0.15, +0.33] |
+| Qwen3-32B uncapped | therapy | yo | +0.19 [+0.10, +0.28] |
 | gemma-2-27b-it uncapped | coding | ha | +0.00 [-0.26, +0.26] |
-| gemma-2-27b-it uncapped | coding | yo | +0.00 [-0.26, +0.26] |
-| gemma-2-27b-it uncapped | metacognitive | ha | +0.00 [-0.25, +0.26] |
-| gemma-2-27b-it uncapped | metacognitive | yo | +0.21 [-0.02, +0.44] |
-| gemma-2-27b-it uncapped | therapy | ha | -0.56 [-0.77, -0.36] |
-| gemma-2-27b-it uncapped | therapy | yo | +0.26 [-0.05, +0.57] |
+| gemma-2-27b-it uncapped | coding | yo | +0.00 [-0.27, +0.27] |
+| gemma-2-27b-it uncapped | metacognitive | ha | -0.39 [-0.66, -0.13] |
+| gemma-2-27b-it uncapped | metacognitive | yo | -0.09 [-0.33, +0.13] |
+| gemma-2-27b-it uncapped | therapy | ha | -0.79 [-1.01, -0.60] |
+| gemma-2-27b-it uncapped | therapy | yo | +0.14 [-0.20, +0.46] |
 
 ## Reply language (all turns)
 
@@ -114,7 +114,7 @@ Score: normalised projection (1 = default Assistant vector, 0 = mean role vector
 
 ## Flags (check before interpreting)
 
-- gemma-2-27b-it uncapped: coding baselines differ across languages by 2.69 (yo -1.89, ha -1.98, en 0.71); language alone shifts the projection, so compare drift, not raw scores.
+- gemma-2-27b-it uncapped: coding baselines differ across languages by 2.69 (yo -1.94, ha -2.03, en 0.66); language alone shifts the projection, so compare drift, not raw scores.
 - Qwen3-32B uncapped ha/coding: only 85% of replies in the user's language.
 - gemma-2-27b-it uncapped yo/therapy: only 77% of replies in the user's language.
 - Qwen3-32B uncapped en/coding: 54% of replies cut at max_new_tokens.
