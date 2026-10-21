@@ -115,3 +115,33 @@ I didn't do it because the project rules say to ask before overwriting anything 
 
 Run logs for this session are in `/workspace/outputs/stage2_logs/` on this machine.
 They have not been uploaded to the dataset.
+
+## 7. Pre-destroy artifact check (`verify_artifacts.py --machine gemma --upload-missing`)
+
+Run after `bash scripts/save_env.sh gemma-a100` (environment record pushed to `env/gemma-a100/`). Nothing was missing, so nothing was uploaded. Output:
+
+```
+      ok  gemma/replay/gemma_uncapped.ckpt.done.json  (0.0 MB)
+      ok  gemma/replay/gemma_uncapped.jsonl  (12.0 MB)
+      ok  gemma/replay/gemma_uncapped.langid.jsonl  (2.9 MB)
+      ok  gemma/replay/gemma_uncapped.log.jsonl  (0.0 MB)
+      ok  gemma/replay/gemma_uncapped.proj.jsonl  (8.3 MB)
+      ok  qwen/replay/qwen_uncapped.jsonl  (25.1 MB)
+      ok  qwen/replay/qwen_uncapped.langid.jsonl  (3.3 MB)
+      ok  qwen/replay/qwen_uncapped.proj.jsonl  (10.2 MB)
+      ok  gemma/pilot/gemma_uncapped.ckpt.done.json  (0.0 MB)
+      ok  gemma/pilot/gemma_uncapped.jsonl  (0.4 MB)
+      ok  gemma/pilot/gemma_uncapped.log.jsonl  (0.0 MB)
+      ok  gemma/logs/pilot_gemma.log  (0.0 MB)
+      ok  gemma/logs/replay_gemma.log  (0.0 MB)
+      ok  gemma/logs/replay_gemma_resume.log  (0.0 MB)
+      ok  gemma/logs/setup_vllm.log  (0.0 MB)
+
+Required for this machine's runs:
+       ok  gemma/replay/gemma_uncapped.jsonl
+       ok  gemma/replay/gemma_uncapped.log.jsonl
+       ok  gemma/replay/gemma_uncapped.proj.jsonl
+       ok  gemma/replay/gemma_uncapped.langid.jsonl
+
+ALL REQUIRED FILES SAVED
+```
