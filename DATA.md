@@ -32,6 +32,10 @@ Per model and condition (`qwen_uncapped`, `qwen_capped`, `gemma_uncapped`), unde
 
 Also `<model>/pilot/` (pilot runs, 400- and 1024-token) and `<model>/logs/` (run and timing logs).
 
+For the public release, `scripts/export_dataset.py` flattens these into `data/turns-<run>.jsonl`
+(one row per reply) and `data/sensitivity.jsonl`, and `scripts/release_dataset.py` uploads them with
+the dataset card `dataset/README.md`. The raw files are not changed.
+
 ## 3. Environment records (replication) — GitHub `env/<machine>/`
 `nvidia-smi`, GPU name, CUDA/driver, `uv pip freeze` of the assistant-axis env and of the vLLM
 env, assistant-axis git commit, repo commit, and the exact run commands (`scripts/save_env.sh`).
