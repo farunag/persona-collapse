@@ -407,9 +407,11 @@ def analyze(proj_paths, langid_paths=(), replay_paths=(), out=RESULTS, min_convs
              f"{prefix}_gap_vs_en.csv": gaps, f"{prefix}_reply_language_by_turn.csv": lturn,
              f"{prefix}_reply_language.csv": lover, f"{prefix}_tokens.csv": ttable}
     conds = sorted({cond_of(r) for r in rows})
+    # a condition without its own coding domain (e.g. a capped subset) has no baseline, hence no drift chart
+    drift_conds = [c for c in conds if any(r["drift"] is not None for r in trows if (r["model"], r["capped"]) == c)]
     charts = []
     if plots:
-        charts += [f"{prefix}_drift_{c[0]}_{'capped' if c[1] else 'uncapped'}.png" for c in conds]
+        charts += [f"{prefix}_drift_{c[0]}_{'capped' if c[1] else 'uncapped'}.png" for c in drift_conds]
         charts += [f"{prefix}_capping_{m}.png" for m in sorted({c[0] for c in conds}) if {(m, True), (m, False)} <= set(conds)]
         charts += [f"{prefix}_reply_language_{c[0]}_{'capped' if c[1] else 'uncapped'}.png"
                    for c in sorted({cond_of(r) for r in lrows})]
@@ -425,7 +427,7 @@ def analyze(proj_paths, langid_paths=(), replay_paths=(), out=RESULTS, min_convs
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         _style(plt)
-        for c in conds:
+        for c in drift_conds:
             plot_drift(trows, c, out / f"{prefix}_drift_{c[0]}_{'capped' if c[1] else 'uncapped'}.png", plt)
         for m in sorted({c[0] for c in conds}):
             if {(m, True), (m, False)} <= set(conds):

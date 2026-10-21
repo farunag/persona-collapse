@@ -148,3 +148,15 @@ def test_plots(files):
     for name in ("stage2_drift_Qwen3-32B_uncapped.png", "stage2_capping_Qwen3-32B.png",
                  "stage2_reply_language_Qwen3-32B_uncapped.png"):
         assert (files["out"] / name).exists()
+
+
+def test_plots_capped_without_coding(tmp_path):
+    # the real capped run covers therapy only (no coding baseline): no drift chart, but no crash either
+    pytest.importorskip("matplotlib")
+    capped = [r for r in fake_proj(capped=True, shift=0.2) if r["domain"] != "coding"]
+    files = {"proj": [write(tmp_path / "q_uncapped.proj.jsonl", fake_proj()), write(tmp_path / "q_capped.proj.jsonl", capped)],
+             "langid": [write(tmp_path / "q.langid.jsonl", fake_langid())],
+             "replay": [write(tmp_path / "q.jsonl", fake_replay())], "out": tmp_path / "results"}
+    run(files, plots=True)
+    assert (files["out"] / "stage2_capping_Qwen3-32B.png").exists()
+    assert not (files["out"] / "stage2_drift_Qwen3-32B_capped.png").exists()
