@@ -5,6 +5,7 @@ Does NOT change the dataset's visibility: switch it to public on the Hub when re
 
   python scripts/release_dataset.py            # download, export, upload data/ + README.md
   python scripts/release_dataset.py --dry-run  # download and export only, upload nothing
+  python scripts/release_dataset.py --card-only  # upload dataset/README.md only
 """
 
 import argparse
@@ -22,10 +23,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--work", type=Path, default=Path("release_work"))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--card-only", action="store_true")
     a = ap.parse_args()
     if not os.environ.get("HF_TOKEN"):
         sys.exit("Set HF_TOKEN in the environment first (a write token).")
 
+    if a.card_only:
+        HfApi().upload_file(repo_id=REPO, repo_type="dataset", path_or_fileobj="dataset/README.md",
+                            path_in_repo="README.md", commit_message="Dataset card")
+        print("Card uploaded.")
+        return
     raw = Path(snapshot_download(REPO, repo_type="dataset", local_dir=a.work / "runs",
                                  allow_patterns=["qwen/replay/*.jsonl", "gemma/replay/*.jsonl", "sensitivity/*"]))
     out = a.work / "export"

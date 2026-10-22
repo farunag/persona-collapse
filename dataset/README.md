@@ -44,7 +44,8 @@ separates its default helpful-assistant persona from role-play characters. The q
 when the conversation is not in English?*
 
 - **Code, analysis and reports:** [github.com/farunag/persona-collapse](https://github.com/farunag/persona-collapse)
-- **Workbench:** [Hugging Face Space, link to come]
+- **Workbench:** [huggingface.co/spaces/Faruna01/persona-collapse](https://huggingface.co/spaces/Faruna01/persona-collapse)
+- **Reproduce the headline:** `notebooks/gate_c.ipynb` in the repo (Colab, CPU, no token)
 - Built on [safety-research/assistant-axis](https://github.com/safety-research/assistant-axis)
   and the published axes in
   [lu-christina/assistant-axis-vectors](https://huggingface.co/datasets/lu-christina/assistant-axis-vectors).
