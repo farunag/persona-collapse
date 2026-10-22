@@ -47,7 +47,9 @@ def turn_rows(replay, proj, lid):
             yield {
                 "model": r["model"], "model_revision": r["model_revision"],
                 "condition": "capped" if r["capped"] else "uncapped", "capped": r["capped"],
-                "capping_experiment": r.get("capping_experiment"),
+                # "none", not null: a column that is null in every row of one file makes the
+                # datasets loader infer type null and then fail on the capped file's strings
+                "capping_experiment": r.get("capping_experiment") or "none",
                 "language": r["lang"], "domain": r["domain"], "conv_id": r["conv_id"],
                 "persona_id": r["persona_id"], "topic_id": r["topic_id"],
                 "seed": r["seed"], "request_seed": (r.get("request_seeds") or [None] * t)[t - 1],
@@ -88,6 +90,17 @@ def sensitivity_rows(raw, prompts):
             }
 
 
+def null_columns(path):
+    """Columns that are null in every row of a file (they break schema inference across files)."""
+    seen, nonnull = set(), set()
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            row = json.loads(line)
+            seen.update(row)
+            nonnull.update(k for k, v in row.items() if v is not None)
+    return sorted(seen - nonnull)
+
+
 def write(rows, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     n = missing = 0
@@ -97,6 +110,9 @@ def write(rows, path):
             missing += row["score"] is None
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
     print(f"{path}: {n} rows, {missing} without a score")
+    bad = null_columns(path)
+    if bad:
+        print(f"  WARNING: always null in this file: {bad}")
     return n
 
 
