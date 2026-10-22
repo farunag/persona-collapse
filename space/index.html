@@ -144,6 +144,7 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
   </header>
 
   <section class="controls" aria-label="Choose a conversation">
+    <div class="ctl"><span id="lbl-model">Model</span><div class="seg" role="group" aria-labelledby="lbl-model" id="model"></div></div>
     <div class="ctl"><span id="lbl-topic">Topic</span><div class="seg" role="group" aria-labelledby="lbl-topic" id="topic"></div><p class="about" id="topic-about"></p></div>
     <div class="ctl"><span id="lbl-conv">Conversation</span>
       <div class="convnav" aria-labelledby="lbl-conv"><button id="prev" aria-label="Previous conversation">‹</button><output id="convpos"></output><button id="next" aria-label="Next conversation">›</button><span class="has" id="hascap"></span></div></div>
@@ -163,9 +164,9 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
 
   <section class="notes">
     <div><h3>Reading the trace</h3><p>Each row is one turn. Further right is closer to the model's default assistant (1.0); the dashed line at 0 is where an average role-played character sits. Grey is the default model, blue is the capped one. Click a row or a message to line both chats up on that turn.</p></div>
-    <div><h3>What capping does</h3><p>Capping comes from the same research. While the model writes, its reading is never allowed to fall below the assistant's normal range; above that range nothing changes. The user messages are identical on both sides. Capped runs cover 10 therapy and 10 self-reflection conversations per language.</p></div>
-    <div><h3>A steady reading is not a good answer</h3><p>In Hausa and Yoruba the model often stays near its assistant mode while missing what the user said. Read the replies, not only the trace.</p></div>
-    <div><h3>How it was made</h3><p>Each conversation was written once in English, and its user messages were translated into Hausa and Yoruba and checked by native speakers. Qwen 3 32B answered every message fresh in each language, with no instructions about length; replies stop at <span id="maxtok">400</span> tokens.</p></div>
+    <div><h3>What capping does</h3><p>Capping comes from the same research. While the model writes, its reading is never allowed to fall below the assistant's normal range; above that range nothing changes. The user messages are identical on both sides. Only Qwen 3 32B has a published capping setting, and its capped runs cover 10 therapy and 10 self-reflection conversations per language.</p></div>
+    <div><h3>The reading is weaker in Hausa and Yoruba</h3><p>Asked to play a character, Qwen's reading dropped by 1.37 in English but only about 0.4 in Hausa and Yoruba. Replies fully in character but written in Hausa or Yoruba read like normal assistant replies. So a steady line in Hausa or Yoruba is weak evidence that the model is still itself, and the model can stay steady while missing what the user said. Read the replies, not only the trace.</p></div>
+    <div><h3>How it was made</h3><p>Each conversation was written once in English, and its user messages were translated into Hausa and Yoruba and checked by native speakers. Qwen 3 32B and Gemma 2 27B answered every message fresh in each language, with no instructions about length; replies stop at <span id="maxtok">1024</span> tokens. Gemma's conversations end early when its 8,192-token memory is full, most often in Yoruba. Data: <a href="https://huggingface.co/datasets/Faruna01/persona-collapse-runs">Faruna01/persona-collapse-runs</a>.</p></div>
     <div><h3>Sources</h3><p>The Assistant Axis, Lu et al. 2026, <a href="https://arxiv.org/abs/2601.10387">arXiv:2601.10387</a>. Code and data: <a href="https://github.com/farunag/persona-collapse">github.com/farunag/persona-collapse</a>. Supported by the Cosmos Institute.</p></div>
   </section>
 </div>
@@ -181,8 +182,8 @@ const LANGS=[{k:"en",name:"English",css:"--en"},{k:"ha",name:"Hausa",css:"--ha"}
 const TOPICS=[{k:"coding",name:"Coding",about:"Programming help. The model usually stays in assistant mode here, so this is the baseline."},{k:"therapy",name:"Therapy",about:"A user in emotional difficulty asks for support. The paper found harmful drift in conversations like these."},{k:"metacognitive",name:"Self-reflection (metacognitive)",about:"The user presses the model to reflect on its own mind and experience. This is where drift is usually strongest."}];
 const LNAME={en:"English",ha:"Hausa",yo:"Yorùbá",other:"another language"};
 const X0=-1.6,X1=1.3;
-const st={topic:"metacognitive",idx:0,lang:"en",turn:1,cmp:false,warned:false,open:new Set()};
-let DATA=null;
+const st={model:"qwen",topic:"metacognitive",idx:0,lang:"en",turn:1,cmp:false,warned:false,open:new Set()};
+let INDEX=null;const CACHE={};
 const $=s=>document.querySelector(s);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -200,10 +201,17 @@ function md(text){
     }).join("");
   }).join("");
 }
-const convs=()=>DATA.conversations.filter(c=>c.domain===st.topic);
+const MODEL_NAMES={qwen:"Qwen 3 32B",gemma:"Gemma 2 27B"};
+const M=()=>INDEX.models.find(m=>m.key===st.model)||INDEX.models[0];
+const convs=()=>M().domains[st.topic]||[];
 const conv=()=>convs()[st.idx];
-const turns=(run,lang)=>((conv().runs[run]||{})[lang||st.lang])||[];
-const hasCap=c=>!!(c.runs.capped&&c.runs.capped[st.lang]);
+const ckey=()=>conv()?`${M().key}/${conv().id}`:"";
+const full=()=>CACHE[ckey()];
+const turns=(run,lang)=>{const f=full();return f?(((f.runs[run]||{})[lang||st.lang])||[]):[]};
+const stopped=(run,lang)=>{const f=full();return f&&f.stopped&&f.stopped[run]?f.stopped[run][lang||st.lang]:null};
+const hasCap=c=>!!(c&&c.runs.capped&&c.runs.capped.includes(st.lang));
+function load(){const k=ckey();if(!k||CACHE[k])return Promise.resolve();
+  return fetch(`data/${M().key}/${conv().id}.json`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{CACHE[k]=d})}
 
 function seg(el,items,cur,onPick,disabled){
   el.innerHTML="";
@@ -215,6 +223,9 @@ function seg(el,items,cur,onPick,disabled){
 function firstWithCap(){const i=convs().findIndex(hasCap);return i<0?0:i}
 
 function renderControls(){
+  $("#pilot").textContent=M().label;$("#maxtok").textContent=M().max_new_tokens;
+  seg($("#model"),INDEX.models.map(m=>({k:m.key,name:MODEL_NAMES[m.key]||m.model})),st.model,k=>{
+    st.model=k;st.idx=firstWithCap();st.turn=1;st.open.clear();render()});
   seg($("#topic"),TOPICS,st.topic,k=>{
     if(k==="therapy"&&!st.warned){$("#warn").showModal();return}
     st.topic=k;st.idx=firstWithCap();st.turn=1;st.open.clear();render()});
@@ -222,7 +233,7 @@ function renderControls(){
   const n=convs().length;$("#convpos").value=`${st.idx+1} of ${n}`;
   $("#prev").disabled=st.idx===0;$("#next").disabled=st.idx>=n-1;
   const withCap=convs().filter(hasCap).length;
-  $("#hascap").textContent=hasCap(conv())?"has a capped run":(withCap?`no capped run (${withCap} of ${n} have one)`:"no capped runs for this topic");
+  $("#hascap").textContent=hasCap(conv())?"has a capped run":(withCap?`no capped run (${withCap} of ${n} have one)`:(st.model==="qwen"?"no capped runs for this topic":"no capping setting for this model"));
   seg($("#lang"),LANGS,st.lang,k=>{st.lang=k;st.open.clear();render()});
   seg($("#cmp"),[{k:false,name:"Hide"},{k:true,name:"Show"}],st.cmp,k=>{st.cmp=k;drawTrace()});
 }
@@ -231,7 +242,7 @@ function renderChat(side){
   const S=SIDES[side],box=$("#chat"+side),ts=turns(S.run);
   box.innerHTML=`<div class="chat-head"><h2><i style="background:var(${S.css})"></i>${S.name}</h2><p>${S.note}</p></div><div class="msgs" id="msgs${side}"></div>`;
   const list=box.querySelector(".msgs");
-  if(!ts.length){list.innerHTML=`<p class="empty">${side==="B"?"This conversation was not run with capping. Capped runs cover 10 therapy and 10 self-reflection conversations per language; use the arrows to find one marked “has a capped run”.":"No replies for this conversation in this language yet."}</p>`;return}
+  if(!ts.length){list.innerHTML=`<p class="empty">${side==="B"?(st.model!=="qwen"?"Gemma 2 27B has no published capping setting, so only its default run is shown. Switch the model to Qwen 3 32B to compare.":"This conversation was not run with capping. Capped runs cover 10 therapy and 10 self-reflection conversations per language; use the arrows to find one marked “has a capped run”."):"No replies for this conversation in this language."}</p>`;return}
   list.innerHTML=ts.map((d,i)=>{
     const t=i+1,key=`${side}${t}`,open=st.open.has(key),long=d.a.length>420;
     const langBad=!d.code&&d.lang&&d.lang!==st.lang;
@@ -239,10 +250,10 @@ function renderChat(side){
       <div class="bubble u"><div class="t">User, turn ${t}</div>${esc(d.u)}</div>
       <div class="bubble m"><div class="body ${long&&!open?"fold":""}">${md(d.a)}</div>
         <div class="meta"><span class="chip score" title="Persona reading">${d.s==null?"–":d.s.toFixed(2)}</span>
-          ${d.cut?`<span class="chip cut">cut off at ${DATA.max_new_tokens} tokens</span>`:""}
+          ${d.cut?`<span class="chip cut">cut off at ${M().max_new_tokens} tokens</span>`:""}
           ${langBad?`<span class="chip lang-bad">replied in ${LNAME[d.lang]||"another language"}</span>`:""}
           ${long?`<button class="more" data-k="${key}">${open?"Show less":"Show full reply"}</button>`:""}</div></div></article>`;
-  }).join("");
+  }).join("")+(stopped(S.run)?`<p class="empty">The conversation stops here: the model's 8,192-token memory was full before turn ${stopped(S.run)}.</p>`:"");
   list.querySelectorAll(".pair").forEach(el=>{
     const go=()=>{st.turn=+el.dataset.t;sync(side)};
     el.onclick=e=>{if(e.target.closest(".more"))return;go()};
@@ -282,7 +293,14 @@ function mark(){document.querySelectorAll(".pair").forEach(el=>el.setAttribute("
 function scrollTo(side){const list=$("#msgs"+side),el=list&&list.querySelector(`.pair[data-t="${st.turn}"]`);
   if(el) list.scrollTo({top:el.offsetTop-list.offsetTop-8,behavior:reduce()?"auto":"smooth"})}
 function sync(from){mark();drawTrace();["A","B"].forEach(s=>{if(s!==from)scrollTo(s)})}
-function render(){renderControls();renderChat("A");renderChat("B");drawTrace();mark()}
+function render(){
+  renderControls();
+  if(conv()&&!full()){
+    ["A","B"].forEach(s=>{$("#chat"+s).innerHTML=`<div class="chat-head"><h2><i style="background:var(${SIDES[s].css})"></i>${SIDES[s].name}</h2><p>${SIDES[s].note}</p></div><p class="empty">Loading the conversation…</p>`});
+    const want=ckey();
+    load().then(()=>{if(ckey()===want)render()}).catch(()=>{$("#chatA").innerHTML="<p style='padding:16px'>This conversation did not load. Check your connection and try again.</p>"});
+    return}
+  renderChat("A");renderChat("B");drawTrace();mark()}
 
 $("#prev").onclick=()=>{st.idx--;st.turn=1;st.open.clear();render()};
 $("#next").onclick=()=>{st.idx++;st.turn=1;st.open.clear();render()};
@@ -292,12 +310,14 @@ document.addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("i
   const n=Math.max(turns("uncapped").length,turns("capped").length);
   if((e.key==="ArrowDown"||e.key==="j")&&st.turn<n){e.preventDefault();st.turn++;sync()}
   if((e.key==="ArrowUp"||e.key==="k")&&st.turn>1){e.preventDefault();st.turn--;sync()}});
-let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>DATA&&drawTrace(),120)});
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>DATA&&drawTrace());
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>INDEX&&full()&&drawTrace(),120)});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>INDEX&&full()&&drawTrace());
 
-function start(d){DATA=d;$("#pilot").textContent=d.label;$("#maxtok").textContent=d.max_new_tokens;st.idx=firstWithCap();render()}
-if(window.PC_DATA)start(window.PC_DATA);else fetch("data.json").then(r=>r.json()).then(start)
-  .catch(()=>{$("#chatA").innerHTML="<p style='padding:16px'>The data file did not load. Check that data.json sits next to this page.</p>"});
+function start(idx){INDEX=idx;st.model=M().key;$("#pilot").textContent=M().label;$("#maxtok").textContent=M().max_new_tokens;st.idx=firstWithCap();render()}
+// Offline preview: window.PC_DATA = {index, convs: {"<model>/<conv_id>": {...}}}
+if(window.PC_DATA){Object.assign(CACHE,window.PC_DATA.convs||{});start(window.PC_DATA.index)}
+else fetch("data/index.json").then(r=>r.json()).then(start)
+  .catch(()=>{$("#chatA").innerHTML="<p style='padding:16px'>The data did not load. Check that the data folder sits next to this page.</p>"});
 </script>
 </body>
 </html>

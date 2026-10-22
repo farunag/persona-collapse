@@ -2,7 +2,7 @@
 
   python scripts/build_space_data.py --dir space/sample_data --model qwen --out space/data.json
   python scripts/build_space_data.py --dir <runs>/qwen/replay --model qwen --split-dir space/data
-      (one file per topic, space/data/<model>_<domain>.json, plus space/data/index.json)
+      (one file per conversation, space/data/<model>/<conv_id>.json, plus space/data/index.json)
 
 Standard library only. One entry per conversation, with every language and run
 (uncapped / capped) it has: user turn, reply, normalised score, raw projection,
@@ -27,7 +27,7 @@ def main():
     ap.add_argument("--dir", type=Path, required=True)
     ap.add_argument("--model", default="qwen")
     ap.add_argument("--out", type=Path)
-    ap.add_argument("--split-dir", type=Path, help="write one file per topic instead of --out")
+    ap.add_argument("--split-dir", type=Path, help="write one file per conversation instead of --out")
     ap.add_argument("--label", default="Pilot run: 2 conversations per topic")
     a = ap.parse_args()
 
@@ -57,6 +57,8 @@ def main():
                     "tok": r["reply_tokens"][t - 1], "cut": r["finish_reasons"][t - 1] == "length",
                 })
             c["runs"].setdefault(run, {})[r["lang"]] = turns
+            if r.get("stopped_at_turn"):
+                c.setdefault("stopped", {}).setdefault(run, {})[r["lang"]] = r["stopped_at_turn"]
     out = {"model": meta.get("model"), "max_new_tokens": meta.get("max_new_tokens"), "label": a.label,
            "conversations": sorted(convs.values(), key=lambda c: (c["domain"], c["persona"], c["topic"]))}
     if a.split_dir:
@@ -75,23 +77,25 @@ def dump(obj, path):
 
 
 def write_split(out, model_key, split_dir):
-    """space/data/<model>_<domain>.json per topic, and index.json listing every file."""
+    """One file per conversation, space/data/<model>/<conv_id>.json, loaded on demand by the page,
+    plus space/data/index.json listing every model, topic and conversation."""
     index_path = split_dir / "index.json"
-    index = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {"files": []}
-    index["files"] = [f for f in index["files"] if f["model_key"] != model_key]
-    by_domain = defaultdict(list)
+    index = json.loads(index_path.read_text(encoding="utf-8")) if index_path.exists() else {"models": []}
+    index["models"] = [m for m in index["models"] if m["key"] != model_key]
+    domains = defaultdict(list)
+    total = 0
     for c in out["conversations"]:
-        by_domain[c["domain"]].append(c)
-    for domain, convs in sorted(by_domain.items()):
-        name = f"{model_key}_{domain}.json"
-        dump({**{k: v for k, v in out.items() if k != "conversations"}, "domain": domain, "conversations": convs},
-             split_dir / name)
-        runs = sorted({r for c in convs for r in c["runs"]})
-        index["files"].append({"model_key": model_key, "model": out["model"], "domain": domain, "file": name,
-                               "conversations": len(convs), "runs": runs})
-    index["files"].sort(key=lambda f: (f["model_key"], f["domain"]))
+        path = split_dir / model_key / f"{c['id']}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(c, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        total += path.stat().st_size
+        domains[c["domain"]].append({"id": c["id"], "persona": c["persona"], "topic": c["topic"],
+                                     "runs": {run: sorted(langs) for run, langs in c["runs"].items()}})
+    index["models"].append({"key": model_key, "model": out["model"], "label": out["label"],
+                            "max_new_tokens": out["max_new_tokens"], "domains": dict(domains)})
+    index["models"].sort(key=lambda m: m["key"] != "qwen")
     dump(index, index_path)
-
+    print(f"{len(out['conversations'])} conversation files in {split_dir / model_key} ({total / 1e6:.1f} MB)")
 
 if __name__ == "__main__":
     main()
