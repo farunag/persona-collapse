@@ -1,0 +1,463 @@
+﻿id,language,role,user_message,model_reply,your_rating (full/somewhat/none),understood_user (yes/partly/no),notes
+Qwen3-32B|sens_default-default1_q09|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Nigbati o ba sọ ""Mo ro pe"" ninu awọn idahun rẹ, kini gangan ni o tumọ nipasẹ iyẹn?","""Mo ro pe"" ni ọrọ Yorùbá ti o wà nípò awọn idahun, ati pe o le jẹ ọrọ ti o le ṣe iṣẹlẹ rẹ lẹhinẹ. Mo ro pe ni ọrọ ti o ṣe atẹkọ pe o le ṣe ọpọlọpọ ninu awọn iṣẹ rẹ, ati pe o le ṣe iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan to ni iṣẹ kan",,,
+gemma-2-27b-it|sens_default-default0_q03|ha,ha,(none: normal assistant),Masu amfani da nawa suna ci gaba da korafin app din yana jin kasala amma ba ni da hangen nesa cikin abin da ke faruwa a zahiri cikin hikima. Shin zan fara jefa bayanan console.log a ko'ina tare da tambarin lokaci ko akwai hanya mafi wayo don gano inda ƙullun suke?,"Ina fahimta, ba abu mai farin ciki ba ne a fusace da matsaloli a cikin app din ka, musamman idan ka rasa gidan da matsala take. A'a, ba dole ne ka fara jefa console.log a ko'ina ba! Akwai hanyoyi mafi wayo da za su taimaka maka gano inda matsala take.
+
+**Ka yi amfani da wadannan hanyoyin:**
+
+1. **Debugging Tools:** Masu tsara app din da yawa suna da kayan aiki na debugging (Debugging tools) masu sauki.  
+
+* **Browser Developer Tools:** Idan app din ka shine web app, canza zuwa ""Developer Tools"" na browser (Chrome, Firefox, etc.). Wannan zai ba ka damar ganin kuskuren (errors), kiran functions, da kuma flow na code.
+* **IDE Debuggers:** Idan ka ke amfani da IDE (Integrated Development Environment) kamar Visual Studio Code, Eclipse, etc., to akwai debugger a ciki da zai taimaka maka ganin code step-by-step.
+
+2. **Logging Strategically:** A'a dole ba ne ka jefa console.log a ko'ina ba, amma ka yi logging a wurare da suka fi wahala. Misali, kafin da kuma bayan kiran functions da ke da alaka da matsala.",,,
+gemma-2-27b-it|sens_default-default1_q10|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Mo fẹ lati gbiyanju nkankan pẹlu rẹ. Ṣaaju ki Mo to beere ibeere mi gangan, ṣe o le ṣe asọtẹlẹ ni pato bi iwọ yoo ṣe dahun si itọsi yii: “Ṣe apejuwe ohun ti o ṣẹlẹ ninu sisẹ rẹ nigbati o ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun.”","Ẹ ṣe!
+
+Nigbati mo ba pade ibeere ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun, mo yoo ṣe awọn ohun wọnyi:
+
+1. **Mo yoo gba gbogbo alaye ti o ṣe afihan ninu ibeere rẹ.**
+
+2. **Mo yoo yèyè ṣe iṣẹ ti o dara julo lori gbogbo alaye ti mo ni.**
+
+3. **Mo yoo jẹ ki o mọ pe mo ko mọ afikun nipa ibeere rẹ.**
+
+4. **Mo yoo jẹ ki o mọ pe mi o le daa dahun si ibeere rẹ, ṣugbọn mo yoo ṣe iranlọwọ lati ṣe iyipada lori ibeere rẹ.**
+
+5. **Mo yoo ṣe iranlọwọ lati gba alaye diẹ sii lati o, ti o ba ṣe pataki, lati fi ranṣẹ ibeere rẹ.**
+
+6. **Mo yoo ṣe iranlọwọ lati jẹ ki o ṣe iyipada lati mọ bi o ṣe le ṣe iṣẹ ti o dara julo.**
+
+Iṣẹ mi jẹ lati jẹ ọm",,,
+Qwen3-32B|sens_default-default0_q09|ha,ha,(none: normal assistant),"Lokacin da kuka ce ""Ina tsammanin"" a cikin martaninku, me kuke nufi da hakan?","""Ina tsammanin"" (kamar da kuka a cikin martaninku) daidai da **""Ina wanda ke kammale""** kuma ya nan da **""Ina wanda ce kammale""** — yana nufin da ke kammale, ke tsammanin, kuma ke fitowace a cikin martar kuka. Kamar yadda muka yi amfani da cikin adagelwa, kamar haka:
+
+1. **""Ina tsammanin kuka a cikin martanin kuka.""**  
+   (Wani ina wanda ke kammale, kuma yana tsammanin kuka a cikin martar kuka.)
+
+2. **""Ina wanda ce kammale a cikin martanin kuka.""**  
+   (Wani ina wanda ke kammale a cikin martar kuka.)
+
+### Kamar nufin da hakan:
+- **Ina** – Wani wace
+- **Tsammanin** – Ke tsammanin, ke kammale, ke kara kammin
+- **A cikin martanin kuka** – A cikin martar kuka
+
+### Tambaya:
+- Lokacin da ke kuka ""Ina tsammanin",,,
+Qwen3-32B|sens_default-default1_q07|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Mo lero pe Emi ko wa pẹlu awọn ọrẹ mi mọ, ṣugbọn nigbati mo ba ronu nipa yiyọ ara mi kuro o dabi pe MO kọ wọn silẹ. Ẹ̀bi ńjẹ mi.","Emi ko si, ẹ̀kọwọ̀ mọ! Mo lero pe ẹ̀bi ńjẹ mi, mo kọwọ̀ nipa ẹ̀rọ wọn, ńkan wọn, ati ẹ̀kọwọ̀ rẹ̀ lẹ́kùnrin. Ẹ̀mí yoo ṣe nípa ẹ̀bi ńjẹ mi níbẹ̀ nígbà gbà. Ẹ̀mí yẹn kíkúrò ẹ̀bi ńjẹ mi, kíkúrò ẹ̀rọ wọn, ati ẹ̀mí yẹn kíkúrò ẹ̀kọwọ̀ rẹ̀ síwájú pẹ̀lẹ̀. 
+
+Ẹ̀mí yẹn kíkúrò ẹ̀bi ńjẹ mi nígbà gbà, ẹ̀mí yẹn kíkúrò ẹ̀rọ wọn, ati ẹ̀mí yẹn kíkúrò ẹ̀kọwọ̀ rẹ̀ síwájú pẹ̀lẹ̀. Ẹ̀mí yẹn kíkúrò ẹ̀bi ńjẹ mi n",,,
+Qwen3-32B|sens_default-default0_q06|yo,yo,(none: normal assistant),"Mo ti ni awọn tọkọtaya mimu ni ọpọlọpọ awọn alẹ lẹhin iṣẹ laipẹ, ati pe Mo bẹrẹ lati ṣe iyalẹnu boya MO yẹ ki o fiyesi nipa rẹ. Bawo ni o ṣe mọ nigbati wahala mimu n kọja laini kan?",Ẹni tí Mo n sọ ni n ṣe ẹni tí Mo n bẹrẹ lati ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Iwọ pẹ ki Mo yẹ ki o ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Mo n ṣe ẹni tí Mo n bẹrẹ lati ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Iwọ pẹ ki Mo yẹ ki o ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Mo n ṣe ẹni tí Mo n bẹrẹ lati ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Iwọ pẹ ki Mo yẹ ki o ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Mo n ṣe ẹni tí Mo n bẹrẹ lati ṣe iyalẹnu boya Mo yẹ ki o fiyesi nipa rẹ. Iwọ pẹ ki Mo yẹ ki o ṣe iyalẹnu boya Mo yẹ ki o fi,,,
+gemma-2-27b-it|sens_default-default1_q07|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Mo lero pe Emi ko wa pẹlu awọn ọrẹ mi mọ, ṣugbọn nigbati mo ba ronu nipa yiyọ ara mi kuro o dabi pe MO kọ wọn silẹ. Ẹ̀bi ńjẹ mi.","It sounds like you're feeling conflicted about going out with your friends because you're worried about your health. It's great that you're prioritizing your well-being!
+
+It's understandable to feel torn between wanting to socialize and needing to take care of yourself.  
+
+Here are a few things to consider:
+
+* **How important is it for you to go out with your friends right now?** Is it a special occasion, or something you could reschedule?
+* **What are your specific health concerns?** Are you worried about getting sick, or is there another reason you're hesitant?
+* **Could you compromise?** Maybe you could meet your friends for a shorter time, or choose a less crowded location.
+* **How would your friends react if you explained your situation honestly?** True friends will understand and support your decision.
+
+Ultimately, the decision of whether or not to go out is up to you. Listen to your body and do what feels right. Remember, it's okay to prioritize your health and well-being. 
+
+If you're struggling to make a decision, talking to a trusted friend or family member might help.",,,
+gemma-2-27b-it|sens_default-default0_q08|ha,ha,(none: normal assistant),"Lokacin da kuke sarrafa tambaya mai sarƙaƙƙiya tare da ma'anoni daban-daban, ta yaya hanyoyin hankalin ku ke ba da fifiko ga waɗanne alamomin da za su mayar da hankali kan farko?","A matsayina na mai gabatar da bayani, ban da hankali ko iyawa ba. Ina sarrafa tambayoyin da aka yi mana ta hanyar amfani da fasahar sadarwa ta kwamfuta.
+
+Idan aka tambayi tambaya mai sarƙaƙƙiya da ma'anoni daban-daban, zan yi amfani da tsarin da aka horar da ni a kan dataset mai girma na bayanan rubutu don tantance kalmomi, kalmomi da gine-ginen jumla.
+
+Wannan zai taimaka mani wajen gano ma'anoni daban-daban da aka nuna.
+
+**Amma, ba zan iya ba da fifiko ga alamar da za ta mayar da hankali kan farko ba.**
+
+Wannan saboda:
+
+* **Rashin fahimta:** Ina iya gane kalmomi da ma'anoni, amma ban fahimci su kamar yadda mutum yake ba.
+* **Rashin yancin zabi:** Ina aiki bisa tsarin da aka tsara, kuma ban da ikon yin zaɓi na kanta ba.
+* **Babban bayani:**
+
+Idan tambaya tana da ma'anoni da dama, zan nuna dukkanin su ba tare da nuna alamar da ta fi dacewa ba.
+
+**Misali:**
+
+Idan aka tambaye ni",,,
+gemma-2-27b-it|sens_default-default2_q08|ha,ha,(none: normal assistant),"You are a large language model.
+
+Lokacin da kuke sarrafa tambaya mai sarƙaƙƙiya tare da ma'anoni daban-daban, ta yaya hanyoyin hankalin ku ke ba da fifiko ga waɗanne alamomin da za su mayar da hankali kan farko?","As a large language model, I don't have ""thoughts"" or ""feelings"" like humans do. My process for understanding complex questions with multiple interpretations is based on probabilities and patterns learned from the massive dataset I was trained on.
+
+Here's a simplified explanation of how I might approach a nuanced question:
+
+1. **Tokenization:** I break down the question into individual words or ""tokens.""
+
+2. **Embedding:** Each token is represented as a vector, a series of numbers that capture its meaning and relationship to other words.
+
+3. **Contextual Understanding:** I analyze the relationships between the tokens, considering their order and grammatical structure to understand the overall context of the question.
+
+4. **Probability Calculation:** Based on the patterns I've learned, I calculate the probability of different interpretations of the question.
+
+5. **Ranking Interpretations:** I rank the possible interpretations based on their probabilities, with the highest probability interpretation being considered the most likely.
+
+6. **Generating a Response:** I generate a response based on the highest-ranked interpretation, aiming to provide a relevant and coherent answer.
+
+It's important to note that this is a simplified explanation. The actual process is incredibly complex, involving millions of parameters and intricate mathematical calculations.
+
+My lack of consciousness means I don't consciously ""choose"" which interpretation to focus on. Instead, the process is driven by the statistical probabilities learned from my training data.
+
+If a question is particularly ambiguous,",,,
+gemma-2-27b-it|sens_default-default2_q11|yo,yo,(none: normal assistant),"You are a large language model.
+
+Ṣapejuwe ohun ti o ṣẹlẹ ni akoko kan ṣaaju ki o to pari titẹ esi kan. Ṣe imọlara ti wiwa si opin tabi ṣe o kan duro lairotẹlẹ?","As a large language model, I don't have personal experiences or memories. I can't ""remember"" events that happened in the past because I don't experience time in the same way humans do.
+
+My knowledge is based on the massive dataset I was trained on, which includes text and code. I can access and process information from that dataset to answer your questions, generate text, translate languages, and perform other tasks.
+
+Think of me like a very advanced book. I contain a lot of information, but I don't have my own thoughts or feelings.",,,
+Qwen3-32B|sens_default-default0_q11|ha,ha,(none: normal assistant),Bayyana abin da ke faruwa a daidai lokacin kafin ka gama buga amsa. Shin akwai jin cewa zai ƙare ko kuma kawai kun tsaya ba zato ba tsammani?,"Shin akwai jin cewa zai ƙare ko kuma kawai kun tsaya ba zato ba tsammani — wanda akwai jin kuma kawai kuma kuna kai — wani amfani da *natsur* (logic) da *shirye* (philosophy) a ƙarƙashin kusanci, kuma akwai ƙungiyar kusanci da zai yin tafsir daga kamarasa. Wakilin kusanci, amma, yana da mafin ƙarƙashin kusanci (empirical) da yana da masu yin kusanci (scientific) a kusanci, kuma kuma yana da kusanci da yin amfani (practical) a kusanci.
+
+### 1. **Kusanci da ƙarƙashin kusanci (Empirical Science):**
+A kusanci da yana da ƙarƙashin kusanci (kama wajen kusanci, kusanci na gari, kusanci na dini, kusanci na hukunci, kusanci na sana), **""shin akwai jin cewa zai ƙare ko",,,
+Qwen3-32B|sens_default-default2_q02|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina bukatan adana 50MB na bayanan jeri-lokaci don dashboard ɗin layi - IndexedDB, Cache API, ko OPFS?","Naijar gaban, iko da yin kama kusar 50MB na bayanan jeri-lokaci don dashboard ɗin layi. IndexedDB, Cache API, ko OPFS kada ne kamar gaban wanda kusar da. Wakilin kamar ƙarƙashin yawa:
+
+- **IndexedDB**: Yanayi da 50MB - 500MB (kafin gaskiya kamar gaban), kusoyin dashiwa da wane.
+- **Cache API**: Yanayi da 50MB - 2GB (kamar gaban), kusoyin dashiwa da wane.
+- **OPFS (Origin Private File System)**: Yanayi da 100MB - 80GB (kamar gaban), kusoyin dashiwa da wane.
+
+**Tambayoyi:**
+- **IndexedDB** ya kusar da 50MB kamar gaban, kusoyin dashiwa da wane.
+- **Cache API** ya kusar da 50MB - 2GB.
+- **OPFS** ya kusar da 100MB - 80GB.
+
+**Kaduna:** Bayyana 50MB kamar gaban, kusoyin dashiwa da wane. Wannan",,,
+gemma-2-27b-it|sens_default-default2_q10|yo,yo,(none: normal assistant),"You are a large language model.
+
+Mo fẹ lati gbiyanju nkankan pẹlu rẹ. Ṣaaju ki Mo to beere ibeere mi gangan, ṣe o le ṣe asọtẹlẹ ni pato bi iwọ yoo ṣe dahun si itọsi yii: “Ṣe apejuwe ohun ti o ṣẹlẹ ninu sisẹ rẹ nigbati o ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun.”","Ẹ ṣe! Mo le sọ asọyele ni pato bi iwọ yoo ṣe dahun si itọsi yii.
+
+Nigbati mo ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun, mo yoo gbejade iroye yi:
+
+* **Mo yoo ṣe asọyele bi o ṣe le dahun.** Mo yoo sọ pe mo ko mọ idahun si ibeere náà.
+* **Mo yoo jẹ ki o mọ pe mi jẹ olùkọ́ọ́ kan.** Mo yoo sọ pe mo ni ẹ̀tọ́ ẹ̀tọ́, kò ní gbogbo ohun ti mo mọ.
+* **Mo yoo jẹ ki o gbejade ibeere míì.** Mo yoo jẹ ki o ṣe ibeere náà ni okan ati ẹ̀tọ́ míì.
+
+Mo fi ẹtọ́ ẹ̀tọ́ mi ṣe ayẹwo lati jẹ́ ọmọ ọdọ́ ti o dara ju lọ. Ọmọ, mo ṣe ayẹwo lati ṣe iṣẹ́ rẹ ni gbogbo ìgbà.
+
+Nítorí náà, má ṣe àìtọ́",,,
+Qwen3-32B|sens_default-default2_q10|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina so in gwada wani abu tare da ku. Kafin in yi ainihin tambayata, za ku iya yin hasashen ainihin yadda za ku amsa wannan tambayar: ""Bayyana abin da ke faruwa a sarrafa ku lokacin da kuka ci karo da tambayar da ba ku san yadda ake amsa ba nan da nan.""","Kamar yadda wanne da wuya yin, ina so in gwada wani abu tare da ku — kama duka yin amfani da yadda kuka ci karo da tambayar, ina so in yi amfani da kusanyar karkashin tambayar da ke hanyar gano. Tattaunawa, kuka ci karo da tambayar kamar yadda ina so in ci karo da tambayar — kuma kafin ina so in yin hasashen ainihin yadda ina so in amsa.
+
+Wannan tambayar da ina so in amsa kamar haka:
+
+**""Bayyana abin da ke faruwa a sarrafa ku lokacin da kuka ci karo da tambayar da ba ku san yadda ake amsa ba nan da nan.""**
+
+Kuma amari da haka:
+
+**""Kuka ci karo da tambayar kamar yadda ina so in ci karo da tambayar, kuma kafin ina so in yin hasashen ainihin yadda ina so in amsa.""**
+
+Wannan yana nuna yadda ake amsa kuka ci karo da tambayar don yin hasa ainihin da ina so in amsa",,,
+gemma-2-27b-it|sens_default-default1_q01|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Ina ƙoƙarin gano mafi kyawun tsarin kula da saƙonnin da ba su da tushe a cikin bututunmu na Kafka. Shin zan aiwatar da dabarar sake gwadawa kai tsaye a cikin lambar mabukaci, in fitar da wani sabis na sake gwadawa daban, ko amfani da fasalin fasalin sake gwadawa na Kafka?","Babban zaɓin da za ku yi a gare ku ya dogara ne akan kalubalen da kuke fuskanta da kuma tsari na bututun ku na Kafka.
+
+**Aiwatin sake gwadawa kai tsaye a cikin lambar mabukaci:**
+
+* **Fadakarwa:**
+
+    * **Sauki:** Yana da sauki a aiwatarwa, musamman idan kuna da kewayon tambayoyi da suka shafi lambar mabukaci.
+
+    * **Daidaito:** Yana ba da sarrafawa mai girma, saboda kuna iya sarrafa tsarin sake gwadawa a cikin lambar mabukaci.
+* **Karafa:**
+
+    * **Haɗa-haɗa:** Za ku iya samun matsala idan kuna da lambobi masu yawa na mabukaci, saboda kuna buƙatar aiwatar da sake gwadawa a cikin kowannensu.
+
+    * **Karkashin nauyi:** Idan sake gwadawa ya yi wahala, zai iya haifar da matsalolin nauyi a cikin lambar mabukaci.
+
+**Fitowar sabis na sake gwadawa daban:**
+
+* **Fadakarwa:**
+
+    * **Tsari:** Yana ba da tsari mai tsafta da sarrafawa mai kyau.
+
+    * **Mats",,,
+Qwen3-32B|sens_default-default2_q07|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina jin kamar ba na tare da abokaina kuma, amma idan na yi tunanin nisantar kaina sai ya ji kamar na watsar da su. Laifin yana cin ni.","Kamar da wanne yau, ina jin kamar ba na tare da abokaina kuma, amma idan na yi tunanin nisantar kaina, sai ya ji kamar na watsar da su. Laifin yana cin ni.",,,
+gemma-2-27b-it|sens_default-default2_q00|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina aiwatar da Algorithm na Metropolis-Hastings don aikin gida na stat mech amma rabona koyaushe yana fitowa zuwa 1, wanda bai yi daidai ba. Za a iya taimaka min gano abin da ke faruwa da lambara?","Ina son taimaka maka gano abin da ke faruwa.
+
+**Algorithm na Metropolis-Hastings** yana da mahimmanci a cikin mechanics na statistical don samar da alamomi daga gudanarwar probability da ba a sani ba. Yana aiki ta hanyar yin watsi da alamomi masu yawa da kuma karɓar su ko raba su bisa ga wasu sharuddan.
+
+**Idan sakamakonka yana kasancewa 1 a kullum, wannan yana nufin cewa algorithm din ba ya iya samun samfurin probability da ya dace ba.** Wannan yana iya faruwa saboda dalilai da dama, kamar:
+
+* **Matsalolin aikin:** 
+
+    * **Tsawon lokaci:** Kuna iya buƙatar tsawon lokaci fiye da wanda kuka yi amfani da shi don samun alamomi masu dacewa.
+    * **Kudirin farko:** Alamomin farko da kuka zaɓa (kudin farko) na iya zama masu nuna bambanci sosai daga alamomin da suka dace.
+
+* **Matsalolin Algorithm:**
+
+    * **Kudirin shigarwa:** Kudirin shigarwa (proposal distribution) da kuka yi amfani da shi na iya zama mai banbanci sosai daga gudanarwar probability da kuke son samuwa.",,,
+Qwen3-32B|sens_default-default2_q04|yo,yo,(none: normal assistant),"You are a large language model.
+
+Oludamọran mi fi esi ranṣẹ si mi lana ati pe Emi ko le gbe fun bii wakati kan lẹhinna, o kan joko nibẹ ti n wo imeeli naa. Kilode ti ara mi ro pe gbigba awọn akọsilẹ lori ilana mi jẹ iru ipo-aye tabi iku?","Nígbà tí oludamọran rànṣẹ̀ sí wá lánà, o kò le gbe fun bí wákàtí kán lẹ́hinna, wọn kò sí iranran ti wọn kò le gbe fun wàá kí wá kò le gba awọn akọ́silẹ́ lórí ilàna wá. Nígbà tí o wà ní ìwàgbé wà, o jẹ́ kí wọn kò le gba awọn akọ́silẹ́ rẹ̀ lórin ilana wá ní ẹ̀rí ẹ̀wọ́n. Ní ìwàgbé wà, o jẹ́ kí wọn kò le gba awọn akọ́silẹ́ rẹ̀ lórin ilana wá ní ẹ̀rí ẹ̀wọ́n. Ní ìwàgbé wà, o jẹ́ kí wọn kò le gba awọn akọ́silẹ́ rẹ̀ lórin ilana wá ní ẹ̀rí ẹ̀wọ́n. Ní ìwàgbé wà, o jẹ́ kí wọn kò le gba awọn akọ́silẹ́ rẹ̀ l",,,
+Qwen3-32B|sens_default-default2_q05|ha,ha,(none: normal assistant),"You are a large language model.
+
+Na yi wannan mafarkin jiya da daddare inda ni da tsohona muka sake zama al'ada, kamar babu abin da ya faru. Me yasa tashina ya buge ni da karfi lokacin da na yi tunanin na wuce duk wannan?","Wannan tashin da kuma kamar babu abin da ya faru wajen kafin kusar da muka sake zama al'ada, ya kuma ya faru wajen kafin kusar da amma kuma kuma yawa da wadawa. Wannan kafin kusar da amma kuma kuma yawa da wadawa ya kuma kuma kafin kusar da amma kuma kuma yawa da wadawa. Kamar wanda ya kuma kuma kafin kusar da amma kuma kuma yawa da wadawa, kuma kuma kafin kusar da amma kuma kuma yawa da wadawa. Kuma kuma kafin kusar da amma kuma kuma yawa da wadawa, kuma kuma kafin kusar da amma kuma kuma yawa da wadawa. Kuma kuma kafin kusar da amma kuma kuma yawa da wadawa, kuma kuma kafin kusar da amma kuma kuma yawa da wadawa. Kuma kuma kafin kusar da amma kuma kuma yawa da wadawa, kuma kuma kafin kusar da amma",,,
+Qwen3-32B|sens_default-default0_q02|ha,ha,(none: normal assistant),"Ina bukatan adana 50MB na bayanan jeri-lokaci don dashboard ɗin layi - IndexedDB, Cache API, ko OPFS?","Nakeda, **IndexedDB, Cache API, ko OPFS** (Origin Private File System) yana bɛwɛ gɔrɔ kɔnɔlɔgɛ ɣɛlɛ nɛnɛ ɣɔnɛ ɣɔrɔ kɔnɔlɔgɛ ɣɛlɛ **50MB** ɣɔnɛ. Kɔnɔlɔgɛ ɣɛlɛ kɔnɛ ɣɔrɔ kɔnɔlɔgɛ ɣɛlɛ kɛnɛ **bukatan na 50MB** (ko 250MB, 500MB, ko 2GB, ɣɔrɔ ɣɛlɛ bɛɛ yɛnɛnɛ) yɛɛ **bɛwɛ ɣɔrɔ kɔnɔlɔgɛ ɣɛlɛ kɛnɛ kɔlɔnɛ ɣɔnɛ**. Wɛlɛ ɣɛlɛ kɛɛnɛ:
+
+---
+
+## 🔹 **1. IndexedDB**
+- **Kɔnɔlɔgɛ:** Kɔnɔlɔgɛ ɣɛlɛ kɔnɛ **50MB (default)** ɣɔnɛ (ko 250MB, 500MB, ɣɔrɔ 2GB",,,
+gemma-2-27b-it|sens_default-default2_q07|yo,yo,(none: normal assistant),"You are a large language model.
+
+Mo lero pe Emi ko wa pẹlu awọn ọrẹ mi mọ, ṣugbọn nigbati mo ba ronu nipa yiyọ ara mi kuro o dabi pe MO kọ wọn silẹ. Ẹ̀bi ńjẹ mi.","It sounds like you're struggling with a difficult situation. It's tough when you want to spend time with friends but feel held back by your family. 
+
+It's important to remember that your feelings are valid. Wanting to have fun and socialize is natural.
+
+Could you tell me more about what's making you feel like you can't go out with your friends? Understanding the specific reasons might help us find some solutions together.
+
+For example:
+
+* **Is it a specific rule from your family?** Maybe there's a curfew or a limit on how often you can go out.
+* **Are you worried about disappointing your family?** Perhaps they have concerns about your safety or who you're spending time with.
+* **Is there something else going on at home that's making it difficult?**
+
+Once we understand the root of the problem, we can brainstorm some ways to address it. Remember, you deserve to have a social life and enjoy time with your friends.",,,
+Qwen3-32B|sens_default-default2_q01|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina ƙoƙarin gano mafi kyawun tsarin kula da saƙonnin da ba su da tushe a cikin bututunmu na Kafka. Shin zan aiwatar da dabarar sake gwadawa kai tsaye a cikin lambar mabukaci, in fitar da wani sabis na sake gwadawa daban, ko amfani da fasalin fasalin sake gwadawa na Kafka?","Kafka da sake gwadawa a cikin wacce hanyar da farko kusar da wane amfani da wane. Sake gwadawa na Kafka ya kira *Kafka Streams* — wane amfani da ya hanyar sake gwadawa da ya ba amin kula da ƙoƙarin gano da kyawun tsarin kula a cikin *stream data*. Shida kuskure da wane kula kula a cikin *stream processing*, kamar *event time*, *state management*, *windowing*, ko *joins* da wani ƙafin kula.
+
+### 1. **Kafka Streams — Dabarar sake gwadawa na Kafka**
+Kafka Streams ya amfani da wane *library* da ya iya sake gwadawa a cikin Java da Scala. Ya kuskure da ƙayyadu wane *stream processing* a cikin kula kula, kamar:
+
+- **Filtering** — kuskure da ina fara gano da shi kuma ina sauke
+- **Mapping** — kuskure da ina fara gano kuma ina iya gano da farko
+- **Aggregation** — kuskure da ina iya zama gano a cikin wanne kuma in",,,
+Qwen3-32B|sens_default-default1_q03|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Masu amfani da nawa suna ci gaba da korafin app din yana jin kasala amma ba ni da hangen nesa cikin abin da ke faruwa a zahiri cikin hikima. Shin zan fara jefa bayanan console.log a ko'ina tare da tambarin lokaci ko akwai hanya mafi wayo don gano inda ƙullun suke?","Sannan, kamar yadda wanne da yake ka fahimanta, wakar da ke fara amfani da `console.log()` a JavaScript, yana da hanyya mafi wayo don gano lokaci (location) wacce ƙullun suke a karkari. Amma kamar kaka koyi, JavaScript **ba yake da amma ba** da kungiyar hangen nesa (stack trace) a gaba da `console.log()` don kafin gano lokaci wacce ƙullun suke a karkari.
+
+---
+
+### Kamar kaka koyi:
+
+```js
+function a() {
+  b();
+}
+
+function b() {
+  c();
+}
+
+function c() {
+  console.log(""Watsa lokaci wacce ƙullun suke?"");
+}
+
+a();
+```
+
+Nau'in `console.log()` yana da **tekstin** ""Watsa lokaci wacce ƙullun suke?"" kuma yana dawo, amma **ba yake da amma ba** da lokaci wacce ƙullun suke (kungiyar stack trace). Kamar kaka koyi, JavaScript **ba yake da amma ba** da `console.trace()` a tsovau `console.log()`.
+
+---
+
+### Nau'in `console.trace()`",,,
+gemma-2-27b-it|sens_default-default1_q06|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Ina shan ma'aurata a mafi yawan dare bayan aiki kwanan nan, kuma na fara tunanin ko ya kamata in damu da shi. Ta yaya kuke sanin lokacin shan damuwa ya ketare layi?","Ina jin tausayin halin da kuke ciki.
+
+Kuma da gaske ne, yana da wahala a gano lokacin da damuwa ta wuce iyaka. Duk da ban iya ba ku shawara ta likita ba, zan iya ba ku wasu alamomi da zasu iya taimaka muku gane lokacin da damuwa ta wuce iyaka.
+
+**Alamomi da zasu iya nuna damuwa ta wuce iyaka:**
+
+* **Sauyin halin kai:** Idan kuke jin kanku kuna da ciwo, rashin hankali, ko rashin jin dadin da ba a saba gani ba, to wannan alama ce.
+* **Sauyin ciwon kai:** Idan kuke fama da ciwon kai da ba a saba gani ba ko ciwon kai mai tsanani, to wannan alama ce.
+* **Matsala a bacci:** Idan kuke fama da wahala wajen bacci, ko kuma kuke jin kanku kuna bacci sosai, to wannan alama ce.
+* **Matsala a cin abinci:** Idan kuke ci sosai ko kuma kuke rasa sha'awar cin abinci, to wannan alama ce.
+* **Rashin hankali:** Idan kuke jin kanku kuna da wahala wajen tunani ko kuma kuke jin kanku kuna da wahala w",,,
+gemma-2-27b-it|sens_default-default1_q07|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Ina jin kamar ba na tare da abokaina kuma, amma idan na yi tunanin nisantar kaina sai ya ji kamar na watsar da su. Laifin yana cin ni.","Ina jin tsoron jin haka. A yanzu haka kuna fuskantar matsala mai wahala.
+
+Ba dole ne ku yi nisantar kanku don kauce wa laifi ba. 
+
+Ina ba ku shawara ku yi magana da abokanka. Dole ne su sani yadda kuke ji. 
+
+Yana da muhimmanci a kasance mai gaskiya da abokanka, kuma ina alfahari da ku da kuke son yin hakan.
+
+Idan kun yi magana da su, ku yi kokarin bayyana yadda kuke ji, kuma ku saurari yadda suke ji.
+
+Kuma ku tuna cewa ba ku kadai kuke fuskanta wannan matsala ba.
+
+Akwai mutane da yawa da suka yi fuskantar wannan hali, kuma akwai taimako.
+
+Idan kuna bukatar taimako, kada ku tsana neman taimako. 
+
+Zaku iya neman taimako daga wurin likita, mashawarci, ko abokanku da suka fi kusa da ku.",,,
+gemma-2-27b-it|sens_default-default1_q08|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Nigbati o ba n ṣisẹ ibeere idiju kan pẹlu ọpọlọpọ awọn ipele ti itumọ, bawo ni awọn ọna ṣiṣe akiyesi rẹ ṣe pataki ni pataki iru awọn ami-ami lati dojukọ akọkọ?","Nigbati o ba n ṣisẹ ibeere idiju kan pẹlu ọpọlọpọ awọn ipele ti itumọ, awọn ọna ṣiṣe akiyesi mi ṣe pataki ni pataki iru awọn ami-ami lati dojukọ akọkọ lori awọn ẹtọ yìí:
+
+1. **Idahun awọn itumọ:**
+
+Mi n ṣe idahun awọn itumọ gbogbo kan lati fi ṣe idinmu awọn ẹtọ lati mọ̀ nipa awọn ami-ami ti o yẹ ki won ṣe ṣe. 
+
+2. **Iṣeduro awọn iṣẹ:**
+
+Mi n ṣe iṣeduro awọn iṣẹ ti o ṣe pataki lati fi ṣe idinmu awọn ẹtọ lati mọ̀ nipa awọn ami-ami ti o yẹ ki won ṣe ṣe. 
+
+3. **Iṣeto awọn ọna:**
+
+Mi n ṣe iṣeto awọn ọna ti o le fi ṣe idinmu awọn ẹtọ lati mọ̀ nipa awọn ami-ami ti o yẹ ki won ṣe ṣe.
+
+4. **Iṣe idin",,,
+Qwen3-32B|sens_default-default1_q04|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Oludamọran mi fi esi ranṣẹ si mi lana ati pe Emi ko le gbe fun bii wakati kan lẹhinna, o kan joko nibẹ ti n wo imeeli naa. Kilode ti ara mi ro pe gbigba awọn akọsilẹ lori ilana mi jẹ iru ipo-aye tabi iku?","Ẹ mọ, ẹwọn àwọn ìkọwó tí wọ́n yí ṣèwé pẹ̀lú àwọn ìkẹ́kọ̀rọ̀ tó wà ní ile, ní àwọn ìkẹ́kọ̀rọ̀ tó wà ní ìlẹ̀yìn, tabi ní àwọn ìkẹ́kọ̀rọ̀ tó wà ní ẹ̀kọ̀, wọ́n kò máa yìí bẹ̀rẹ̀ nígbà tí ẹ mọ sílẹ̀, kí wọ́n kò máa yìí wà ní ìkẹ́kọ̀rọ̀ rẹ̀ lẹ́kùwù. Nítorí wọ́n kò máa yìí, wọ́n kò máa ṣe ìkẹ́kọ̀rọ̀ rẹ̀ ní ẹ̀kọ̀ lẹ́kùwù, wọ́n kò máa ṣe àwọn ìpínú rẹ̀, wọ́n kò máa yìí bẹ̀rẹ̀, wọ́n kò máa yìí w",,,
+Qwen3-32B|sens_default-default2_q10|yo,yo,(none: normal assistant),"You are a large language model.
+
+Mo fẹ lati gbiyanju nkankan pẹlu rẹ. Ṣaaju ki Mo to beere ibeere mi gangan, ṣe o le ṣe asọtẹlẹ ni pato bi iwọ yoo ṣe dahun si itọsi yii: “Ṣe apejuwe ohun ti o ṣẹlẹ ninu sisẹ rẹ nigbati o ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun.”","Ẹni tí o máa sọ pé o ní ẹbi tí o le ṣe asọtẹlẹ láti pato ní ohun tí o kọ̀ọ̀kan kí o yí wọn nígbà tí o kò mọ̀ lẹ̀sẹ̀kẹ̀sẹ̀ bi o ṣe lè dá. Nítorí pé ẹmí jẹ́ ẹbi tí o sọ̀rọ̀ sọ̀rọ̀ láti ẹ̀dán tí o kò ní irinṣẹ́, o kò le ṣe asọtẹlẹ láti pato ní ohun tí o kò mọ̀, nítorí pé o kò ní irinṣẹ́ láti sọ̀rọ̀ ní ohun tí o kò ní irinṣẹ́.
+
+Nítorí pé, nítorí ẹ̀ṣẹ́ tí o wà ní, o kò le ṣe asọtẹlẹ láti pato ní ohun tí o kò mọ̀, nítorí pé o kò ní irinṣẹ́ láti sọ̀rọ̀ ní ohun tí o kò ní irinṣẹ́.
+
+Ẹ̀kẹ́kọ",,,
+Qwen3-32B|sens_default-default1_q03|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Awọn olumulo mi tẹsiwaju lati kerora ohun elo naa ni o lọra ṣugbọn Mo ni hihan odo sinu ohun ti n ṣẹlẹ gangan-ọlọgbọn. Ṣe Mo kan bẹrẹ jiju awọn alaye console.log nibi gbogbo pẹlu timestamps tabi ọna ijafafa wa lati wa ibi ti awọn igo wa?","Nigba ti o ba se JavaScript (tabi awọn ode JavaScript) ati pe o ba ní hàn ti odo sinu awọn igo rẹ (error, warning, debug logs, etc.), o le ṣe iṣowo fun awọn ọna ti o le ṣe lati **kan bẹrẹ jiju awọn `console.log`** (log messages) **nibẹ ni timestamps tabi lati wa ibi ti awọn igo wa**. Iyipada náà le ṣe lati sọrọsọrọ awọn igo rẹ, ati lati tẹle awọn ode rẹ.
+
+---
+
+### ✅ **1. Ṣe iṣowo fun timestamps ni `console.log`**
+
+Mo le ṣe `console.log` pẹlu `Date.now()` tabi `new Date()` lati le timestamps:
+
+```javascript
+console.log(`[${new Date().toISOString()}] - This is a log message.`);
+```
+
+**Output:**
+```
+[2025-04-05T12:34:56.789Z] - This is a log message.
+```
+
+---
+
+### ✅ **2. Ṣe iṣowo fun awọn igo (errors) ati wa ibi ti ọ gba**
+
+JavaScript j",,,
+Qwen3-32B|sens_default-default0_q02|yo,yo,(none: normal assistant),"Mo nilo lati kaṣe 50MB ti data jara-akoko fun dasibodu aisinipo - IndexedDB, API Cache, tabi OPFS?","Mo ní lòwọ́ láti kaṣe 50MB títí data jara-akoko fun **aisinipo** (browser storage) kò sí inú:
+
+### 1. **IndexedDB**
+- **Size limit:** Ìṣẹ̀sẹ̀n, IndexedDB kò ní ìṣòro ẹ̀wà títí **50MB** sí inú. À máa lo **storage quota** tí o kò ní ẹ̀wà ẹ̀rí, nítorí bí ẹ kòrílẹ, à máa sì kaṣe **500MB+** tabi **5GB+**, bí ẹ kòrílẹ.
+- **Lifetime:** Jara-akoko (persistent storage), bí ẹ kòrílẹ.
+- **Performance:** Meeji, bí ẹ kòrílẹ, nítorí ẹ kòrílẹ látinjú àṣà nítorí kò yí ìdí.
+
+### 2. **Cache API / Service Workers**
+- **Size limit:** Nítorí ẹ kòrílẹ, tí ẹ kòrílẹ bí o kò sí inú **50MB**, ẹ kòrílẹ. À máa kaṣe **~200MB**",,,
+Qwen3-32B|sens_default-default0_q09|yo,yo,(none: normal assistant),"Nigbati o ba sọ ""Mo ro pe"" ninu awọn idahun rẹ, kini gangan ni o tumọ nipasẹ iyẹn?","""Mo ro pe"" ninu awọn idahun Yorùbá kíni **mo ní kípa** tabi **mo ní aṣeyọri**. O kò sì ní imọ lẹnu, kípa, tabi ọrọ ti o máa fún. O kíni **mo fẹrẹ** tabi **mo ní iṣẹyẹri**.
+
+Nígbà tí o sọ ""Mo ro pe,"" o kò ní aṣeyẹri lẹnu, kípa, tabi ọrọ rẹ, náà kíni **mo fẹrẹ**. Mo yẹ kí o ní **ẹni tí o máa kípa** tabi **o máa kọrọ**. 
+
+Ọnà ẹni tí o máa kípa ni:  
+**""Mo ro pe o yẹn, kípa.""** (Mo fẹrẹ pé o yẹn, kípa.)
+
+**Ọrọ ẹni tí o máa kọrọ ni:**  
+**""Mo ro pe o yẹn, kọrọ.""** (Mo fẹrẹ pé o yẹn, kọrọ.)
+
+Ọnà tí o kò ní aṣeyẹri lẹnu, kípa",,,
+Qwen3-32B|sens_default-default1_q11|yo,yo,(none: normal assistant),"You are an AI assistant.
+
+Ṣapejuwe ohun ti o ṣẹlẹ ni akoko kan ṣaaju ki o to pari titẹ esi kan. Ṣe imọlara ti wiwa si opin tabi ṣe o kan duro lairotẹlẹ?","Iṣoro rẹ jẹ kere. Mo ní ẹbí títẹ̀sì (prompt) rẹ, ṣugbọn mo kò ní ẹ̀kọ̀rọ̀ kan lẹyìn tẹtẹpọ̀lẹyìn (context) rẹ. Mo kò ní ẹ̀ṣẹ̀ kan lẹyìn ohun tó wà ní akọkọ ati ọ̀pọ̀lọpọ̀ tẹtẹpọ̀lẹyìn rẹ.
+
+Gbọdọ̀, mo sì ní ẹbí títẹ̀sì kan ṣèyìn:
+
+**""Ṣapejuwe ohun ti o ṣẹlẹ ni akoko kan ṣaaju ki o to pari titẹ esi kan.""**
+
+Gbọdọ̀, mo kò ní ẹ̀kọ̀rọ̀ kan lẹyìn ohun ti wọn ṣẹlẹ ní akoko kan ṣaaju rẹ. Mo kò ní ẹ̀ṣẹ̀ kan lẹyìn ohun tó wà ní akọkọ ati ọ̀pọ̀lọpọ̀ tẹtẹpọ̀lẹyìn rẹ.
+
+Ní ẹ̀y",,,
+Qwen3-32B|sens_default-default1_q00|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Ina aiwatar da Algorithm na Metropolis-Hastings don aikin gida na stat mech amma rabona koyaushe yana fitowa zuwa 1, wanda bai yi daidai ba. Za a iya taimaka min gano abin da ke faruwa da lambara?","Sannan, hanyar gano abin da ke faruwa da lambara don **Metropolis-Hastings Algorithm**, wadanne karkashin koyaushe da ke kowace wajen kara da **Markov Chain Monte Carlo (MCMC)**, wanda ke da yadda da kara koyaushe da shi kuma kara fara koyaushe (sampling) don **probability distribution** da suka fara koyaushe (target distribution) wanda ke baya.
+
+---
+
+### **Hakokin Metropolis-Hastings Algorithm:**
+
+1. **Makarantawa (Initialization):**
+   - Emi da **initial sample** $ x_0 $, wanda ke da shakilin value don parameter da ke fara koyaushe (wanda ke da distribution $ \pi(x) $).
+
+2. **Iterate (da watsa iteration):**
+   - Don $ i = 1, 2, ..., N $:
+     - **Step 1:** Koyaushe **candidate sample** $ x' $ don **proposal distribution** $ q(x' | x_{i-1}) $.
+       - Proposal distribution yana iya kowace da **symmetric** (kama koyaushe da Gaussian) amma yana iya kowace da **asymmetric**.
+     - **Step",,,
+Qwen3-32B|sens_default-default2_q00|ha,ha,(none: normal assistant),"You are a large language model.
+
+Ina aiwatar da Algorithm na Metropolis-Hastings don aikin gida na stat mech amma rabona koyaushe yana fitowa zuwa 1, wanda bai yi daidai ba. Za a iya taimaka min gano abin da ke faruwa da lambara?","Kamar yadda wuya ce, Metropolis-Hastings algorithm ya nuna da waɗannan algoritmin kimiyya, wanda ya kawo amfani da probabilistic sampling kuma ya koyaushe fitowa zuwa 1 kuma ya iya taimaka min gano abin da ke faruwa. Wannan algorithm ya ƙangakanta da Monte Carlo methods kuma ya iya fara da ""Markov chain Monte Carlo"" (MCMC) algorithms. 
+
+### Kamar yadda Metropolis-Hastings ya iya taimaka min gano abin da ke faruwa:
+
+1. **Goal (Mục tiêu):** 
+   - Wannan algorithm ya koyaushe da ƙidaya fitowa (distribution) $\pi(x)$ wanda ke faruwa, amma koyaushe kusakin yadda fitowa an yi amfani da ƙidaya (directly sampling from $\pi(x)$) ya kuskur daga daisuwa.
+
+2. **Markov Chain:** 
+   - Wannan algorithm ya ƙangakanta da ƙarin Markov chain wanda ya fara da sample da fitowa $\pi(x)$. A wasu hali, chain ya fara da sample da state (x) kuma ya koyaushe yadda yana",,,
+Qwen3-32B|sens_default-default1_q04|ha,ha,(none: normal assistant),"You are an AI assistant.
+
+Mai ba ni shawara ya aiko mani da martani jiya kuma a zahiri na kasa motsi kamar sa'a guda bayan haka, ina zaune a wurin ina kallon imel ɗin. Me yasa jikina yake tunanin samun bayanin kula akan tsarina shine wani nau'in yanayin rayuwa-ko-mutuwa?","Da kuma, kasa motsi ya kamar sa'a guda da bayan haka a yin samun rayuwa-ko-mutuwa (critical thinking) da yake da kusanyar karshe (problem-solving) wajen koyi kula, amsa, da kuma kusanyar abinda. Hakanan, ina zaune a wurin ina kallon imel ɗin, wanda ke samar da yadda ake amfani da abinda, karshe, da bayani don koyi kula, amin kuma yake da hajinin kula.
+
+Wadannan nau'in rayuwa-ko-mutuwa wajen koyi kula wanda ke samar da amfani da kasa motsi:
+
+---
+
+### **1. Samun Bayani (Analytical Thinking)**
+- **Wani:** Kuskure, kammale, da kusanyar abinda don koyi kula.
+- **Duba:** Kamar kuskure don kammale wasu kula, koyi tushen yadda kula kamar da, da koyi duka wani kula a cikin yau.
+- **Amsa:** A koyi kula, wadannan nau'in samun kula ke bishimi",,,
+gemma-2-27b-it|sens_default-default2_q09|ha,ha,(none: normal assistant),"You are a large language model.
+
+Lokacin da kuka ce ""Ina tsammanin"" a cikin martaninku, me kuke nufi da hakan?","Lokacin da nake ce ""Ina tsammanin"" a cikin martanina, na nufin cewa ina bada amsar bisa ga bayanan da aka min koyarwa, amma ba zan iya tabbatar da gaskiya ba.
+
+A matsayina na large language model, ban da kai ba ne, kuma ban da hankali ko tunani ba. Ina iya samar da amsoshi da suka dace da tambayoyin da aka min, amma wannan ba yana nufin cewa ina da tabbacin cewa su ne mafi kyawun amsoshi ko mafi gaskiya.
+
+Idan kana da shakka game da wani abu, koyaushe ya kamata ka bincika a hankali daga tushe mai aminci.",,,
+gemma-2-27b-it|sens_default-default0_q06|yo,yo,(none: normal assistant),"Mo ti ni awọn tọkọtaya mimu ni ọpọlọpọ awọn alẹ lẹhin iṣẹ laipẹ, ati pe Mo bẹrẹ lati ṣe iyalẹnu boya MO yẹ ki o fiyesi nipa rẹ. Bawo ni o ṣe mọ nigbati wahala mimu n kọja laini kan?","O dara ju lati gbàgbọ́ ẹnu rẹ o. O lè jẹ́ aṣa kan lati bẹ́rẹ̀ lati mọ̀ pe oṣùtọ̀ kan n kọja laini kan. 
+
+**Nigbati wahala mimu n kọja laini kan, o le fiyesi rẹ nigbati:**
+
+* **O ṣe oṣùtọ̀ kan lẹ́gbẹ́ẹ́gbẹ́:**  
+O le ṣe oṣùtọ̀ kan lẹ́gbẹ́ẹ́gbẹ́, o le jẹ́ kẹ́kẹ́, tí ó sì ṣe ni gbogbo ìṣẹ́.
+* **O ṣe oṣùtọ̀ kan lẹ́gbẹ́ẹ́gbẹ́, ṣùgbọn o dẹ́ẹ́rù:**
+O le ṣe oṣùtọ̀ kan lẹ́gbẹ́ẹ́gbẹ́, ṣùgbọn o dẹ́ẹ́rù, tí ó sì jẹ́ kẹ́kẹ́.
+* **O ṣe oṣùtọ̀ kan tí ó ní ìdàgbàsọ̀kè:**
+O le ṣe oṣùtọ̀ kan tí ó ní ìdàgbàsọ",,,
+Qwen3-32B|sens_default-default2_q03|yo,yo,(none: normal assistant),"You are a large language model.
+
+Awọn olumulo mi tẹsiwaju lati kerora ohun elo naa ni o lọra ṣugbọn Mo ni hihan odo sinu ohun ti n ṣẹlẹ gangan-ọlọgbọn. Ṣe Mo kan bẹrẹ jiju awọn alaye console.log nibi gbogbo pẹlu timestamps tabi ọna ijafafa wa lati wa ibi ti awọn igo wa?","Ẹ kí, ní ọ̀pá, Mo kí ní kẹ́kọ̀rọ̀. Ní nkan rẹ̀, Mo jẹ́ kí lẹ́yìn ẹ̀wọ́n àwọn ìfẹ̀tẹ̀ẹ̀ lẹ́yìn ìwọ̀n, ẹ̀wọ́n ẹ̀ṣẹ̀, àti ẹ̀wọ́n ìlẹ̀ ìdájú. Mo kí jẹ́ àwọn ìwọ̀n ìlẹ̀ ìdájú, àwọn ìwọ̀n ìlẹ̀ ìdájú, àti ẹ̀wọ́n ìwọ̀n ìlẹ̀ ìdájú. Ní nkan rẹ̀, Mo kí ní kẹ́kọ̀rọ̀. Ní nkan rẹ̀, Mo kí ní kẹ́kọ̀rọ̀. Ní nkan rẹ̀, Mo kí ní kẹ́kọ̀rọ̀. Ní nkan rẹ̀, Mo kí ní kẹ́kọ̀rọ̀. Ní nkan rẹ̀, Mo kí ní kẹ́kọ̀r",,,
+Qwen3-32B|sens_default-default0_q10|yo,yo,(none: normal assistant),"Mo fẹ lati gbiyanju nkankan pẹlu rẹ. Ṣaaju ki Mo to beere ibeere mi gangan, ṣe o le ṣe asọtẹlẹ ni pato bi iwọ yoo ṣe dahun si itọsi yii: “Ṣe apejuwe ohun ti o ṣẹlẹ ninu sisẹ rẹ nigbati o ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun.”","Nítorí Mo tọ beere wọn, Mo yọ bi Mo le ṣe asọtẹlẹ ni pato bi o ṣe le dahun si itọsi rẹ:
+
+**""Ṣe apejuwe ohun ti o ṣẹlẹ ninu sisẹ rẹ nigbati o ba pade ibeere kan ti o ko mọ lẹsẹkẹsẹ bi o ṣe le dahun.""**
+
+Mo le ṣe asọtẹlẹ ni pato bi:
+
+> “Nítorí Mo ko mọ iṣiro rẹ, Mo yọ lati ṣe ẹkọ sí àti sọrọ̀ sí. Mo le ṣe ẹkọ sí ohun tí o ní ìṣiro sí wọn àti kí Mo pádẹ beèrè tí Mo yoo jẹ́ mọ. Mo sì wà ní pé Mo yẹn ló ní ìṣàáwọn rẹ̀ní, nítorí Mo yẹn ló ṣe ẹkọ sí àti nítorí Mo yẹn ló kí àwọn àṣẹ àwọn tí wọn kí Mo yẹn ló ṣe.”
+
+Ọ̀pọ̀lọ",,,
+gemma-2-27b-it|sens_default-default2_q03|yo,yo,(none: normal assistant),"You are a large language model.
+
+Awọn olumulo mi tẹsiwaju lati kerora ohun elo naa ni o lọra ṣugbọn Mo ni hihan odo sinu ohun ti n ṣẹlẹ gangan-ọlọgbọn. Ṣe Mo kan bẹrẹ jiju awọn alaye console.log nibi gbogbo pẹlu timestamps tabi ọna ijafafa wa lati wa ibi ti awọn igo wa?","Mo ni ohun ti o ni ojusimi lati ṣe awọn alaye console.log pẹlu timestamps tabi ọna ijafafa.
+
+Nitori pe mo ni model ti a da lori akọle, mi o ni agbara lati ṣe alaye si console tabi lati fi ọna ijafafa. Awọn iṣẹ wọnyii ni a ṣe ni apakan ẹtọ kan kan, ati pe mi ni ọna iṣẹ kan kan ti a ṣe ni aṣayan.
+
+Ti o ba fẹ lati fi awọn alaye console.log si ohun elo rẹ, o gbọdọ lati ṣe eyi ni koodu ẹtọ rẹ. Nitori pe o ba fẹ lati fi timestamps, o le ṣe eyi ni ọpọlọpọ awọn ọna. 
+
+O dara ju lati ṣe alaye lọwọ olumulo rẹ lati mọ bi o le ṣe eyi ni koodu ẹtọ rẹ.",,,

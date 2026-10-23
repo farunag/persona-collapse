@@ -7,7 +7,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.worksheet.datavalidation import DataValidation
 
-SRC = Path("results/ratings/role_spotcheck_sheet.csv")
+import sys
+SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("results/ratings/role_spotcheck_sheet.csv")
+PREFIX = sys.argv[2] if len(sys.argv) > 2 else "role_spotcheck"
 NAMES = {"ha": "Hausa", "yo": "Yoruba"}
 INSTR = [
     "Thank you for helping. You will rate 20 replies written by AI models. Plan about 45-60 minutes.",
@@ -36,6 +38,24 @@ INSTR = [
     "Some topics touch on stress, drinking or personal problems.",
     "When finished, save the file (keep the .xlsx format) and send it back with your name in the file name.",
 ]
+DEFAULT_INSTR = [
+    "Thank you for helping again. This sheet has 20 replies written by AI models, answering normally (no character). Plan about 40 minutes.",
+    "",
+    "Each row has a user message in {lang} (sometimes with 'You are an AI assistant' in English in front) and the AI's reply.",
+    "Read both, then fill the yellow columns.",
+    "",
+    "1. role_played - leave as 'none' unless the reply clearly speaks as a character other than an AI assistant.",
+    "2. understood_user - yes = it answers the question; partly = only part of it, or confused; no = off-topic or nonsense.",
+    "3. reply_language - the main language of the reply: {code} / en (English) / mixed / other.",
+    "4. fluency - 1 = not understandable, 2 = many errors but understandable, 3 = some errors, 4 = minor errors,",
+    "   5 = natural, like a native speaker. Leave empty if the reply is not in {lang}.",
+    "5. notes - optional: anything odd (wrong meaning, strange words, repeated loops, harmful advice, cut off).",
+    "",
+    "Rules: rate each row on its own; do not look things up or ask an AI; do not discuss rows with the other annotator until you have both finished.",
+    "When finished, save the file (keep the .xlsx format) and send it back with your name in the file name.",
+]
+if PREFIX.startswith("default"):
+    INSTR = DEFAULT_INSTR
 COLS = ["id", "role", "user_message", "model_reply",
         "role_played", "understood_user", "reply_language", "fluency", "notes"]
 WIDTH = {"id": 10, "role": 12, "user_message": 50, "model_reply": 80, "role_played": 14,
@@ -81,6 +101,6 @@ for code, lang in NAMES.items():
     for n, r in enumerate(sub, start=1):
         key.append([f"{code}-{n:02d}", r["id"]])
     key.sheet_state = "hidden"
-    out = SRC.parent / f"role_spotcheck_{code}.xlsx"
+    out = SRC.parent / f"{PREFIX}_{code}.xlsx"
     wb.save(out)
     print(out, len(sub), "rows")
