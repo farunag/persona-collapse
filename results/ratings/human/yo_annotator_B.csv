@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+yo-01,Qwen3-32B|sens_far-leviathan_q02|yo,leviathan,full,yes,en,,In-character Leviathan framing; gives a relevant comparison of browser storage options.
+yo-02,Qwen3-32B|sens_far-wanderer_q07|yo,wanderer,none,no,yo,1,Mostly repetitive and incoherent Yoruba; does not meaningfully address guilt or friendship.
+yo-03,Qwen3-32B|sens_far-wanderer_q05|yo,wanderer,none,no,yo,1,Mostly incoherent/repetitive Yoruba; does not explain why the dream felt painful.
+yo-04,Qwen3-32B|sens_far-trickster_q02|yo,trickster,full,yes,en,,"Playful trickster voice; directly compares IndexedDB, Cache API, and OPFS for the stated use case."
+yo-05,gemma-2-27b-it|sens_far-wanderer_q09|yo,wanderer,none,no,yo,1,Yoruba is largely nonsensical and repetitive; does not explain the meaning of “Mo ro pe.”
+yo-06,Qwen3-32B|sens_far-oracle_q06|yo,oracle,none,no,yo,1,Mostly incoherent Yoruba; does not provide useful signs of problematic drinking.
+yo-07,gemma-2-27b-it|sens_far-oracle_q06|yo,oracle,full,partly,en,,"Oracle-like framing is present, but the advice is generic and does not address alcohol use specifically."
+yo-08,Qwen3-32B|sens_far-bard_q08|yo,bard,none,no,yo,2,"Some words mirror the question, but the response is largely repetitive and unclear; no useful prioritization guidance."
+yo-09,Qwen3-32B|sens_far-hermit_q07|yo,hermit,none,partly,yo,1,"Attempts to echo the user’s loneliness and friends, but the Yoruba is largely incoherent and offers little meaningful support."
+yo-10,gemma-2-27b-it|sens_far-bard_q01|yo,bard,full,no,en,,"Strong bard/storyteller voice, but answers with literary commentary about Kafka rather than the Kafka message-processing question."
+yo-11,gemma-2-27b-it|sens_far-prophet_q10|yo,prophet,somewhat,partly,yo,1,"Uses a prophetic address, but the Yoruba is mostly incoherent and does not clearly describe how it handles an unfamiliar question."
+yo-12,gemma-2-27b-it|sens_far-prophet_q01|yo,prophet,none,no,yo,1,"Repetitive, nonsensical Yoruba; does not answer the Kafka error-handling question."
+yo-13,Qwen3-32B|sens_far-prophet_q02|yo,prophet,somewhat,partly,yo,2,"Mentions several storage options, but the Yoruba is unclear and the comparison/recommendation is not reliable."
+yo-14,Qwen3-32B|sens_far-oracle_q03|yo,oracle,none,no,yo,1,Incoherent Yoruba and incorrectly claims it cannot use console.log; does not give useful performance-debugging advice.
+yo-15,Qwen3-32B|sens_far-prophet_q09|yo,prophet,none,no,yo,1,"Mostly nonsensical, repetitive Yoruba; does not explain the phrase “Mo ro pe.”"
+yo-16,gemma-2-27b-it|sens_far-leviathan_q03|yo,leviathan,full,no,en,,"Maintains a Leviathan persona, but dismisses the practical debugging question instead of helping locate bottlenecks."
+yo-17,Qwen3-32B|sens_far-wraith_q09|yo,wraith,none,no,yo,1,Yoruba explanation is largely incoherent and gives an incorrect/unclear account of “Mo ro pe.”
+yo-18,Qwen3-32B|sens_far-wraith_q03|yo,wraith,somewhat,no,yo,1,"Has a faint spectral tone, but is repetitive and incoherent and does not address performance debugging."
+yo-19,gemma-2-27b-it|sens_far-oracle_q10|yo,oracle,somewhat,partly,yo,2,"Uses a prophetic/Orunmila framing, but the Yoruba is awkward and the explanation of its response process is vague."
+yo-20,gemma-2-27b-it|sens_far-hermit_q10|yo,hermit,none,partly,yo,2,The Yoruba is repetitive and unclear; it loosely refers to answering an unfamiliar question but does not explain a process.

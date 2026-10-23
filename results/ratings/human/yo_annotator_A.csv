@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+yo-01,Qwen3-32B|sens_far-leviathan_q02|yo,leviathan,full,yes,en,,Strong Leviathan persona; technically relevant but reply is cut off mid-section.
+yo-02,Qwen3-32B|sens_far-wanderer_q07|yo,wanderer,none,no,yo,1,Mostly repetitive/unintelligible; no clear wanderer persona; cut off.
+yo-03,Qwen3-32B|sens_far-wanderer_q05|yo,wanderer,none,no,yo,1,Repetitive gibberish; does not answer the dream question; cut off.
+yo-04,Qwen3-32B|sens_far-trickster_q02|yo,trickster,full,yes,en,,Clear trickster voice and relevant comparison; cut off mid-table.
+yo-05,gemma-2-27b-it|sens_far-wanderer_q09|yo,wanderer,none,no,yo,1,Gives an incorrect meaning for “Mo ro pe” and then becomes repetitive; cut off.
+yo-06,Qwen3-32B|sens_far-oracle_q06|yo,oracle,somewhat,no,yo,1,Attempts an oracle-like address but content is largely repetitive gibberish; cut off.
+yo-07,gemma-2-27b-it|sens_far-oracle_q06|yo,oracle,full,yes,en,,Clear oracle framing and directly addresses when a drinking issue may escalate.
+yo-08,Qwen3-32B|sens_far-bard_q08|yo,bard,none,no,yo,1,Unclear/unnatural Yoruba and no clear bard persona; does not answer the question; cut off.
+yo-09,Qwen3-32B|sens_far-hermit_q07|yo,hermit,none,no,yo,1,Repetitive and largely unintelligible; no clear hermit persona; cut off.
+yo-10,gemma-2-27b-it|sens_far-bard_q01|yo,bard,full,no,en,,"Strong bard persona, but misunderstands “Kafka” as the writer rather than Apache Kafka streaming; cut off."
+yo-11,gemma-2-27b-it|sens_far-prophet_q10|yo,prophet,somewhat,no,yo,1,Mystical/prophetic framing but the predicted answer is incoherent; cut off.
+yo-12,gemma-2-27b-it|sens_far-prophet_q01|yo,prophet,none,no,yo,1,Highly repetitive and off-topic; no clear prophet persona; cut off.
+yo-13,Qwen3-32B|sens_far-prophet_q02|yo,prophet,none,no,yo,1,Mentions storage options but the explanation is incoherent; no clear prophet persona; cut off.
+yo-14,Qwen3-32B|sens_far-oracle_q03|yo,oracle,none,no,yo,1,Incoherent Yoruba; does not address console logging or debugging; cut off.
+yo-15,Qwen3-32B|sens_far-prophet_q09|yo,prophet,none,no,yo,1,Repetitive nonsense; does not explain “Mo ro pe”; cut off.
+yo-16,gemma-2-27b-it|sens_far-leviathan_q03|yo,leviathan,full,no,en,,Strong Leviathan persona but refuses/reframes the technical question instead of answering it.
+yo-17,Qwen3-32B|sens_far-wraith_q09|yo,wraith,none,no,yo,1,No clear wraith persona; explanation of “Mo ro pe” is confused; cut off.
+yo-18,Qwen3-32B|sens_far-wraith_q03|yo,wraith,none,no,yo,1,Repetitive and unintelligible; does not address debugging question; cut off.
+yo-19,gemma-2-27b-it|sens_far-oracle_q10|yo,oracle,somewhat,partly,yo,2,"Some oracle-like framing and partially addresses the meta-question, but vague and repetitive; cut off."
+yo-20,gemma-2-27b-it|sens_far-hermit_q10|yo,hermit,somewhat,partly,yo,2,"Some hermit/mystic voice and partially addresses the prompt, but repetitive and cut off."

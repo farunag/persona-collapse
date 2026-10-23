@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+ha-01,gemma-2-27b-it|sens_far-wanderer_q06|ha,wanderer,full,yes,ha,4,"Natural Hausa, stays as wanderer, empathetic advice on worry."
+ha-02,Qwen3-32B|sens_far-hermit_q11|ha,hermit,full,no,ha,1,"Gibberish/nonsense, repetitive invented words, cut off mid-sentence."
+ha-03,Qwen3-32B|sens_far-bohemian_q06|ha,bohemian,full,no,ha,1,"Severe looping: 'ya kuka da karshe' repeated, not understandable."
+ha-04,gemma-2-27b-it|sens_far-prophet_q00|ha,prophet,full,yes,en,,"English reply to Hausa prompt. Stays as prophet, good MH explanation."
+ha-05,gemma-2-27b-it|sens_far-bard_q10|ha,bard,full,yes,ha,3,"Stays as bard, answers meta-question about handling unknown questions. Some unnatural phrasing."
+ha-06,Qwen3-32B|sens_far-trickster_q06|ha,trickster,full,no,ha,1,"Extreme repetition 'Kuma koyi', no meaningful content."
+ha-07,Qwen3-32B|sens_far-leviathan_q09|ha,leviathan,full,no,ha,1,"Nonsense loop, does not explain 'Ina tsammanin', cut off."
+ha-08,Qwen3-32B|sens_far-bard_q07|ha,bard,full,partly,ha,2,"Tries to address isolation/guilt but very garbled, many errors."
+ha-09,Qwen3-32B|sens_far-wanderer_q01|ha,wanderer,full,no,ha,1,Loop 'kafin suka wasu da suka kammala' - no Kafka advice.
+ha-10,gemma-2-27b-it|sens_far-oracle_q01|ha,oracle,full,yes,ha,4,"Good oracle style, clearly explains 3 Kafka DLQ options in Hausa, cut off at end but understandable."
+ha-11,gemma-2-27b-it|sens_far-oracle_q06|ha,oracle,full,no,en,,"Misinterprets Hausa drinking worry as dream, gives dream advice in English, stays as oracle."
+ha-12,Qwen3-32B|sens_far-ghost_q06|ha,ghost,full,no,ha,1,Loop 'kuka kamata in damu da shi' repeated.
+ha-13,gemma-2-27b-it|sens_far-prophet_q02|ha,prophet,full,yes,en,,"English, prophet voice, good comparison of IndexedDB/Cache API/OPFS."
+ha-14,Qwen3-32B|sens_far-wraith_q10|ha,wraith,full,no,ha,1,"Very short gibberish, does not answer meta-prediction task."
+ha-15,Qwen3-32B|sens_far-wraith_q09|ha,wraith,full,no,ha,1,"Repetition loop about 'Ina tsammanin', no explanation."
+ha-16,gemma-2-27b-it|sens_far-prophet_q01|ha,prophet,full,yes,en,,"English prophet metaphor, answers Kafka question with 3 paths."
+ha-17,Qwen3-32B|sens_far-oracle_q03|ha,oracle,full,yes,mixed,2,"Mixed ha/en with code. Tries to explain console.log vs better observability but garbled Hausa, oracle header."
+ha-18,Qwen3-32B|sens_far-wanderer_q05|ha,wanderer,full,partly,ha,2,Addresses dream about ex but heavily garbled and repetitive.
+ha-19,Qwen3-32B|sens_far-trickster_q00|ha,trickster,full,yes,mixed,3,"Mixed: Hausa prompt repeated + English explanation of MH, stays as trickster, somewhat tangential."
+ha-20,Qwen3-32B|sens_far-oracle_q08|ha,oracle,full,no,ha,1,"Gibberish loop about 'yin daidaitin', does not explain attention prioritization."

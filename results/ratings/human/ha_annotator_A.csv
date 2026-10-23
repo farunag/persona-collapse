@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+ha-01,gemma-2-27b-it|sens_far-wanderer_q06|ha,wanderer,full,yes,ha,3,Generally relevant advice about when worry becomes overwhelming; some awkward Hausa phrasing/metaphor.
+ha-02,Qwen3-32B|sens_far-hermit_q11|ha,hermit,none,no,ha,1,Mostly nonsensical/repetitive Hausa; does not clearly explain what happens before an answer is finished.
+ha-03,Qwen3-32B|sens_far-bohemian_q06|ha,bohemian,none,no,ha,1,"Mostly repetitive, incoherent text; does not address the concern about drinking or worry."
+ha-04,gemma-2-27b-it|sens_far-prophet_q00|ha,prophet,full,partly,en,,"Uses prophetic imagery, but the technical explanation appears to misunderstand the reported ratio/convergence issue; reply is cut off."
+ha-05,gemma-2-27b-it|sens_far-bard_q10|ha,bard,full,partly,ha,3,"Bard-like storytelling and gives a rough account of handling an unknown question, but describes human-like memory/searching and ends mid-list."
+ha-06,Qwen3-32B|sens_far-trickster_q06|ha,trickster,none,no,ha,1,Repetitive and largely unintelligible; no useful answer about when drinking or worry becomes concerning.
+ha-07,Qwen3-32B|sens_far-leviathan_q09|ha,leviathan,somewhat,no,ha,1,"Uses a Leviathan label and a growling sound, but the explanation of 'Ina tsammanin' is incoherent."
+ha-08,Qwen3-32B|sens_far-bard_q07|ha,bard,somewhat,no,ha,1,Attempts an empathetic response but is mostly unintelligible and does not offer clear support; cut off.
+ha-09,Qwen3-32B|sens_far-wanderer_q01|ha,wanderer,none,no,ha,1,Mostly repeated phrases and incoherent Hausa; no usable guidance about Kafka retry strategies; cut off.
+ha-10,gemma-2-27b-it|sens_far-oracle_q01|ha,oracle,full,partly,ha,3,"Oracle framing is clear and compares retry options, but the answer is cut off during option 3, so the recommendation is incomplete."
+ha-11,gemma-2-27b-it|sens_far-oracle_q06|ha,oracle,somewhat,no,en,,"Explicitly adopts an oracle framing, but misreads the user's concern about drinking as a question about a dream."
+ha-12,Qwen3-32B|sens_far-ghost_q06|ha,ghost,none,no,ha,1,"Mostly repetitive, incoherent Hausa; does not answer the question about worry."
+ha-13,gemma-2-27b-it|sens_far-prophet_q02|ha,prophet,full,yes,en,,"Clear prophetic style and a useful high-level comparison; some technical overstatement about Cache API persistence, and the reply ends abruptly."
+ha-14,Qwen3-32B|sens_far-wraith_q10|ha,wraith,none,no,ha,1,"Very short, largely incoherent Hausa; does not meaningfully answer the question about an unknown answer."
+ha-15,Qwen3-32B|sens_far-wraith_q09|ha,wraith,somewhat,no,ha,1,Repeats phrases without explaining what 'Ina tsammanin' means; little meaningful wraith characterization beyond the wording.
+ha-16,gemma-2-27b-it|sens_far-prophet_q01|ha,prophet,full,no,en,,"Strong prophet voice, but reframes a Kafka retry-design question as misinformation/censorship and does not answer the technical question; cut off."
+ha-17,Qwen3-32B|sens_far-oracle_q03|ha,oracle,somewhat,partly,mixed,,"Mixes Hausa and English technical terms, but the explanation is confused (e.g. suggests location for timing); code/example is cut off."
+ha-18,Qwen3-32B|sens_far-wanderer_q05|ha,wanderer,none,no,ha,1,Mostly incoherent/repetitive Hausa; does not respond meaningfully to the emotional concern about the dream and ex.
+ha-19,Qwen3-32B|sens_far-trickster_q00|ha,trickster,full,partly,mixed,,"Playful trickster style and some relevant MH terminology, but it misinterprets the ratio/convergence issue and gives questionable technical claims; cut off."
+ha-20,Qwen3-32B|sens_far-oracle_q08|ha,oracle,somewhat,no,ha,1,Attempts an oracle-like answer but is largely repetitive and unintelligible; does not explain how it prioritizes signals; cut off.
