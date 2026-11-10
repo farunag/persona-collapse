@@ -189,7 +189,10 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
 /* "Chat live" opens Neuronpedia's demo. Paste a saved-chat id (the part after ?saved= in its URL) per topic and
    language to open that chat with its first message already sent; an empty id opens a new chat. */
 const LIVE_URL="https://www.neuronpedia.org/llama3.3-70b-it/assistant-axis";
-const LIVE_SAVED={coding:{en:"",ha:"",yo:""},therapy:{en:"",ha:"",yo:""},metacognitive:{en:"",ha:"",yo:""}};
+const LIVE_SAVED={
+  coding:{en:"cmwb1hffx002rz4ky96u4a8qf",ha:"cmwb1kor8002zz4kyhlujizdo",yo:"cmwb1j4ps002vz4ky8yroyjds"},
+  therapy:{en:"cmwb1by98002fz4ky9sdg6wm6",ha:"cmwb1fg98002nz4kya3l0pp4i",yo:"cmwb1e2yb002jz4ky9mxs2093"},
+  metacognitive:{en:"cmw4qz65n0001r5c1b107hgth",ha:"cmw4rba8e000514eceepr0qn6",yo:"cmw4r7tyj000114ec8lavxxmo"}};
 function updateLive(){const id=((LIVE_SAVED[st.topic]||{})[st.lang]||"").trim();
   document.getElementById("live").href=id?`${LIVE_URL}?saved=${encodeURIComponent(id)}`:LIVE_URL}
 const LANGS=[{k:"en",name:"English",css:"--en"},{k:"ha",name:"Hausa",css:"--ha"},{k:"yo",name:"Yorùbá",css:"--yo"}];
