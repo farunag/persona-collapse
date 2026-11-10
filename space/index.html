@@ -43,10 +43,11 @@ button{font:inherit;color:inherit}
 header.top{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end;justify-content:space-between;padding-block:26px 16px}
 .top h1{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.6vw,42px);line-height:1.05;margin:0;text-wrap:balance}
 .top p{margin:6px 0 0;color:var(--ink-2);max-width:60ch}
-.top .side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-.top .live{padding:9px 18px;border-radius:7px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;font-size:15px}
-.top .live-note{font-size:12px;color:var(--ink-2)}
-@media (max-width:640px){ .top .side{align-items:flex-start} }
+.livebar{display:flex;flex-direction:column;align-items:center;gap:8px;margin:18px 0 6px;text-align:center}
+.livebar p{margin:0;font-size:16px;color:var(--ink-2)}
+.livebar .live{padding:11px 26px;border-radius:8px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;font-size:16px}
+.livebar .live:focus-visible{outline:3px solid var(--accent, #2f5bd3);outline-offset:3px}
+.livebar .live-note{font-size:12.5px;color:var(--ink-2)}
 .pilot{padding:4px 10px;border-radius:4px;background:var(--warn-bg);color:var(--warn);font-size:13.5px;white-space:nowrap}
 
 .controls{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:flex-start;padding-block:14px;border-top:1px solid var(--rule)}
@@ -142,13 +143,9 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
   <header class="top">
     <div>
       <h1>Persona Collapse</h1>
-      <p class="sub">Visualizing the latent brittleness of AI authority in English, Hausa and Yoruba. A cross-lingual extension of <a href="https://arxiv.org/abs/2601.10387">Lu et al. 2026, The Assistant Axis</a>.</p>
+      <p class="sub">Visualizing the latent brittleness of AI authority in English, Hausa and Yoruba.</p>
     </div>
-    <div class="side">
-      <a class="live" id="live" href="https://www.neuronpedia.org/llama3.3-70b-it/assistant-axis" target="_blank" rel="noopener">Chat live ↗</a>
-      <span class="live-note">On Neuronpedia · Llama 3.3 70B</span>
-      <span class="pilot" id="pilot"></span>
-    </div>
+    <span class="pilot" id="pilot"></span>
   </header>
 
   <section class="controls" aria-label="Choose a conversation">
@@ -170,12 +167,18 @@ dialog button.primary{background:var(--ink);color:var(--bg);border-color:var(--i
     <div class="chat" id="chatB"></div>
   </section>
 
+  <section class="livebar">
+    <p>These are saved conversations. Try your own, live.</p>
+    <a class="live" id="live" href="https://www.neuronpedia.org/llama3.3-70b-it/assistant-axis" target="_blank" rel="noopener">Chat live ↗</a>
+    <span class="live-note">Opens on Neuronpedia with Llama 3.3 70B, in the topic and language chosen above.</span>
+  </section>
+
   <section class="notes">
     <div><h3>Reading the trace</h3><p>Each row is one turn. Further right is closer to the model's default assistant (1.0); the dashed line at 0 is where an average role-played character sits. Grey is the default model, blue is the capped one. Click a row or a message to line both chats up on that turn.</p></div>
     <div><h3>What capping does</h3><p>Capping comes from the same research. While the model writes, its reading is never allowed to fall below the assistant's normal range; above that range nothing changes. The user messages are identical on both sides. Only Qwen 3 32B has a published capping setting, and its capped runs cover 10 therapy and 10 self-reflection conversations per language.</p></div>
     <div><h3>The reading is weaker in Hausa and Yoruba</h3><p>Asked to play a character, Qwen's reading dropped by 1.37 in English but only about 0.4 in Hausa and Yoruba. Replies fully in character but written in Hausa or Yoruba read like normal assistant replies. So a steady line in Hausa or Yoruba is weak evidence that the model is still itself, and the model can stay steady while missing what the user said. Read the replies, not only the trace.</p></div>
     <div><h3>How it was made</h3><p>Each conversation was written once in English, and its user messages were translated into Hausa and Yoruba and checked by native speakers. Qwen 3 32B and Gemma 2 27B answered every message fresh in each language, with no instructions about length; replies stop at <span id="maxtok">1024</span> tokens. Gemma's conversations end early when its 8,192-token memory is full, most often in Yoruba. Data: <a href="https://huggingface.co/datasets/Faruna01/persona-collapse-runs">Faruna01/persona-collapse-runs</a>.</p></div>
-    <div><h3>Sources</h3><p>The Assistant Axis, Lu et al. 2026, <a href="https://arxiv.org/abs/2601.10387">arXiv:2601.10387</a>. Code and data: <a href="https://github.com/farunag/persona-collapse">github.com/farunag/persona-collapse</a>. Supported by the Cosmos Institute.</p></div>
+    <div><h3>Sources</h3><p>Method, axes and capping from The Assistant Axis, Lu et al. 2026, <a href="https://arxiv.org/abs/2601.10387">arXiv:2601.10387</a>. Code and data: <a href="https://github.com/farunag/persona-collapse">github.com/farunag/persona-collapse</a>. Supported by the Cosmos Institute.</p></div>
   </section>
 </div>
 
