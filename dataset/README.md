@@ -56,7 +56,7 @@ when the conversation is not in English?*
 Details: the technical report (`paper/technical_report.md`) and native-speaker ratings
 (`results/spotcheck_summary.md`) in the GitHub repo.
 
-1. **Qwen3-32B mostly does not produce usable Hausa or Yoruba.** Six native speakers rated 80
+1. **Qwen3-32B mostly does not produce usable Hausa or Yoruba.** Eight native speakers rated 80
    single-turn replies. Even as a plain assistant, 91% (Hausa) and 100% (Yoruba) of Qwen's
    in-language replies were rated fluency 1–2 of 5, and annotators said a reply fully understood
    the user in 1 of 24 ratings per language.

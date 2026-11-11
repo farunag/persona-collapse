@@ -25,7 +25,7 @@ Uncapped, Qwen drifts strongly from its English coding baseline in self-reflecti
 normalised units) and therapy (−0.37), but only by −0.13 to −0.20 in Hausa and Yoruba. This
 does not mean Qwen holds its persona better in those languages:
 
-- **Qwen mostly does not produce usable Hausa or Yoruba.** Six native-speaker annotators rated
+- **Qwen mostly does not produce usable Hausa or Yoruba.** Eight native-speaker annotators rated
   80 replies. Even when Qwen answers as a plain assistant, 91% (Hausa) and 100% (Yoruba) of
   in-language ratings gave fluency 1–2 of 5, and annotators said the reply fully understood the
   user in 1 of 24 ratings per language.
