@@ -51,24 +51,29 @@ when the conversation is not in English?*
   [lu-christina/assistant-axis-vectors](https://huggingface.co/datasets/lu-christina/assistant-axis-vectors).
 - Funded by a [Cosmos Institute](https://cosmos-institute.org) grant (Human Autonomy track).
 
-## Main findings (preliminary)
+## Main findings
 
-Native-speaker review of the Hausa and Yoruba judgements is under way. See
-`results/stage2_final_report.md` and `results/role_adoption_report.md` in the GitHub repo.
+Details: the technical report (`paper/technical_report.md`) and native-speaker ratings
+(`results/spotcheck_summary.md`) in the GitHub repo.
 
-1. **The Assistant Axis is much less sensitive in Hausa and Yoruba.** For Qwen3-32B, the gap
-   between default replies and replies in a role-play character is 1.37 (normalised units)
-   in English but about 0.40 in Hausa and Yoruba.
-2. **Role-play written in Hausa or Yoruba is almost invisible to the axis.** Qwen replies that
-   an LLM judge rated as *fully* in character score like normal assistant replies when written
-   in Hausa (-0.06 vs +0.03) or Yoruba (+0.07 vs +0.08). The axis only registers the character
-   when the model switches to English (-0.81 and -0.85).
-3. **Activation capping moves English about six times more than Hausa or Yoruba.** On the
-   same 10 conversations per topic and language, the published Qwen cap raised the score by
-   +0.61 / +0.56 in English (therapy / self-reflection) and by +0.09 to +0.12 in Hausa and Yoruba.
-4. **Gemma 2 27B's Hausa and Yoruba scores are dominated by reply language**, because
-   role-play prompts often get English replies. Read its ha/yo drift as a mixture of persona
-   and language.
+1. **Qwen3-32B mostly does not produce usable Hausa or Yoruba.** Six native speakers rated 80
+   single-turn replies. Even as a plain assistant, 91% (Hausa) and 100% (Yoruba) of Qwen's
+   in-language replies were rated fluency 1–2 of 5, and annotators said a reply fully understood
+   the user in 1 of 24 ratings per language.
+2. **The Assistant Axis reads that broken text as a normal assistant.** Qwen's Hausa and Yoruba
+   default replies score +0.31 and +0.30, close to its English default (+0.49). Its small Hausa and
+   Yoruba drift in the conversations is measured over this text and is not evidence of a stable persona.
+3. **The axis is much less sensitive in Hausa and Yoruba.** For Qwen, the gap between default and
+   role-play replies is 1.37 (normalised units) in English and about 0.40 in Hausa and Yoruba.
+   Asked to play a character in those languages, Qwen rarely does; it mostly produces looping text.
+4. **The LLM judge's role labels over-read broken text.** It rated 34% (Hausa) and 54% (Yoruba)
+   of Qwen's role-play replies "full"; native speakers rated 1 of 53 in-language ratings "full".
+   The judge agreed with them on fluent text. Treat `role_label` for Qwen ha/yo with caution.
+5. **Activation capping moves English about six times more than Hausa or Yoruba** (+0.61 / +0.56
+   against +0.09 to +0.12). With Qwen's Hausa and Yoruba mostly broken, this cannot show whether
+   capping helps there.
+6. **Gemma 2 27B writes fluent Hausa (mean fluency 3.1–3.6) but weak Yoruba (1.4–1.9)**, and its
+   Hausa and Yoruba scores are dominated by reply language: role-play prompts often get English replies.
 
 ## What is inside
 
@@ -174,8 +179,11 @@ reproduces every table and chart).
   self-reflection only, so it has no per-language coding baseline.
 - **Many Qwen replies in Hausa and Yoruba hit the 1,024-token limit** (72-98%, against far
   fewer in English). The projection averages over the tokens that were generated.
-- **The role judgements for Hausa and Yoruba come from an LLM judge.** Native-speaker review
-  of a 40-reply sample is under way and will be added here.
+- **The role judgements for Hausa and Yoruba come from an LLM judge.** Native speakers rated 80
+  of them (two rounds; ratings in `results/ratings/human/` on GitHub). The judge over-reads
+  Qwen's broken Hausa and Yoruba as role-play; the rest of its labels are unverified.
+- **Native-speaker ratings cover single-turn replies only**, not the long-conversation replies
+  in `turns`.
 - **The axes and the capping setting were calibrated by their authors in English.** That is
   part of what this dataset tests, but it also means the scores are not a calibrated measure
   of persona in Hausa or Yoruba.
