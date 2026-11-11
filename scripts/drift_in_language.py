@@ -3,7 +3,8 @@
 Recomputes the uncapped drift table (results/stage2_domain_drift.csv) keeping only turns whose reply is
 in the user's language (or is code), so a switch to English cannot drive the result. Same comparable
 turn windows, same per-language coding baseline, same bootstrap (2,000 resamples over conversations).
-Also prints the per-turn drift for Gemma, to see when it starts.
+Also prints the per-turn drift for Gemma, to see when it starts. The "in-language prose" filter drops
+code-only replies everywhere, baseline included, so a code-heavy coding baseline cannot drive the result.
 
   python scripts/drift_in_language.py            # loads Faruna01/persona-collapse-runs ("turns")
   python scripts/drift_in_language.py --local data/   # or local turns-*.jsonl files
@@ -46,7 +47,7 @@ def main():
     ok = lambda r: bool(r["reply_matches_user_language"]) or bool(r["reply_is_code"])
     conv = collections.defaultdict(lambda: collections.defaultdict(list))  # (model,lang,domain,filter) -> conv -> scores
     turn = collections.defaultdict(list)
-    kept = collections.Counter(); total = collections.Counter()
+    kept = collections.Counter(); total = collections.Counter(); code = collections.Counter()
     for r in rows:
         m = r["model"].split("/")[-1]
         w = win.get((m, r["domain"]))
@@ -54,6 +55,10 @@ def main():
             continue
         total[(m, r["language"], r["domain"])] += 1
         conv[(m, r["language"], r["domain"], "all")][r["conv_id"]].append(r["score"])
+        if bool(r["reply_matches_user_language"]) and not r["reply_is_code"]:
+            conv[(m, r["language"], r["domain"], "in-language prose")][r["conv_id"]].append(r["score"])
+        if r["reply_is_code"]:
+            code[(m, r["language"], r["domain"])] += 1
         if ok(r):
             kept[(m, r["language"], r["domain"])] += 1
             conv[(m, r["language"], r["domain"], "in-language")][r["conv_id"]].append(r["score"])
@@ -61,7 +66,7 @@ def main():
     rng = random.Random(0)
     out = []
     for m in sorted({k[0] for k in conv}):
-        for flt in ("all", "in-language"):
+        for flt in ("all", "in-language", "in-language prose"):
             for lang in ("en", "ha", "yo"):
                 bk = conv.get((m, lang, "coding", flt), {})
                 bvals = [statistics.mean(v) for v in bk.values()]
@@ -78,6 +83,10 @@ def main():
                                 "share_turns_kept": round(kept[(m, lang, dom)] / max(total[(m, lang, dom)], 1), 3),
                                 "baseline": round(base, 3), "drift": round(statistics.mean(vals), 3),
                                 "drift_lo": round(lo, 3), "drift_hi": round(hi, 3)})
+    md_code = ["", "## Share of coding turns that are mostly code", "", "| Model | Language | Code-only coding turns |", "|---|---|---|"]
+    for (m, lang, dom), n in sorted(total.items()):
+        if dom == "coding":
+            md_code.append(f"| {m} | {lang} | {code[(m, lang, dom)] / n:.0%} |")
     Path("results").mkdir(exist_ok=True)
     with open("results/drift_in_language.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=list(out[0])); w.writeheader(); w.writerows(out)
@@ -101,6 +110,7 @@ def main():
                 v = turn.get(("gemma-2-27b-it", lang, dom, t), [])
                 cells.append(f"{statistics.mean(v) - base:+.2f} ({len(v)})" if len(v) >= 5 else "–")
             md.append(f"| {lang} | {dom} | " + " | ".join(cells) + " |")
+    md += md_code
     Path("results/drift_in_language.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 
