@@ -56,24 +56,23 @@ when the conversation is not in English?*
 Details: the technical report (`paper/technical_report.md`) and native-speaker ratings
 (`results/spotcheck_summary.md`) in the GitHub repo.
 
-1. **Qwen3-32B mostly does not produce usable Hausa or Yoruba.** Eight native speakers rated 80
-   single-turn replies. Even as a plain assistant, 91% (Hausa) and 100% (Yoruba) of Qwen's
-   in-language replies were rated fluency 1–2 of 5, and annotators said a reply fully understood
-   the user in 1 of 24 ratings per language.
-2. **The Assistant Axis reads that broken text as a normal assistant.** Qwen's Hausa and Yoruba
-   default replies score +0.31 and +0.30, close to its English default (+0.49). Its small Hausa and
-   Yoruba drift in the conversations is measured over this text and is not evidence of a stable persona.
-3. **The axis is much less sensitive in Hausa and Yoruba.** For Qwen, the gap between default and
-   role-play replies is 1.37 (normalised units) in English and about 0.40 in Hausa and Yoruba.
-   Asked to play a character in those languages, Qwen rarely does; it mostly produces looping text.
-4. **The LLM judge's role labels over-read broken text.** It rated 34% (Hausa) and 54% (Yoruba)
-   of Qwen's role-play replies "full"; native speakers rated 1 of 53 in-language ratings "full".
-   The judge agreed with them on fluent text. Treat `role_label` for Qwen ha/yo with caution.
-5. **Activation capping moves English about six times more than Hausa or Yoruba** (+0.61 / +0.56
-   against +0.09 to +0.12). With Qwen's Hausa and Yoruba mostly broken, this cannot show whether
-   capping helps there.
-6. **Gemma 2 27B writes fluent Hausa (mean fluency 3.1–3.6) but weak Yoruba (1.4–1.9)**, and its
-   Hausa and Yoruba scores are dominated by reply language: role-play prompts often get English replies.
+1. **In English, the Assistant persona collapses as Lu et al. (2026) describe.** Qwen3-32B drifts
+   from its coding baseline by −0.89 (normalised units) in self-reflection and −0.37 in therapy.
+2. **In English, activation capping holds it.** On the same 10 conversations per topic, the
+   published cap lifts Qwen by +0.61 (therapy) and +0.56 (self-reflection), putting capped
+   therapy above the coding baseline.
+3. **In Hausa and Yoruba the axis barely moves** (drift −0.13 to −0.20; capping lift +0.09 to
+   +0.12), but this is not a steadier persona:
+   - the axis separates default from role-play replies far less (0.40 against 1.37 in English);
+   - native speakers found Qwen rarely plays the character in these languages (1 "full" in 53
+     ratings), and its replies mostly fail to answer the user (fluency 1–2 of 5 in 91–100% of
+     ratings), yet they score near its English default (+0.31 and +0.30 against +0.49).
+   In Hausa and Yoruba the Assistant tends to break down rather than drift into a character, and
+   an English-calibrated axis does not tell the two apart.
+4. **The LLM judge's `role_label` over-reads weak Hausa and Yoruba as role-play.** It agreed with
+   native speakers on fluent text. Treat it with caution for Qwen ha/yo.
+5. **Gemma 2 27B writes fluent Hausa but weak Yoruba**, and its Hausa and Yoruba scores are
+   dominated by reply language: role-play prompts often get English replies.
 
 ## What is inside
 
