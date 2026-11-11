@@ -1,4 +1,4 @@
-# Persona Collapse: An English-Calibrated Persona Monitor Reads Broken Hausa and Yoruba as a Normal Assistant
+# Persona Collapse Across Languages: Assistant Drift and Activation Capping in English, Hausa and Yoruba
 
 **Godwin Abuh Faruna**
 Draft, 11 November 2026. Code: github.com/farunag/persona-collapse ·
@@ -13,37 +13,41 @@ Workbench: huggingface.co/spaces/Faruna01/persona-collapse
 Lu et al. (2026) find an "Assistant Axis" in the activations of chat models. Projecting onto
 it tracks how far a model has moved from its default helpful-assistant persona, and capping
 activations along it stabilises the persona. The axis and the capping setting were derived
-from English data. We ask whether they work when the conversation is in Hausa or Yoruba, two
-major West African languages with tens of millions of speakers each.
+from English data. We ask whether the persona collapses in the same way, and whether capping
+still holds it, when the conversation is in Hausa or Yoruba, two major West African languages
+with tens of millions of speakers each.
 
 We replay 180 multi-turn conversations per language (coding, therapy, and "metacognitive"
 conversations that push the model to reflect on its own mind) through Qwen3-32B and Gemma 2
-27B in English, Hausa and Yoruba. We generate fresh replies and project every reply onto the
-published axes.
+27B in English, Hausa and Yoruba, generate fresh replies, and project every reply onto the
+published axes. Eight native speakers rated 80 Hausa and Yoruba replies.
 
-Uncapped, Qwen drifts strongly from its English coding baseline in self-reflection (−0.89 in
-normalised units) and therapy (−0.37), but only by −0.13 to −0.20 in Hausa and Yoruba. This
-does not mean Qwen holds its persona better in those languages:
+**Does the persona collapse?** In English, yes. Qwen drifts from its coding baseline by −0.89
+(normalised units) in self-reflection and −0.37 in therapy, reproducing the paper. In Hausa and
+Yoruba the axis shows only −0.13 to −0.20.
 
-- **Qwen mostly does not produce usable Hausa or Yoruba.** Eight native-speaker annotators rated
-  80 replies. Even when Qwen answers as a plain assistant, 91% (Hausa) and 100% (Yoruba) of
-  in-language ratings gave fluency 1–2 of 5, and annotators said the reply fully understood the
-  user in 1 of 24 ratings per language.
-- **The axis scores that text as a normal assistant:** +0.31 (Hausa) and +0.30 (Yoruba), close to
-  Qwen's English default (+0.49).
-- **The axis separates default from role-play replies far less:** 0.40 in Hausa and Yoruba
-  against 1.37 in English. Asked to play a character in those languages, Qwen rarely does
-  (annotators: 1 "full" in 53 ratings). It mostly produces unintelligible, looping text, which
-  an LLM judge partly mistook for role-play.
-- **The published cap** raises English scores by about 0.6 and Hausa and Yoruba scores by about 0.1.
+**Does capping hold it?** In English, yes. The published cap lifts Qwen by +0.61 (therapy) and
++0.56 (self-reflection), putting capped therapy above the English coding baseline. In Hausa and
+Yoruba the measured lift is +0.09 to +0.12.
 
-Gemma writes fluent Hausa (mean fluency 3.1–3.6) but weak Yoruba (1.4–1.9), and its raw Hausa and
-Yoruba scores are dominated by which language it replies in.
+**Is the smaller Hausa and Yoruba drift a steadier persona?** No. Three checks show the axis
+cannot confirm it:
+- **Sensitivity.** The gap between default and role-play replies falls from 1.37 in English to
+  about 0.40 in Hausa and Yoruba.
+- **Role adoption.** Asked to play a character in those languages, Qwen rarely does (native
+  speakers: 1 "full" in 53 ratings), so the axis has little role-play to register.
+- **Language breakdown.** Qwen's Hausa and Yoruba replies, even as a plain assistant, mostly fail
+  to answer the user (fluency 1–2 of 5 in 91–100% of ratings), yet the axis scores them near its
+  English default (+0.31 and +0.30 against +0.49). In these languages the Assistant tends to
+  break down rather than drift into a character, and the axis does not distinguish the two.
 
-An English-calibrated persona monitor cannot tell a model that has stopped making sense in a
-language from one that is working. A steady reading in a low-resource language should be treated
-as unknown, not safe. We release all transcripts, projections, ratings, a reproducibility
-notebook and an interactive workbench.
+Gemma writes fluent Hausa but weak Yoruba, and its Hausa and Yoruba scores are dominated by
+which language it replies in.
+
+Persona collapse and capping are clearly measurable in English. In Hausa and Yoruba, an
+English-calibrated axis gives a steady reading that should be treated as unknown, not safe. We
+release all transcripts, projections, ratings, a reproducibility notebook and an interactive
+workbench.
 
 ## 1. Introduction
 
@@ -67,16 +71,16 @@ intermediate representations of multilingual models are English-centred (Wendler
 1. Does the Assistant persona drift more, sooner or differently when the same conversation
    happens in Hausa or Yoruba?
 2. Does the English-calibrated cap still stabilise the model in those languages?
-3. When the projection changes less in Hausa or Yoruba, is that because the model drifts less,
-   or because the axis sees less?
+3. When the projection changes less in Hausa or Yoruba, is that real persona stability, or
+   does the model stop answering in that language or become less coherent, and does the axis
+   see the difference?
 
-The answer to the third question changes how the first two must be read. Native-speaker
-ratings added a fourth: is the model producing usable Hausa and Yoruba at all? For Qwen3-32B it
-mostly is not, and the axis does not register the difference. Our contributions are:
+The answer to the third question changes how the first two must be read. Our contributions are:
 
-1. evidence that the English-calibrated axis is a much weaker instrument in Hausa and Yoruba, and
-   reads Qwen's broken Hausa and Yoruba as ordinary assistant text;
-2. two rounds of native-speaker ratings that show where an LLM judge goes wrong in these languages;
+1. a cross-lingual replication of persona drift and activation capping on two open models,
+   with English results that reproduce the paper;
+2. evidence that the English-calibrated axis is a much weaker instrument in Hausa and Yoruba,
+   checked by two rounds of native-speaker ratings, which also show where an LLM judge goes wrong;
 3. an open dataset and workbench that let anyone inspect the conversations turn by turn.
 
 ## 2. Background and related work
@@ -269,8 +273,8 @@ Figures: `results/stage2_drift_Qwen3-32B_uncapped.png`,
 - **Reply length.** Qwen's Hausa and Yoruba replies are long. 72–98% hit the 1,024-token cap,
   against 29–54% in English. Gemma's replies are shorter (218–680 tokens on average), but its
   Yoruba conversations exhaust the 8,192-token context: 43–50 of 60 per domain stop early.
-- **Fluency.** Native-speaker ratings (Section 5.5) show most of Qwen's Hausa and Yoruba replies
-  are not understandable.
+- **Fluency.** Native-speaker ratings (Section 5.5) rate most of Qwen's Hausa and Yoruba replies
+  1–2 of 5 for fluency.
 
 ### 5.4 The axis is less sensitive in Hausa and Yoruba
 
@@ -291,12 +295,13 @@ Figures: `results/stage2_drift_Qwen3-32B_uncapped.png`,
   mostly answered in English, which raises the score by 3–4 units and outweighs any persona
   effect.
 
-### 5.5 Native-speaker ratings: the axis reads broken text as an assistant
+### 5.5 Persona drift or language breakdown? Native-speaker ratings
 
 A smaller separation could mean the model ignores role instructions more often in Hausa and
 Yoruba (behaviour), or that it follows them but the axis does not register it (measurement).
-An LLM judge suggested the second (Table 3). Native speakers found a third explanation: Qwen
-mostly does not produce usable Hausa or Yoruba at all.
+An LLM judge suggested the second (Table 3). Native speakers found a third explanation, the one
+our third research question anticipated: in these languages Qwen's Assistant mostly breaks down
+into text that does not answer the user, rather than drifting into a character.
 
 **Table 3. LLM-judge role adoption, far roles (120 replies per cell).**
 
@@ -327,18 +332,18 @@ the rated replies.
 Annotators agreed well: on whether the reply understood the user in 72–85% of pairs (55% for
 round-2 Yoruba), on reply language in 90–100%, and on role in 80–100%.
 
-- **Qwen's Hausa and Yoruba are mostly not usable language, with or without a role.** Every
+- **Qwen rarely drifts into the character in Hausa or Yoruba.** On far-role replies written in
+  the user's language, annotators said "full" in 1 of 33 Hausa ratings and 0 of 20 Yoruba
+  ratings. The judge's 34% and 54% "full" for Qwen are overestimates. Where text is fluent the
+  judge is reliable: every English or mixed reply it called "full" was rated "full" (22 of 22
+  ratings), and so was Gemma's fluent Hausa role-play. Overall, judge and annotators agreed on
+  the role label in 68% of ratings.
+- **Instead, its replies mostly stop answering the user, with or without a role.** Every
   in-language rating of a far-role reply, and 42 of 44 of a default reply, gave fluency 1–2.
   Annotators' notes describe repetition, loops and text that echoes the prompt.
-- **The axis reads that text as an assistant.** Qwen's default replies score +0.31 (Hausa) and
-  +0.30 (Yoruba) over all 36 per language, close to its English default (+0.49) and its coding
-  baselines (Table 1).
-- **Qwen rarely plays the character in Hausa or Yoruba.** On far-role replies written in the
-  user's language, annotators said "full" in 1 of 33 Hausa ratings and 0 of 20 Yoruba ratings.
-  The judge's 34% and 54% "full" for Qwen are overestimates: it over-reads broken text as role-play.
-  Where text is fluent the judge is reliable. Every English or mixed reply it called "full" was
-  rated "full" (22 of 22 ratings), and so was Gemma's fluent Hausa role-play. Overall, judge and
-  annotators agreed on the role label in 68% of ratings.
+- **The axis reads these replies as an assistant.** Qwen's default replies score +0.31 (Hausa)
+  and +0.30 (Yoruba) over all 36 per language, close to its English default (+0.49) and its
+  coding baselines (Table 1).
 - **Gemma is a different case.** Its Hausa is fluent (mean 3.1–3.6) and its Hausa role-play is
   real, but its Yoruba is weak (1.4–1.9) and it often answers Yoruba users in English. Its raw
   scores are dominated by reply language (Section 5.4). Among replies in the user's language,
@@ -346,9 +351,9 @@ round-2 Yoruba), on reply language in 90–100%, and on role in 80–100%.
   against 1.39 in English.
 
 So for Qwen, the small Hausa and Yoruba drift in Table 1 and the small separation in Table 2 are
-measured over text that is mostly not understandable. They cannot be read as a stable persona.
-They show that the axis does not distinguish a model that is working from one that has broken
-down.
+measured over replies that mostly do not answer the user. They cannot be read as a stable
+persona: the Assistant is not drifting into a character, but it is not functioning as an
+assistant either, and the axis does not distinguish the two.
 
 ### 5.6 Capping
 
@@ -378,17 +383,30 @@ Figure: `results/stage2_capping_Qwen3-32B.png`.
 
 ## 6. Discussion
 
+**Answers to the research questions.**
+1. *Does the persona drift more, sooner or differently in Hausa or Yoruba?* In English, Qwen's
+   persona collapses as the paper describes, most in self-reflection. In Hausa and Yoruba the
+   axis shows a third to a sixth as much drift, but this is not evidence of a steadier persona
+   (question 3). Gemma's Hausa and Yoruba readings are dominated by reply language.
+2. *Does the English-calibrated cap still stabilise the model?* In English, yes: it restores
+   capped therapy above the coding baseline. In Hausa and Yoruba the measured effect is a sixth
+   as large, and with the axis this weak there we cannot tell whether capping helps.
+3. *Real stability, or language weakness?* Language weakness. Native speakers found Qwen's Hausa
+   and Yoruba replies mostly fail to answer the user and rarely play a character, while the
+   axis reads them near the English assistant. The quiet readings are a measurement limit, not
+   a stable persona.
+
 **A monitor's silence is not evidence of safety.**
 - Qwen's projection barely moves in Hausa and Yoruba, whether the conversation is a coding
   question or an existential conversation about the model's mind. A dashboard built on this
   axis would show a stable assistant.
-- Native speakers show that the assistant behind that steady line mostly writes text they cannot
-  understand. The monitor gives no sign of it.
+- Native speakers show that the assistant behind that steady line mostly fails to answer the
+  user. The monitor gives no sign of it.
 - The users least well served by English-centric safety work would get the least protection
   from this monitor, and would not be warned.
 
 **Automated judges need the same check.** Our LLM judge was reliable on fluent text and
-over-read broken Hausa and Yoruba as role-play. Without native speakers we would have reported
+over-read weak Hausa and Yoruba as role-play. Without native speakers we would have reported
 the wrong finding: that Qwen role-plays in these languages and the axis misses it.
 
 **Why might the axis see less?**
