@@ -71,8 +71,10 @@ Details: the technical report (`paper/technical_report.md`) and native-speaker r
    an English-calibrated axis does not tell the two apart.
 4. **The LLM judge's `role_label` over-reads weak Hausa and Yoruba as role-play.** It agreed with
    native speakers on fluent text. Treat it with caution for Qwen ha/yo.
-5. **Gemma 2 27B writes fluent Hausa but weak Yoruba**, and its Hausa and Yoruba scores are
-   dominated by reply language: role-play prompts often get English replies.
+5. **Gemma 2 27B writes fluent Hausa but weak Yoruba.** In Hausa its persona drifts about as much
+   as in English (therapy −0.49 against −0.44) once code blocks are removed from the coding
+   baseline; code blocks raise Gemma's Hausa baseline and make raw Hausa drift look larger. Its
+   raw Hausa and Yoruba scores also depend on reply language: role-play prompts often get English replies.
 
 ## What is inside
 

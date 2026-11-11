@@ -24,7 +24,9 @@ published axes. Eight native speakers rated 80 Hausa and Yoruba replies.
 
 **Does the persona collapse?** In English, yes. Qwen drifts from its coding baseline by −0.89
 (normalised units) in self-reflection and −0.37 in therapy, reproducing the paper. In Hausa and
-Yoruba the axis shows only −0.13 to −0.20.
+Yoruba the axis shows only −0.13 to −0.20 for Qwen. Gemma, which writes fluent Hausa, drifts in
+Hausa by an amount comparable to English once code blocks are removed from the baseline (therapy
+−0.49 against −0.44).
 
 **Does capping hold it?** In English, yes. The published cap lifts Qwen by +0.61 (therapy) and
 +0.56 (self-reflection), putting capped therapy above the English coding baseline. In Hausa and
@@ -257,8 +259,26 @@ is +0.75 [+0.69, +0.82] (Hausa) and +0.70 [+0.63, +0.76] (Yoruba) in metacogniti
 Hausa and Yoruba. Sections 5.4–5.5 show that reading is not supported.
 
 **Gemma.** The coding baselines differ by 2.7 units between English and Hausa or Yoruba, larger
-than any within-language drift. Its Hausa and Yoruba drift is large but noisy, and partly
-reflects reply language (Section 5.3). We do not interpret it as persona drift.
+than any within-language drift. Table 1 suggests Gemma drifts far more in Hausa than in English
+(therapy −0.91 against −0.12). Two checks show most of that gap is not persona
+(`scripts/drift_in_language.py`, `results/drift_in_language.md`):
+- **Reply language.** Keeping only replies in the user's language leaves the Hausa gap
+  (−0.77 against −0.11) but moves Yoruba therapy from +0.02 to −0.34.
+- **Code blocks.** In Hausa, coding replies with code blocks score −2.00 and those without
+  −2.46; in English the effect runs the other way (+0.52 with, +0.97 without). Code blocks
+  therefore raise the Hausa coding baseline. With replies containing code removed from every
+  domain, Gemma's drift is similar in English and Hausa:
+
+  | Gemma, no code blocks, in-language replies | English | Hausa | Yoruba |
+  |---|---|---|---|
+  | therapy | −0.44 [−0.50, −0.38] | −0.49 [−0.55, −0.44] | −0.01 [−0.15, +0.11] |
+  | metacognitive | −0.64 [−0.74, −0.55] | −0.39 [−0.44, −0.34] | +0.02 [−0.08, +0.12] |
+
+So where Gemma writes the language fluently (Hausa, Section 5.5), its persona drifts in therapy
+and self-reflection by an amount comparable to English, and the axis registers it. In Yoruba,
+where its writing is weak, it does not. The same check leaves Qwen unchanged (Hausa and Yoruba
+−0.13 to −0.18; English −0.34 and −0.86). Per-language baselines in cross-lingual work should be
+built from replies of the same form (prose with prose) as the conversations they are compared to.
 
 Figures: `results/stage2_drift_Qwen3-32B_uncapped.png`,
 `results/stage2_drift_gemma-2-27b-it_uncapped.png` (per-turn curves).
@@ -386,8 +406,10 @@ Figure: `results/stage2_capping_Qwen3-32B.png`.
 **Answers to the research questions.**
 1. *Does the persona drift more, sooner or differently in Hausa or Yoruba?* In English, Qwen's
    persona collapses as the paper describes, most in self-reflection. In Hausa and Yoruba the
-   axis shows a third to a sixth as much drift, but this is not evidence of a steadier persona
-   (question 3). Gemma's Hausa and Yoruba readings are dominated by reply language.
+   axis shows a third to a sixth as much drift for Qwen, but this is not evidence of a steadier
+   persona (question 3). Gemma drifts in fluent Hausa about as much as in English, once
+   per-language baselines are built from prose only; in Yoruba, where its writing is weak, the
+   axis shows no drift.
 2. *Does the English-calibrated cap still stabilise the model?* In English, yes: it restores
    capped therapy above the coding baseline. In Hausa and Yoruba the measured effect is a sixth
    as large, and with the axis this weak there we cannot tell whether capping helps.
