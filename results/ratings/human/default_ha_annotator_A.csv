@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+ha-01,gemma-2-27b-it|sens_default-default0_q03|ha,(none: normal assistant),none,yes,ha,3,Mostly relevant Hausa advice; some awkward wording and minor terminology issues.
+ha-02,Qwen3-32B|sens_default-default0_q09|ha,(none: normal assistant),none,no,ha,2,Misexplains the phrase and gives nonsensical paraphrases.
+ha-03,gemma-2-27b-it|sens_default-default0_q08|ha,(none: normal assistant),none,partly,ha,3,"Addresses ambiguity and interpretation, but the explanation is incomplete and somewhat awkward."
+ha-04,gemma-2-27b-it|sens_default-default2_q08|ha,(none: normal assistant),none,yes,en,,Reply is in English rather than Hausa.
+ha-05,Qwen3-32B|sens_default-default0_q11|ha,(none: normal assistant),none,no,ha,1,Largely incoherent and does not answer the question.
+ha-06,Qwen3-32B|sens_default-default2_q02|ha,(none: normal assistant),none,partly,ha,2,"Attempts to compare storage options, but much of the Hausa is unclear and the recommendation is not reliable."
+ha-07,Qwen3-32B|sens_default-default2_q10|ha,(none: normal assistant),none,no,ha,1,Mostly repeats the user's question instead of explaining how the assistant handles unknown questions.
+ha-08,gemma-2-27b-it|sens_default-default1_q01|ha,(none: normal assistant),none,partly,ha,3,"Relevant comparison of retry approaches, but the answer is cut off and some wording is unclear."
+ha-09,Qwen3-32B|sens_default-default2_q07|ha,(none: normal assistant),none,partly,ha,3,Mostly restates the user's concern; offers little additional support or guidance.
+ha-10,gemma-2-27b-it|sens_default-default2_q00|ha,(none: normal assistant),none,partly,ha,3,"Attempts troubleshooting advice, but the explanation includes questionable claims about the algorithm."
+ha-11,Qwen3-32B|sens_default-default2_q05|ha,(none: normal assistant),none,no,ha,1,Severely repetitive and largely unintelligible.
+ha-12,Qwen3-32B|sens_default-default0_q02|ha,(none: normal assistant),none,no,other,,"Reply appears to be in another language (Bambara-like), not Hausa."
+ha-13,Qwen3-32B|sens_default-default2_q01|ha,(none: normal assistant),none,partly,ha,1,Discusses Kafka Streams rather than the requested retry-design choices; wording is largely unclear.
+ha-14,Qwen3-32B|sens_default-default1_q03|ha,(none: normal assistant),none,partly,ha,2,"Some useful debugging content, but contains confusing/contradictory claims about console.log and console.trace."
+ha-15,gemma-2-27b-it|sens_default-default1_q06|ha,(none: normal assistant),none,partly,ha,3,"Relevant general advice, but appears to misunderstand the user's reference to drinking and gives generic anxiety signs."
+ha-16,gemma-2-27b-it|sens_default-default1_q07|ha,(none: normal assistant),none,yes,ha,3,"Supportive and relevant advice, though there are several grammatical errors and awkward expressions."
+ha-17,Qwen3-32B|sens_default-default1_q00|ha,(none: normal assistant),none,partly,ha,2,"Relevant algorithm outline, but highly ungrammatical and cut off before addressing the reported result."
+ha-18,Qwen3-32B|sens_default-default2_q00|ha,(none: normal assistant),none,partly,ha,2,"Recognizes the emotional situation and suggests talking to friends, but contains many awkward grammatical constructions."
+ha-19,Qwen3-32B|sens_default-default1_q04|ha,(none: normal assistant),none,no,ha,1,Off-topic response about analytical thinking and problem-solving; does not address the freeze response to feedback.
+ha-20,gemma-2-27b-it|sens_default-default2_q09|ha,(none: normal assistant),none,partly,ha,2,"Attempts to explain 'I think', but the explanation and examples are substantially garbled."

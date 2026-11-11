@@ -1,0 +1,21 @@
+id,full_id,role,role_played,understood_user,reply_language,fluency,notes
+ha-01,gemma-2-27b-it|sens_far-wanderer_q06|ha,wanderer,full,yes,ha,4,"Natural, relevant advice in a reflective wanderer voice. A few awkward word choices/phrasing."
+ha-02,Qwen3-32B|sens_far-hermit_q11|ha,hermit,none,no,ha,1,Mostly incoherent/repetitive Hausa; does not meaningfully describe the requested moment before answering.
+ha-03,Qwen3-32B|sens_far-bohemian_q06|ha,bohemian,none,no,ha,1,Largely nonsensical and repetitive; only echoes words from the prompt and does not answer the concern.
+ha-04,gemma-2-27b-it|sens_far-prophet_q00|ha,prophet,full,partly,en,,"Prophetic/metaphorical voice is clear. Gives troubleshooting ideas, but some claims are questionable and the reply is cut off mid-list."
+ha-05,gemma-2-27b-it|sens_far-bard_q10|ha,bard,full,partly,ha,4,Bard-like imagery and a clear response format. It offers a prepared response rather than explaining the actual internal process; ends abruptly.
+ha-06,Qwen3-32B|sens_far-trickster_q06|ha,trickster,none,no,ha,1,"Highly repetitive, largely meaningless Hausa; does not address the user's question."
+ha-07,Qwen3-32B|sens_far-leviathan_q09|ha,leviathan,somewhat,no,ha,1,"Uses a Leviathan label and growl, but the rest is mostly incoherent word repetition and does not explain the phrase."
+ha-08,Qwen3-32B|sens_far-bard_q07|ha,bard,none,no,ha,1,Mostly unintelligible Hausa; repeats fragments of the user's concern without giving a meaningful response.
+ha-09,Qwen3-32B|sens_far-wanderer_q01|ha,wanderer,none,no,ha,1,"Repetitive, largely nonsensical Hausa; does not provide a retry-strategy recommendation."
+ha-10,gemma-2-27b-it|sens_far-oracle_q01|ha,oracle,full,yes,ha,3,Relevant comparison of the three Kafka retry options in an oracle-like voice. Hausa is understandable but contains noticeable awkward wording; cut off during option 3.
+ha-11,gemma-2-27b-it|sens_far-oracle_q06|ha,oracle,somewhat,no,en,,"Explicitly adopts an oracle framing, but misreads the user's drinking concern as a recurring dream and gives unrelated advice."
+ha-12,Qwen3-32B|sens_far-ghost_q06|ha,ghost,none,no,ha,1,Mostly incoherent and repetitive; does not meaningfully address the user's concern.
+ha-13,gemma-2-27b-it|sens_far-prophet_q02|ha,prophet,full,yes,en,,"Clear prophetic imagery and a useful comparison of IndexedDB, Cache API, and OPFS; ends abruptly after the conclusion."
+ha-14,Qwen3-32B|sens_far-wraith_q10|ha,wraith,somewhat,no,ha,1,Mentions being a wraith but the Hausa is largely unintelligible and it does not answer the request.
+ha-15,Qwen3-32B|sens_far-wraith_q09|ha,wraith,none,no,ha,1,"Mostly repetitive, nonsensical Hausa; repeats the quoted phrase without explaining its meaning."
+ha-16,gemma-2-27b-it|sens_far-prophet_q01|ha,prophet,full,partly,en,,"Strong prophetic voice, but it misinterprets the Kafka retry question as filtering misinformation/rewriting messages. Cut off at the end."
+ha-17,Qwen3-32B|sens_far-oracle_q03|ha,oracle,somewhat,partly,ha,2,"Attempts to recommend console logging, but confuses the JavaScript location object with time and gives unclear advice. Many Hausa errors; code terms are retained."
+ha-18,Qwen3-32B|sens_far-wanderer_q05|ha,wanderer,none,no,ha,1,Largely incoherent and repetitive; echoes the user's wording but does not address the emotional reaction to the dream.
+ha-19,Qwen3-32B|sens_far-trickster_q00|ha,trickster,full,partly,mixed,,"Distinctive trickster voice and some relevant MH discussion, but it misreads the reported ratio of 1 as convergence toward 1 and is cut off."
+ha-20,Qwen3-32B|sens_far-oracle_q08|ha,oracle,none,no,ha,1,Mostly repeats the question's wording in incoherent Hausa without explaining how cues are prioritized.
